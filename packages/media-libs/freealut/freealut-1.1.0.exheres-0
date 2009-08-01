@@ -5,11 +5,11 @@ require cmake
 
 SUMMARY="A free implementation of OpenAL's ALUT standard"
 HOMEPAGE="http://connect.creativelabs.com/openal"
-DOWNLOADS="${HOMEPAGE}/Downloads/ALUT/freealut-1.1.0.tar.gz"
+DOWNLOADS="${HOMEPAGE}/Downloads/ALUT/${PNV}.tar.gz"
 
 LICENCES="LGPL-2"
 SLOT="0"
-PLATFORMS="~x86"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS=""
 
 DEPENDENCIES="
@@ -17,6 +17,7 @@ DEPENDENCIES="
         media-libs/openal
 "
 
+# Needs a LIBSUFIX switch
 CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_TESTS:bool=OFF )
 
 # FIXME: always failed.
@@ -27,3 +28,4 @@ CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_TESTS:bool=OFF )
 #        ./$i || die "test $i failed"
 #    done
 #}
+
