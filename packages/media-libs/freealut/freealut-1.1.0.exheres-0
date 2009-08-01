@@ -17,7 +17,8 @@ DEPENDENCIES="
         media-libs/openal
 "
 
-# Needs a LIBSUFIX switch
+# FIXME Add a LIBSUFIX switch
+# FIXME pkg-config file has broken --libs output
 CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_TESTS:bool=OFF )
 
 # FIXME: always failed.
