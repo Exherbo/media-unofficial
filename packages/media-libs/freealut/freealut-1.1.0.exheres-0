@@ -18,15 +18,5 @@ DEPENDENCIES="
 "
 
 # FIXME Add a LIBSUFIX switch
-# FIXME pkg-config file has broken --libs output
-CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_TESTS:bool=OFF )
-
-# FIXME: always failed.
-#src_test() {
-#    cd ${ECMAKE_BUILD_DIR}
-#    for i in test_{version,waveforms,errorstuff,memoryloader}; #fileloader
-#    do
-#        ./$i || die "test $i failed"
-#    done
-#}
+CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_TESTS:BOOL=OFF )
 
