@@ -30,6 +30,7 @@ LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
 MYOPTIONS="alsa jack ffmpeg flac ladspa midi soundtouch mp3 vorbis
+    soundtouch [[ description = [ Required for pitch and tempo changing ] ]]
     id3tag [[ description = [ Enables the ability to modify ID3 tags ] ]]
 "
 
@@ -43,7 +44,7 @@ DEPENDENCIES="
         media-libs/libsndfile[>=1.0.0]
         x11-libs/wxGTK:2.8[>=2.8.0]
         alsa? ( sys-sound/alsa-lib )
-        ffmpeg? ( media/ffmpeg )
+        ffmpeg? ( media/ffmpeg[<0.11] )
         jack? ( media-sound/jack-audio-connection-kit[>=0.103.0] )
         mp3? ( media-libs/libmad[>=0.14.2b] )
         soundtouch? ( media-libs/soundtouch )
