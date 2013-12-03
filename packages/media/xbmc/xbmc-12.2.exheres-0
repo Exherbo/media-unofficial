@@ -2,8 +2,6 @@
 # Copyright 2011 Markus Rothe
 # Distributed under the terms of the GNU General Public License v2
 
-require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.11 1.10 ] ]
-
 SUMMARY="Media player and entertainment hub for digital media"
 HOMEPAGE="http://xbmc.org/"
 DOWNLOADS="http://mirrors.xbmc.org/releases/source/${PNV}.tar.gz"
@@ -96,8 +94,6 @@ DEPENDENCIES="
         x11-apps/xdpyinfo
 "
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-gcc-4.6.patch )
-
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     --disable-hal
     --enable-external-libraries
@@ -114,12 +110,4 @@ DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     vaapi
     vdpau
 )
-
-src_prepare() {
-    default
-
-    # eautoreconf does not run automake, because it only runs if Makefile.am is present. xbmc only
-    # has a Makefile.in
-    edo ./bootstrap
-}
 
