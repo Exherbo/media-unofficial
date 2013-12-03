@@ -41,7 +41,6 @@ DEPENDENCIES="
         dev-libs/libcdio
         dev-libs/openssl
         dev-libs/pcre
-        media/ffmpeg[<0.8]
         media-libs/SDL[X]
         media-libs/SDL_mixer
         media-libs/SDL_image
@@ -98,7 +97,8 @@ DEPENDENCIES="
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     --disable-hal
-    --enable-external-libraries
+    # Enable internal copy of ffmpeg, since xbmc only builds against ffmpeg[<0.8]
+    --disable-external-libraries
     --enable-goom
     --enable-xrandr
 )
