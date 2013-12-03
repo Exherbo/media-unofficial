@@ -11,7 +11,7 @@ BUGS_TO="michael@obberon.com"
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="aac avahi opengl pulseaudio
+MYOPTIONS="aac avahi opengl pulseaudio samba
 
     http    [[ description = [ Support for control over HTTP ] ]]
     vaapi   [[ description = [ Support for the Video Acceleration API ] ]]
@@ -64,7 +64,6 @@ DEPENDENCIES="
         media-libs/libvorbis
         media-libs/tiff
         media-sound/wavpack
-        net-fs/samba
         net-libs/libssh
         net-misc/curl
         sys-apps/dbus
@@ -85,6 +84,9 @@ DEPENDENCIES="
         )
         !opengl? ( media-libs/SDL_gfx )
         pulseaudio? ( media-sound/pulseaudio )
+        samba? (
+            net-fs/samba
+        )
         vaapi? ( x11-libs/libva[opengl] )
         vdpau? (
             media/ffmpeg[vdpau(-)]
@@ -107,6 +109,7 @@ DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     "http webserver"
     "opengl gl"
     "pulseaudio pulse"
+    samba
     vaapi
     vdpau
 )
