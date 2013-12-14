@@ -44,6 +44,6 @@ configure_one_multibuild() {
     econf \
         --enable-ipv6 \
         --with-audio="$(echo ${modules[@]} | tr ' ' ',')" \
-        $(option_enable debug) \
+        $(option_enable debug)
 }
 
