@@ -15,7 +15,6 @@ SLOT="0"
 PLATFORMS="~amd64 ~x86"
 MYOPTIONS="
     debug
-    ipv6
     jack
     openal
     pulseaudio
@@ -43,8 +42,8 @@ configure_one_multibuild() {
     option sdl && modules+=( sdl )
 
     econf \
+        --enable-ipv6 \
         --with-audio="$(echo ${modules[@]} | tr ' ' ',')" \
         $(option_enable debug) \
-        $(option_enable ipv6)
 }
 
