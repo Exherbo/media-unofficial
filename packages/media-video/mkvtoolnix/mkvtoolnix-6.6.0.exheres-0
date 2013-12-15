@@ -45,6 +45,7 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --with-gettext
     --without-curl
 )
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-empty-dir.patch )
 
 src_compile() {
     edo rake
