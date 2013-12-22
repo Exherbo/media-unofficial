@@ -23,13 +23,13 @@ UPSTREAM_DOCUMENTATION="http://download.savannah.gnu.org/releases-noredirect/lin
 
 LICENCES="GPL-2 GPL-3 [[ note = [ A few header files have no copyright information, other are GPL-2+ or AS-IS ] ]]"
 SLOT="0"
-MYOPTIONS="
-    ( alsa portaudio pulseaudio ) [[ number-selected = at-least-one ]]
-    debug gsm opengl speex
+MYOPTIONS="alsa debug gsm opengl portaudio pulseaudio sdl speex theora v4l X
     opus  [[ description = [ Opus audio decoding and encoding ] ]]
     upnp  [[ description = [ Support Service Discovery via libupnp ] ]]
     video [[ description = [ Enable video stream support ] ]]
     vpx   [[ description = [ VP8 support using libvpx ] ]]
+
+    ( alsa portaudio pulseaudio ) [[ number-selected = at-least-one ]]
     ( opengl sdl theora v4l vpx X ) [[ requires = video ]]
 "
 
