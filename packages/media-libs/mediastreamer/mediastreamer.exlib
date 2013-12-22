@@ -1,4 +1,5 @@
 # Copyright 2010 Yury G. Kudryashov
+# Copyright 2013 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part on ortp-0.15.0.exheres-0 which is
 #   Copyright 2009 Ingmar Vanhassel
@@ -24,8 +25,12 @@ LICENCES="GPL-2 GPL-3 [[ note = [ A few header files have no copyright informati
 SLOT="0"
 MYOPTIONS="
     ( alsa portaudio pulseaudio ) [[ number-selected = at-least-one ]]
-    debug gsm speex video [[ description = [ Enable video stream support ] ]]
-    ( sdl theora v4l X ) [[ requires = video ]]
+    debug gsm opengl speex
+    opus  [[ description = [ Opus audio decoding and encoding ] ]]
+    upnp  [[ description = [ Support Service Discovery via libupnp ] ]]
+    video [[ description = [ Enable video stream support ] ]]
+    vpx   [[ description = [ VP8 support using libvpx ] ]]
+    ( opengl sdl theora v4l vpx X ) [[ requires = video ]]
 "
 
 DEPENDENCIES="
@@ -34,21 +39,51 @@ DEPENDENCIES="
         dev-util/intltool
         virtual/pkg-config[>=0.9.0]
     build+run:
-        net-libs/ortp[>=0.17.0]
+        dev-libs/libpcap
+        net-libs/ortp[>=0.21.0]
         alsa? ( sys-sound/alsa-lib )
         gsm? ( media-libs/gsm )
+        opengl? (
+            media-libs/glew
+            x11-dri/mesa
+        )
+        opus? ( media-libs/opus[>=0.9.0] )
         portaudio? ( media-libs/portaudio )
         pulseaudio? ( media-sound/pulseaudio[>=0.9.21] )
         speex? ( media-libs/speex[>=1.2-beta3] )
         theora? ( media-libs/libtheora[>=1.0-alpha7] )
+        upnp? ( net-libs/libupnp[>=1.6&<1.7] )
         v4l? ( media-libs/v4l-utils )
         video? ( || ( media/ffmpeg media/libav ) )
+        vpx? ( media-libs/libvpx[>=0.9.6] )
         sdl? ( media-libs/SDL[>=1.2.0] )
-        X? ( x11-libs/libX11 )
+        X? (
+            x11-libs/libX11
+            x11-libs/libXv
+        )
 "
+# TODO:
+#   test? ( dev-libs/CUnit ) - http://cunit.sourceforge.net/
 
-DEFAULT_SRC_PREPARE_PATCHES=( -p1 "${FILES}/${PN}-fix-ffmpeg.patch" )
-DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( alsa debug gsm portaudio pulseaudio sdl speex theora "v4l libv4l1" "v4l libv4l2" video "X x11" )
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
+    alsa
+    debug
+    gsm
+    'opengl glx'
+    opus
+    portaudio
+    pulseaudio
+    sdl
+    speex
+    theora
+    upnp
+    'v4l libv4l1'
+    'v4l libv4l2'
+    video
+    'vpx vp8'
+    'X x11'
+    'X xv'
+)
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     --datadir=/usr/share/${PN}
@@ -56,9 +91,10 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --disable-artsc
     --disable-macaqsnd
     --disable-macsnd
-    --disable-oss
+    --disable-spandsp
     --enable-external-ortp
     --enable-ipv6
+    --enable-oss
 )
 
 src_prepare() {
