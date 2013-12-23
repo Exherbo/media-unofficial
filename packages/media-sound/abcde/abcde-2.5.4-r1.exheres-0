@@ -23,7 +23,6 @@ DEPENDENCIES="
         speex? ( media-libs/speex )
         vorbis? ( media-sound/vorbis-tools )
         musicbrainz? (
-            dev-perl/Digest-SHA
             dev-perl/MusicBrainz-DiscID
             dev-perl/WebService-MusicBrainz
         )
