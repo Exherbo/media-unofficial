@@ -18,7 +18,6 @@ MYOPTIONS="
     ]]
     curl
     dts
-    ffmpeg    [[ description = [ wma, mpc, tta, mms support ] ]]
     flac
     game      [[ description = [ sid, nfs, ay, support ] ]]
     gtk
@@ -51,7 +50,6 @@ DEPENDENCIES="
         alsa?       ( sys-sound/alsa-lib )
         cdda?       ( dev-libs/libcdio media-libs/libcddb )
         curl?       ( net-misc/curl[>=7.10] )
-        ffmpeg?     ( media/ffmpeg[<0.8] )
         flac?       ( media-libs/flac )
         game?       ( sys-libs/zlib )
         gtk?        ( x11-libs/gtk+:2[>=2.12] )
@@ -69,7 +67,13 @@ DEPENDENCIES="
 
 BUGS_TO="jedahan@gmail.com"
 
-DEFAULT_SRC_CONFIGURE_PARAMS=( --enable-{artwork,supereq,adplug,sndfile} )
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --enable-adplug
+    --enable-artwork
+    --disable-ffmpeg
+    --enable-sndfile
+    --enable-supereq
+)
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     'aac'
     'alsa'
@@ -78,7 +82,6 @@ DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     'converter'
     'curl vfs-curl'
     'dts dca'
-    'ffmpeg'
     'flac'
     'game gme'
     'game sid'
