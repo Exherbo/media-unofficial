@@ -19,6 +19,8 @@ PLATFORMS="~amd64"
 MYOPTIONS="debug"
 
 DEPENDENCIES="
+    build:
+        x11-utils/makedepend
     build+run:
         media-libs/dssi
         media-libs/ladspa-sdk
