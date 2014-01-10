@@ -15,18 +15,19 @@ DOWNLOADS="http://projects.l3ib.org/${PN}/files/${PNV}.tar.gz"
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="xinerama nls inotify"
+MYOPTIONS="nls inotify"
 
 DEPENDENCIES="
         build:
-            xinerama? ( x11-proto/xineramaproto )
+            x11-proto/xineramaproto
         build+run:
             dev-libs/glib:2[>=2.6]
-            x11-libs/gtk+[>=2.10]
             gnome-bindings/gtkmm:2.4[>=2.10]
-            xinerama? ( x11-libs/libXinerama )
+            x11-libs/gtk+[>=2.10]
+            x11-libs/libXinerama
             nls? ( sys-devel/gettext )"
 
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/0001-Explicitly-check-for-X11-lib-in-configure.ac-possibl.patch )
-DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( xinerama nls inotify )
+DEFAULT_SRC_CONFIGURE_PARAMS=( --enable-xinerama )
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( nls inotify )
 
