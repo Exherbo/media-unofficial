@@ -23,7 +23,7 @@ UPSTREAM_DOCUMENTATION="http://download.savannah.gnu.org/releases-noredirect/lin
 
 LICENCES="GPL-2 GPL-3 [[ note = [ A few header files have no copyright information, other are GPL-2+ or AS-IS ] ]]"
 SLOT="0"
-MYOPTIONS="alsa debug gsm opengl portaudio pulseaudio sdl speex theora v4l X
+MYOPTIONS="alsa debug gsm libav opengl portaudio pulseaudio sdl speex theora v4l X
     opus  [[ description = [ Opus audio decoding and encoding ] ]]
     upnp  [[ description = [ Support Service Discovery via libupnp ] ]]
     video [[ description = [ Enable video stream support ] ]]
@@ -54,7 +54,10 @@ DEPENDENCIES="
         theora? ( media-libs/libtheora[>=1.0-alpha7] )
         upnp? ( net-libs/libupnp[>=1.6&<1.7] )
         v4l? ( media-libs/v4l-utils )
-        video? ( || ( media/ffmpeg media/libav ) )
+        video? (
+            !libav? ( media/ffmpeg )
+            libav? ( media/libav )
+        )
         vpx? ( media-libs/libvpx[>=0.9.6] )
         sdl? ( media-libs/SDL[>=1.2.0] )
         X? (
