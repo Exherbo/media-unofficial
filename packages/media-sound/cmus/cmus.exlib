@@ -16,6 +16,10 @@ MYOPTIONS="aac alsa ao arts ffmpeg flac mikmod modplug mp4 mpc oss pulse tremor 
     modplug [[ description = [ Build with modplug support ] ]]
     mp3     [[ description = [ Support mp3 decoding with mad ] ]]
     mp4     [[ description = [ Support mp4 decoding ] ]]
+    mpc     [[ description = [ Support Musepack files decoding ] ]]
+    tremor  [[ description = [ Use Tremor for decoding OggVorbis files (on hardware with no FPU) ]
+    ]]
+    wavpack [[ description = [ Support wv decoding ] ]]
 "
 
 DEPENDENCIES="
@@ -31,7 +35,10 @@ DEPENDENCIES="
         mp3?     ( media-libs/libmad )
         mikmod?  ( media-libs/mikmod )
         modplug? ( media-libs/libmodplug )
-        mp4?     ( media-sound/mpeg4ip )
+        mp4? (
+            media-libs/faad2
+            media-libs/libmp4v2
+        )
         mpc?     ( media-libs/libmpcdec )
         pulse?   ( media-sound/pulseaudio )
         tremor?  ( media-libs/tremor )
@@ -48,6 +55,11 @@ SRC_CONFIGURE_OPTIONS=(
 
 src_prepare() {
     export LD="${CC}"
+
+    # This patch is only needed if ffmpeg2 is installed
+    if optionq "ffmpeg" && has_version --root "media/ffmpeg[>=2.0.0]"; then
+        expatch "${FILES}/${PN}-2.3.4-use-ffmpeg2.patch"
+    fi
 }
 
 option_yesno() {
