@@ -41,7 +41,7 @@ DEPENDENCIES="
         dev-libs/expat
         media-libs/libsamplerate[>=0.1.2]
         media-libs/libsndfile[>=1.0.0]
-        x11-libs/wxGTK:=[>=2.8]
+        x11-libs/wxGTK:2.8[>=2.8.0]
         alsa? ( sys-sound/alsa-lib )
         ffmpeg? ( media/ffmpeg )
         jack? ( media-sound/jack-audio-connection-kit[>=0.103.0] )
