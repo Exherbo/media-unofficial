@@ -1,8 +1,9 @@
 # Copyright 2009 Hong Hao <oahong@gmail.com>
+# Copyright 2014 Konstantinn Bonnet <qu7uux@gmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
 SUMMARY="a framebuffer screenshot program"
-HOMEPAGE="http://hem.bredband.net/gmogmo/fbgrab"
+HOMEPAGE="http://${PN}.monells.se/"
 DOWNLOADS="${HOMEPAGE}/${PNV}.tar.gz"
 
 LICENCES="GPL-2"
@@ -12,18 +13,13 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        sys-libs/zlib
         media-libs/libpng
+        sys-libs/zlib
 "
 
-REMOTE_IDS="freshmeat:fbgrab"
+REMOTE_IDS="freecode:${PN}"
 
-src_compile() {
-    "${CC}" ${CFLAGS} ${LDFLAGS} ${PN}.c -lpng -lz -o ${PN}
-}
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PN}-1.2-fix-manpage-install.patch )
 
-src_install() {
-    dobin ${PN}
-    newman ${PN}.1.man ${PN}.1
-}
+WORK=${WORKBASE}/${PN}
 

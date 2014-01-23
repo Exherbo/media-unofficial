@@ -1,0 +1,16 @@
+Source: Written by Konstantinn Bonnet <qu7uux@gmail.com>
+Upstream: Contacted by email about the issue
+Reason: Install manpage in /usr/share/man instead of /usr/man, which is naughty
+----
+diff -Naur a/Makefile b/Makefile
+--- a/Makefile	2014-01-23 23:23:38.483074259 +0100
++++ b/Makefile	2014-01-23 23:23:29.261073746 +0100
+@@ -19,7 +19,7 @@
+ 
+ install: fbgrab fbgrab.1.gz
+ 	install -D -m 0755 fbgrab $(DESTDIR)/usr/bin/fbgrab
+-	install -D -m 0644 fbgrab.1.gz $(DESTDIR)/usr/man/man1/fbgrab.1.gz
++	install -D -m 0644 fbgrab.1.gz $(DESTDIR)/usr/share/man/man1/fbgrab.1.gz
+ 
+ clean:
+ 	-$(RM) fbgrab fbgrab.1.gz *~ \#*\#
