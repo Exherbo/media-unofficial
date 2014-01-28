@@ -46,18 +46,26 @@ PLATFORMS="~amd64 ~x86"
 MYOPTIONS="flac gtk3 mp3 speex vorbis
     mp4 [[ description = [ Adds support to tag mp4 files ] ]]
     wavpack [[ description = [ Add support for wavpack ] ]]
+
+    ( linguas:
+        bg ca cs da de el es fr he hu it ja lt nl pl pt_BR ro ru sl sr sr@latin sv tr uk zh_CN zh_TW
+    )
 "
 
 DEPENDENCIES="
     build:
+        app-text/docbook-xml-dtd:4.4
+        app-text/docbook-xsl-stylesheets
+        dev-libs/libxslt   [[ note = [ xsltproc for man page generation ] ]]
         dev-util/intltool[>=0.50.0]
+        gnome-desktop/yelp-tools    [[ note = [ build help ] ]]
         sys-devel/gettext
         virtual/pkg-config[>=0.24]
     build+run:
         dev-libs/glib:2[>=2.30.0]
         flac? ( media-libs/flac[>=1.1.4] )
-        gtk3? ( x11-libs/gtk+:3[>=3.0.0] )
-        !gtk3? ( x11-libs/gtk+:2[>=2.24.0] )
+        gtk3? ( x11-libs/gtk+:3[>=3.2.1] )
+        !gtk3? ( x11-libs/gtk+:2[>=2.24.7] )
         mp3? ( media-libs/id3lib[>=3.8.0]
                media-libs/libid3tag )
         mp4? ( media-libs/taglib[>=1.6.0] )
@@ -65,9 +73,20 @@ DEPENDENCIES="
         vorbis? ( media-libs/libogg[>=1.0]
                   media-libs/libvorbis[>=1.0.1] )
         wavpack? ( media-sound/wavpack[>=4.40] )
+    test:
+        dev-util/desktop-file-utils
 "
 
-DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( mp3 'mp3 id3v23' mp4 'vorbis ogg' flac wavpack speex )
+DEFAULT_SRC_CONFIGURE_PARAMS=( --with-help-dir=/usr/share/doc/${PNVR} )
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
+    flac
+    mp3
+    'mp3 id3v23'
+    mp4
+    speex
+    'vorbis ogg'
+    wavpack
+)
 DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( gtk3 )
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-wavpack-tag.patch" )
+DEFAULT_SRC_CONFIGURE_TESTS=( '--any --enable-tests --disable-tests' )
 
