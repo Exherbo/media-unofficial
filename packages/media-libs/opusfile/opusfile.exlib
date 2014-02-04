@@ -1,0 +1,27 @@
+# Copyright 2014 Konstantinn Bonnet <qu7uux@gmail.com>
+# Distributed under the terms of the GNU General Public License v2
+
+SUMMARY="Opusfile provides a high-level API for decoding and seeking within .opus files similar to
+what libvorbisfile provides for Vorbis."
+HOMEPAGE="http://www.opus-codec.org"
+DOWNLOADS="http://downloads.xiph.org/releases/opus/${PNV}.zip"
+
+LICENCES="Xiph"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        app-arch/unzip
+    build+run:
+        dev-libs/openssl
+        media-libs/libogg
+        media-libs/opus
+"
+
+DEFAULT_SRC_CONFIGURE_PARAMS=( --disable-static )
+
+BUGS_TO="qu7uux@gmail.com"
+
+UPSTREAM_DOCUMENTATION="${HOMEPAGE}/docs/${PN}_api-${PV}/index.html"
+

@@ -1,0 +1,7 @@
+# Copyright 2014 Konstantinn Bonnet <qu7uux@gmail.com>
+# Distributed under the terms of the GNU General Public License v2
+
+require opusfile
+
+PLATFORMS="~amd64"
+
