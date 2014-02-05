@@ -52,6 +52,7 @@ src_configure() {
     done
 
     edo ./configure --prefix=/usr \
+        --mandir=/usr/share/man \
         --with-elf \
         --enable-audio=${audios} \
         $(option_enable alsa alsaseq)
