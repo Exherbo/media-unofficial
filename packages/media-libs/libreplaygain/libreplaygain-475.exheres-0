@@ -1,0 +1,39 @@
+# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+MY_PNV=${PN}_r${PV}
+
+require cmake [ api=2 ]
+
+SUMMARY="Musepack's replay gain library"
+
+HOMEPAGE="http://www.musepack.net/"
+DOWNLOADS="http://files.musepack.net/source/${MY_PNV}.tar.gz"
+
+LICENCES="LGPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES=""
+
+BUGS_TO="heirecka@exherbo.org"
+
+CMAKE_SOURCE=${WORKBASE}/${MY_PNV}
+
+src_prepare() {
+    default
+    # Don't be unverbose by default, respect CFLAGS
+    edo sed -e '/^set(CMAKE_VERBOSE_MAKEFILE/d' \
+            -e '/^set(CMAKE_C_FLAGS/d' \
+            -i "${CMAKE_SOURCE}"/CMakeLists.txt
+}
+
+src_install() {
+    cmake_src_install
+
+    # The headers aren't installed automatically
+    insinto /usr/include
+    doins -r "${CMAKE_SOURCE}"/include/replaygain
+}
+
