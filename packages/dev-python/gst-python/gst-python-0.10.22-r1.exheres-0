@@ -17,12 +17,9 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         dev-libs/libxml2:2.0
+        gnome-bindings/pygobject:2[>=2.16.0]
         media-libs/gstreamer:0.10[>=0.10.32]
         media-plugins/gst-plugins-base:0.10[>=0.10.32]
-        || (
-            gnome-bindings/pygobject:2[>=2.16.0]
-            gnome-bindings/pygtk:2[>=2.6.3]
-        )
 "
 
 # Tests broken with Python 2.6 and current GObject API
