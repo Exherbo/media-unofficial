@@ -77,7 +77,6 @@ DEPENDENCIES="
         dev-util/desktop-file-utils
 "
 
-DEFAULT_SRC_CONFIGURE_PARAMS=( --with-help-dir=/usr/share/doc/${PNVR} )
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     flac
     mp3
