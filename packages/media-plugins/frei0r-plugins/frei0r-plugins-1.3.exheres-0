@@ -29,7 +29,7 @@ DEPENDENCIES="
 
 UPSTREAM_DOCUMENTATION="${HOMEPAGE}/codedoc/html"
 
-REMOTE_IDS="freshmeat:frei0r"
+REMOTE_IDS="freecode:frei0r"
 
 WORK="${WORKBASE}/${MY_PNV}"
 

@@ -16,7 +16,7 @@ PLATFORMS="~amd64 ~x86"
 MYOPTIONS="debug examples jpeg jpeg2000 lcms mng openexr opengl png sdl tiff X
 multibuild_c: ( 32 64 )"
 
-REMOTE_IDS+="freshmeat:devil"
+REMOTE_IDS+="freecode:devil"
 
 UPSTREAM_DOCUMENTATION="
 $HOMEPAGE/docs/DevIL%20Manual.pdf            [[ lang = en description = [ DevIL Manual ] ]]

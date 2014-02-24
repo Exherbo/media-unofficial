@@ -9,7 +9,7 @@ LICENCES="LGPL-2.1"
 SLOT="0"
 
 BUGS_TO="marv@exherbo.org"
-REMOTE_IDS="freshmeat:libtiger"
+REMOTE_IDS="freecode:libtiger"
 
 UPSTREAM_CHANGELOG="http://git.xiph.org/?p=users/oggk/tiger.git;a=blob;f=ChangeLog;hb=HEAD"
 

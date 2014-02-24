@@ -15,7 +15,7 @@ SUMMARY="Blender is the free open source 3D content creation suite"
 HOMEPAGE="http://blender.org"
 DOWNLOADS="http://download.blender.org/source/${PNV}.tar.gz"
 
-REMOTE_IDS="freshmeat:${PN}"
+REMOTE_IDS="freecode:${PN}"
 
 LICENCES="GPL-2"
 SLOT="0"

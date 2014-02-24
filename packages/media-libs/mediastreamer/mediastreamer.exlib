@@ -17,7 +17,7 @@ HOMEPAGE="http://www.linphone.org/eng/documentation/dev/${PN}$(ever major)"
 DOWNLOADS="mirror://savannah/linphone/${PN}/${PNV}.tar.gz"
 
 BUGS_TO="urkud@ya.ru"
-REMOTE_IDS="freshmeat:${PN}"
+REMOTE_IDS="freecode:${PN}"
 
 UPSTREAM_DOCUMENTATION="http://download.savannah.gnu.org/releases-noredirect/linphone/${PN}/doc/modules.html [[ lang = en ]]"
 

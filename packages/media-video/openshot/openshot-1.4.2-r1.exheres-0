@@ -36,7 +36,7 @@ DEPENDENCIES="
         media-gfx/inkscape        [[ description = [ For advanced edition of titles  ] ]]
 "
 
-REMOTE_IDS="freshmeat:${PN}-video-editor sourceforge:${PN}video"
+REMOTE_IDS="freecode:${PN}-video-editor sourceforge:${PN}video"
 
 src_prepare() {
     edo sed -i -e "s:lib/:${LIBDIR}/:" setup.py

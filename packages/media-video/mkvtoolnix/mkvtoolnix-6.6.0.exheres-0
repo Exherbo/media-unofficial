@@ -5,7 +5,7 @@ SUMMARY="MKVToolnix is a set of tools to create, alter and inspect Matroska file
 HOMEPAGE="http://www.bunkus.org/videotools/${PN}"
 DOWNLOADS="${HOMEPAGE}/sources/${PNV}.tar.xz"
 
-REMOTE_IDS="freshmeat:${PN}"
+REMOTE_IDS="freecode:${PN}"
 
 BUGS_TO="michael@obberon.com"
 
