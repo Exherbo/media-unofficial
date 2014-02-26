@@ -19,10 +19,7 @@ MYOPTIONS="flac qt4 wxwidgets"
 DEPENDENCIES="
     build:
         app-arch/xz
-        || (
-            dev-lang/ruby:*[>=2.0.0]
-            dev-ruby/rake
-        ) [[ note = [ rake is included in the ruby 2.0.0 and newer package ] ]]
+        dev-lang/ruby:*[>=2.0.0]
         dev-util/pkg-config[>=0.9.0]
         sys-devel/gettext
         sys-devel/gcc:*[>=4.6]
