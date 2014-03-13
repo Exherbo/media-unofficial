@@ -5,7 +5,9 @@ require easy-multibuild
 
 SUMMARY="A free implementation of OpenAL's ALUT standard"
 HOMEPAGE="http://connect.creativelabs.com/openal"
-DOWNLOADS="${HOMEPAGE}/Downloads/ALUT/${PNV}.tar.gz"
+# The homepage seems to be down for quite a while, so we mirror the tarball
+#DOWNLOADS="${HOMEPAGE}/Downloads/ALUT/${PNV}.tar.gz"
+DOWNLOADS="http://dev.exherbo.org/distfiles/${PNV}.tar.gz"
 
 LICENCES="LGPL-2"
 SLOT="0"
