@@ -27,12 +27,12 @@ UPSTREAM_CHANGELOG="${HOMEPAGE}/wiki/History"
 UPSTREAM_DOCUMENTATION="${HOMEPAGE}/wiki/UserManual"
 
 DEPENDENCIES="
-    media-libs/SDL
+    media-libs/SDL:0
     media-libs/SDL_image
     media-libs/SDL_ttf
     media-libs/freetype:2
 "
 
-WORK="${WORKBASE}/${PN}"
+WORK=${WORKBASE}/${PN}
 DEFAULT_SRC_INSTALL_PARAMS=( prefix="/usr" )
 
