@@ -27,7 +27,7 @@ DEPENDENCIES="
         dev-libs/openssl
         media-libs/ilmbase
         media-libs/jpeg
-        media-libs/libpng
+        media-libs/libpng:=
         media-libs/libwebp
         media-libs/openexr
         media-libs/tiff

@@ -24,7 +24,7 @@ DEPENDENCIES="
         doc? ( app-doc/doxygen )
     build+run:
         dev-libs/glib:2
-        media-libs/libpng
+        media-libs/libpng:=
         sys-libs/zlib
 "
 

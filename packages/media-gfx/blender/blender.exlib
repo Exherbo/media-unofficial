@@ -43,7 +43,7 @@ DEPENDENCIES="
         media-libs/glew
         media-libs/ilmbase
         media-libs/jpeg
-        media-libs/libpng
+        media-libs/libpng:=
         media-libs/openexr
         media-libs/tiff
         sys-libs/zlib
