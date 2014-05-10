@@ -2,7 +2,7 @@
 # Copyright 2013 Thomas Witt
 # Distributed under the terms of the GNU General Public License v2
 
-require distutils [ python_dep=2.6 ] googlecode [ suffix=tar.gz ]
+require setup-py [ import=distutils blacklist=3 has_bin=true multibuild=false ]
 
 SUMMARY="GTK+-based audio player written in Python, using the Mutagen tagging library"
 DESCRIPTION="Quod Libet is a GTK+-based audio player written in Python, using
@@ -21,7 +21,13 @@ isn't connected to an audio player. If you're perfectly happy with your favorite
 player and just want something that can handle tagging, Ex Falso is for you.
 "
 
-DOWNLOADS+=" plugins? ( https://bitbucket.org/lazka/${PN}-files/raw/default/releases/${PN}-plugins-${PV}.tar.gz )"
+HOMEPAGE="https://code.google.com/p/${PN}/"
+
+URL_BASE="https://bitbucket.org/lazka/${PN}-files/raw/default/releases"
+DOWNLOADS="
+    ${URL_BASE}/${PNV}.tar.gz
+    plugins? ( ${URL_BASE}/${PN}-plugins-${PV}.tar.gz )
+"
 
 UPSTREAM_CHANGELOG="https://quodlibet.readthedocs.org/en/latest/changelog.html"
 
@@ -66,8 +72,12 @@ DEPENDENCIES="
             #dev-python/cddb-py [[ description = [ plugin: CDDB ] ]]
             # some-category/kakasi [[ description = [ plugin: kakasi ] ]]
 
+src_test() {
+    ${PYTHON} setup.py test
+}
+
 src_install() {
-    distutils_src_install
+    setup-py_src_install
 
     if option plugins ; then
         edo cd "${WORKBASE}/quodlibet-plugins-${PV}"
