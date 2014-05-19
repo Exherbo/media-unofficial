@@ -1,5 +1,5 @@
 # Copryight 2010 Adriaan Leijnse <adriaan@leijnse.net>
-# Copyright 2009 Ali Polatel <alip@exherbo.org>
+# Copyright 2009, 2014 Ali Polatel <alip@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require sourceforge [ suffix=tar.gz ]
