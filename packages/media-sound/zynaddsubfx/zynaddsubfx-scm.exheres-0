@@ -1,10 +1,11 @@
 # Copyright 2010 Adriaan Leijnse <adriaan@leijnse.net>
-# Copyright 2012 Ali Polatel <alip@exherbo.org>
+# Copyright 2012, 2014 Ali Polatel <alip@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 # Based in part on zynaddsubfx-99999999.ebuild from the gentoo pro-audio overlay.
 
-ZYN_REPOROOT="git://${PN}.git.sourceforge.net/gitroot/${PN}"
-SCM_REPOSITORY=${ZYN_REPOROOT}/${PN}
+ZYN_REPOROOT="git://git.code.sf.net/p/zynaddsubfx"
+SCM_REPOSITORY=${ZYN_REPOROOT}/code
+SCM_CHECKOUT_TO=${PN}
 SCM_instruments_REPOSITORY=${ZYN_REPOROOT}/instruments
 SCM_instruments_CHECKOUT_TO=${PN}
 SCM_EXTERNAL_REFS="instruments:instruments"
@@ -22,16 +23,20 @@ PLATFORMS="~amd64"
 # leaving out oss and portaudio options, feel free to patch.
 MYOPTIONS="alsa jack dssi lash
     banks [[ description = [ install instrument banks and examples ] ]]
+    osc [[ description = [ enable Open Sound Control and Non-Session-Manager support ] ]]
+    ntk [[ description = [ use ntk as the GUI Module, fltk is used unconditionally for external programs (controller & spliter) ] ]]
 "
 
 DEPENDENCIES="
     build+run:
-        x11-libs/fltk[>=1.1.2]
         sci-libs/fftw:0
         dev-libs/Mini-XML
-        jack? ( media-sound/jack-audio-connection-kit )
+        x11-libs/fltk[>=1.1.2]
         dssi? ( media-libs/dssi )
+        jack? ( media-sound/jack-audio-connection-kit )
         lash? ( media-sound/lash )
+        osc?  ( media-libs/liblo )
+        ntk?  ( media-libs/ntk )
 "
 
 BUGS_TO="alip@exherbo.org"
@@ -42,11 +47,12 @@ src_configure() {
     ecmake \
         -DPaEnable:BOOL=FALSE \
         -DOssEnable:BOOL=FALSE \
-        -DLibloEnable:BOOL=FALSE \
+        -DGuiModule:STRING=$(option ntk && echo 'ntk' || echo 'fltk') \
         $(cmake_option alsa 'AlsaEnable') \
         $(cmake_option jack 'JackEnable') \
         $(cmake_option dssi 'DssiEnable') \
-        $(cmake_option lash 'LashEnable')
+        $(cmake_option lash 'LashEnable') \
+        $(cmake_option osc  'LibloEnable')
 }
 
 src_compile() {
