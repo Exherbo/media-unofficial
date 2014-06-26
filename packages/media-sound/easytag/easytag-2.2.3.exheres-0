@@ -9,43 +9,43 @@ SUMMARY="GTK+ utility for editing MP2, MP3, MP4, FLAC, Ogg and other media tags"
 DESCRIPTION="
 Features of EasyTAG:
 * View, edit, write tags of MP3, MP2 files (ID3 tag with pictures), FLAC files
-(FLAC Vorbis tag), Ogg Vorbis and Speex files (Ogg Vorbis tag), MP4/AAC
-(MP4/AAC tag), MusePack, Monkey's Audio files and WavPack files (APE tag),
-* Can edit more tag fields : Title, Artist, Album, Disc Album, Year, Track
-Number, Genre, Comment, Composer, Original Artist/Performer, Copyright, URL,
-Encoder name and attached Picture,
-* Auto tagging: parse filename and directory to complete automatically the
-fields (using masks),
-* Ability to rename files and directories from the tag (using masks) or by loading a text file,
-* Process selected files of the selected directory,
-* Ability to browse subdirectories,
-* Recursion for tagging, removing, renaming, saving...,
-* Can set a field (artist, title,...) to all other files,
-* Read file header informations (bitrate, time, ...) and display them,
-* Auto completion of the date if a partial is entered,
-* Undo and redo last changes,
-* Ability to process fields of tag and file name (convert letters into uppercase, downcase, ...),
-* Ability to open a directory or a file with an external program,
-* CDDB support using Freedb.org and Gnudb.org servers (manual and automatic search),
-* A tree based browser or a view by Artist & Album,
-* A list to select files,
-* A playlist generator window,
-* A file searching window,
-* Simple and explicit interface!,
-* French, German, Russian, Dutch, Hungarian, Swedish, Italian, Japanese,
-Ukrainian, Czech, Spanish, Polish, Romanian, Danish, Greek, Brazilian
-Portuguese and Chinese translation languages,
-* Written in C and uses GTK+ 2 or GTK+ 3 for the GUI,
-* Package available for GNU/Linux and Windows.
+(FLAC Vorbis tag), Ogg Opus files (Ogg Vorbis tag), Ogg Speex (Ogg Vorbis tag),
+Ogg Vorbis files (Ogg Vorbis tag), MP4/AAC (MP4/AAC tag), MusePack, Monkey's
+Audio files and WavPack files (APE tag)
+* Can edit more tag fields: title, artist, album, disc number, year, track number,
+comment, composer, original artist/performer, copyright, URL, encoder name and
+attached picture
+* Auto tagging: filename and directory to automatically complete the fields (masks)
+* Ability to rename files and directories from the tag (using masks) or by loading a text file
+* Process selected files of the selected directory
+* Ability to browse subdirectories
+* Recursion for tagging, removing, renaming, saving...
+* Can set a field (artist, title,...) to all other files
+* Read and display file header information (bitrate, time,...)
+* Auto completion of the date if a partial one is entered
+* Undo and redo last changes
+* Ability to process fields of tag and file name (convert letters into uppercase, lowercase,...
+* Ability to open a directory or a file with an external program
+* CDDB support using Freedb.org and Gnudb.org servers (manual and automatic search)
+* A tree based browser or a view by artist & album
+* A list to select files
+* A playlist generator window
+* A file searching window
+* Straightforward and explicit interface
+* Translations into many languages
+* Written in C and using GTK+ for the GUI
+* Packages available for Linux and Windows
 "
 
 BUGS_TO="markus@unixforces.net"
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="flac gtk3 mp3 speex vorbis
+MYOPTIONS="flac gtk3 mp3 vorbis
     mp4 [[ description = [ Adds support to tag mp4 files ] ]]
+    opus [[ description = [ Adds support for opus files ] ]]
     wavpack [[ description = [ Add support for wavpack ] ]]
+    speex [[ requires = vorbis ]]
 
     ( linguas:
         bg ca cs da de el es fr he hu it ja lt nl pl pt_BR ro ru sl sr sr@latin sv tr uk zh_CN zh_TW
@@ -64,11 +64,13 @@ DEPENDENCIES="
     build+run:
         dev-libs/glib:2[>=2.30.0]
         flac? ( media-libs/flac[>=1.1.4] )
-        gtk3? ( x11-libs/gtk+:3[>=3.2.1] )
+        gtk3? ( x11-libs/gtk+:3[>=3.4] )
         !gtk3? ( x11-libs/gtk+:2[>=2.24.7] )
         mp3? ( media-libs/id3lib[>=3.8.0]
                media-libs/libid3tag )
-        mp4? ( media-libs/taglib[>=1.6.0] )
+        mp4? ( media-libs/taglib[>=1.9.1] )
+        opus? ( media-libs/opus[>=1.0]
+                media-libs/opusfile )
         speex? ( media-libs/speex )
         vorbis? ( media-libs/libogg[>=1.0]
                   media-libs/libvorbis[>=1.0.1] )
@@ -82,6 +84,7 @@ DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     mp3
     'mp3 id3v23'
     mp4
+    opus
     speex
     'vorbis ogg'
     wavpack
