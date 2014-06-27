@@ -13,7 +13,7 @@ RESTRICT="test"
 
 SUMMARY="Blender is the free open source 3D content creation suite"
 HOMEPAGE="http://blender.org"
-DOWNLOADS="http://download.blender.org/source/${PNV}.tar.gz"
+DOWNLOADS="http://download.blender.org/source/${PN}-v${PV}.tar.gz"
 
 REMOTE_IDS="freecode:${PN}"
 
@@ -66,6 +66,8 @@ DEPENDENCIES="
     suggestion:
         dev-python/requests[python_abis:*(-)?] [[ description = [ Support to upload models to sketchfab ] ]]
 "
+
+CMAKE_SOURCE="${WORKBASE}"/${PN}-v${PV}
 
 blender_src_prepare() {
     if option openmp; then
