@@ -3,7 +3,7 @@
 # Copyright 2014 Johannes Nixdorf <mixi@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake [ cmake_minimum_version=2.8 api=2 ] freedesktop-desktop \
+require cmake [ api=2 ] freedesktop-desktop \
         python [ blacklist="2 3.1 3.2" multibuild=false ] flag-o-matic
 
 export_exlib_phases src_prepare src_configure src_install
@@ -13,9 +13,7 @@ RESTRICT="test"
 
 SUMMARY="Blender is the free open source 3D content creation suite"
 HOMEPAGE="http://blender.org"
-DOWNLOADS="http://download.blender.org/source/${PN}-v${PV}.tar.gz"
-
-REMOTE_IDS="freecode:${PN}"
+DOWNLOADS="http://download.blender.org/source/${PNV}.tar.gz"
 
 LICENCES="GPL-2"
 SLOT="0"
@@ -66,8 +64,6 @@ DEPENDENCIES="
     suggestion:
         dev-python/requests[python_abis:*(-)?] [[ description = [ Support to upload models to sketchfab ] ]]
 "
-
-CMAKE_SOURCE="${WORKBASE}"/${PN}-v${PV}
 
 blender_src_prepare() {
     if option openmp; then
