@@ -4,13 +4,4 @@
 require cmus
 
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="audioscrobbler [[ description = [ Apply Audioscrobbler/Last.fm patch from http://www.hci-matters.com/blog/2008/05/06/c-music-player-audioscrobblerlastfm-patch/ ] ]]"
-
-src_prepare() {
-    default
-
-    if option "audioscrobbler" ; then
-        expatch "${FILES}/cmus_audioscrobbler.patch"
-    fi
-}
 
