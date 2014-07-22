@@ -1,14 +1,14 @@
 # Copyright 2009 Gaute Hope <eg@gaute.vetsj.com>
 # Distributed under the terms of the GNU General Public License v2
 
-MY_PNV=${PN}-v${PV}
-require sourceforge
+require github [ tag=v${PV} ]
 
 SUMMARY="A console audio player"
 DESCRIPTION="
 cmus is a small and fast text mode music player for Linux and many other UNIX
 like operating systems.
 "
+HOMEPAGE="https://cmus.github.io/"
 
 LICENCES="GPL-2"
 SLOT="0"
@@ -45,8 +45,6 @@ DEPENDENCIES="
         vorbis?  ( media-libs/libvorbis )
         wavpack? ( media-sound/wavpack )
 "
-
-WORK="${WORKBASE}"/${MY_PNV}
 
 SRC_CONFIGURE_OPTIONS=(
     aac alsa ao arts ffmpeg flac "mp3 mad" mikmod modplug mp4 mpc

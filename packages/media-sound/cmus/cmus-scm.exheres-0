@@ -3,11 +3,6 @@
 
 require cmus
 
-DOWNLOADS=""
-
-SCM_REPOSITORY="git://repo.or.cz/cmus.git"
-require scm-git
-
 PLATFORMS="~amd64 ~x86"
 MYOPTIONS="audioscrobbler [[ description = [ Apply Audioscrobbler/Last.fm patch from http://www.hci-matters.com/blog/2008/05/06/c-music-player-audioscrobblerlastfm-patch/ ] ]]"
 
