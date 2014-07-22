@@ -51,13 +51,8 @@ SRC_CONFIGURE_OPTIONS=(
     oss pulse tremor vorbis wav wavpack
 )
 
-src_prepare() {
+pkg_setup() {
     export LD="${CC}"
-
-    # This patch is only needed if ffmpeg2 is installed
-    if optionq "ffmpeg" && has_version --root "media/ffmpeg[>=2.0.0]"; then
-        expatch "${FILES}/${PN}-2.3.4-use-ffmpeg2.patch"
-    fi
 }
 
 option_yesno() {
