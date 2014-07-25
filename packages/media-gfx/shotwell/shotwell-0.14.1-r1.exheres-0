@@ -11,7 +11,7 @@ organize them in various ways, view them in full-window or fullscreen mode, and 
 with others.
 "
 HOMEPAGE="http://yorba.org/${PN}"
-DOWNLOADS="http://yorba.org/download/${PN}/$(ever range 1-2)/${PNV}.tar.xz"
+DOWNLOADS="mirror://gnome/sources/${PN}/$(ever range 1-2)/${PNV}.tar.xz"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
