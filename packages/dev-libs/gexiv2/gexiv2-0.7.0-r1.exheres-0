@@ -3,15 +3,13 @@
 
 require python
 
-MY_PNV="lib${PNV}"
-
 SUMMARY="GObject wrapper for Exiv2"
 DESCRIPTION="
 gexiv2 is a GObject-based wrapper around the Exiv2 library. It makes the basic features of Exiv2
 available to GNOME applications.
 "
 HOMEPAGE="http://redmine.yorba.org/projects/${PN}/wiki"
-DOWNLOADS="http://yorba.org/download/${PN}/$(ever range 1-2)/${MY_PNV}.tar.xz"
+DOWNLOADS="mirror://gnome/sources/${PN}/$(ever range 1-2)/${PNV}.tar.xz"
 
 LICENCES="GPL-2"
 SLOT="0"
@@ -28,8 +26,6 @@ DEPENDENCIES="
             dev-lang/python:=[~>2.0] [[ note = [ fix this better when we have multipy ] ]]
         )
 "
-
-WORK=${WORKBASE}/${MY_PNV}
 
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( 'gobject-introspection introspection' )
 DEFAULT_SRC_INSTALL_PARAMS=( "LIB=${LIBDIR}" )
