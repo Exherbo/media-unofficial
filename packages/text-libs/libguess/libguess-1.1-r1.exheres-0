@@ -2,9 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 
 SUMMARY="A high-speed character set detection library."
+
 HOMEPAGE="http://www.atheme.org/projects/${PN}.html"
+# TODO: check if the tarball becomes available again
+#DOWNLOADS="http://distfiles.atheme.org/${PNV}.tar.bz2"
+DOWNLOADS="http://dev.exherbo.org/distfiles/${PN}/${PNV}.tar.bz2"
+
 LICENCES="BSD-3"
-DOWNLOADS="http://distfiles.atheme.org/${PNV}.tar.bz2"
 SLOT="0"
 PLATFORMS="~x86 ~amd64"
 
