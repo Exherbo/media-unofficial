@@ -1,0 +1,58 @@
+# Copyright 2011 Pierre Lejeune <superheron@gmail.com>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake [ api=2 ]
+
+SUMMARY="Free video effect plugins"
+DESCRIPTION="
+Frei0r is a minimalistic plugin API for video effects.
+
+The main emphasis is on simplicity for an API that will round up the most common video effects into
+simple filters, sources and mixers that can be controlled by parameters.
+"
+HOMEPAGE="http://frei0r.dyne.org"
+DOWNLOADS="http://dev.exherbo.org/~tgurr/distfiles/${PN}/${PNV}.tar.gz"
+
+REMOTE_IDS="freecode:frei0r"
+
+UPSTREAM_DOCUMENTATION="${HOMEPAGE}/codedoc/html"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="
+    facebl0r [[ description = [ Activates the OpenCV-based facebl0r effect ] ]]
+"
+
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+    build+run:
+        x11-libs/cairo[>=1.0.0]
+        facebl0r? ( media-libs/opencv[>=1.0.0] )
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS=( -DWITHOUT_GAVL:BOOL=TRUE )
+
+src_configure() {
+    local cmakeargs+=(
+        -DWITHOUT_OPENCV:BOOL=$(option facebl0r && echo FALSE || echo TRUE)
+    )
+
+    ecmake "${cmakeargs[@]}" "${CMAKE_SRC_CONFIGURE_PARAMS[@]}"
+}
+
+src_install() {
+    cmake_src_install
+
+    [[ -d ${IMAGE}/usr/${LIBDIR} ]] || dodir /usr/${LIBDIR}
+    if [[ ${LIBDIR} != lib ]] ; then
+        edo sed \
+            -e "s:/lib:/${LIBDIR}:g" \
+            -i "${IMAGE}"/usr/lib/pkgconfig/frei0r.pc
+
+        edo mv "${IMAGE}"/usr/lib/* "${IMAGE}"/usr/${LIBDIR}
+        edo rmdir "${IMAGE}"/usr/lib
+    fi
+}
+
