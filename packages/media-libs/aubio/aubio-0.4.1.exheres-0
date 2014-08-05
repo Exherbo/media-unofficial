@@ -1,0 +1,103 @@
+# Copyright 2009 Ali Polatel <alip@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require setup-py [ import=distutils blacklist=3 with_opt=true multibuild=false ] waf
+
+SUMMARY="Library for audio labelling"
+DESCRIPTION="
+aubio is a library for audio labelling. Its features include segmenting a sound
+file before each of its attacks, performing pitch detection, tapping the beat
+and producing midi streams from live audio. The name aubio comes from 'audio'
+with a typo: several transcription errors are likely to be found in the results
+too.
+"
+HOMEPAGE="http://aubio.piem.org"
+DOWNLOADS="http://aubio.piem.org/pub/${PNV}.tar.bz2"
+
+BUGS_TO="alip@exherbo.org"
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="doc ffmpeg jack libav
+    ( ffmpeg libav ) [[ number-selected = at-most-one ]]"
+
+DEPENDENCIES="
+    build:
+        app-text/txt2man
+        virtual/pkg-config
+        doc? ( app-doc/doxygen )
+    build+run:
+        sci-libs/fftw[>=3]
+        media-libs/libsndfile[>=1.0.4]
+        media-libs/libsamplerate[>=0.0.15]
+        dev-lang/python:=
+        ffmpeg? ( media/ffmpeg[>=2.0] )
+        jack? ( media-sound/jack-audio-connection-kit )
+        libav? ( media/libav[>=9] )
+        python? ( dev-python/numpy[python_abis:*(-)?] )
+"
+
+WAF_SRC_COMPILE_PARAMS=( --notests )
+WAF_SRC_TEST_PARAMS=( --alltests )
+
+src_prepare() {
+    default
+
+    # the build system doesn't respect libdir for aubio target
+    edo sed -e "s:\/lib:\/${LIBDIR}:" -i src/wscript_build
+    option doc || \
+        edo sed -e "s/find_program('doxygen'/find_program('disable-doxy'/" \
+                -i wscript
+}
+
+src_configure() {
+    ewaf --jobs=1 configure \
+        --prefix=/usr/ \
+        --bindir=/usr/bin/ \
+        --libdir=/usr/${LIBDIR}/ \
+        --datadir=/usr/share/ \
+        --docdir=/usr/share/doc/${PNVR}/html/ \
+        --enable-double \
+        --enable-fftw3f \
+        $( (option ffmpeg || option libav) && echo --enable-avcodec || echo --disable-avcodec) \
+        $(option_enable jack)
+
+    if option python ; then
+        pushd python
+        setup-py_src_configure
+        popd
+    fi
+}
+
+src_compile() {
+    waf_src_compile
+
+    if option python ; then
+        edo pushd python
+        setup-py_src_compile
+        edo popd
+    fi
+}
+
+src_test() {
+    ewaf --jobs=${EXJOBS:-1} --alltests
+
+    # Python tests segfault (0.4.1)
+    #if option python ; then
+        #edo pushd python/tests
+        #export PYTHONPATH=$(ls -d "${WORK}"/python/build/lib.*/)
+        #edo ${PYTHON} -B run_all_tests
+        #edo popd
+    #fi
+}
+
+src_install() {
+    waf_src_install
+
+    if option python ; then
+        edo pushd python
+        setup-py_src_install
+        edo popd
+    fi
+}
+
