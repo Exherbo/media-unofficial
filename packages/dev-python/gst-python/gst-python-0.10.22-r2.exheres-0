@@ -3,7 +3,7 @@
 # Based in part upon 'gst-python-0.10.13.ebuild' from Gentoo, which is:
 #     Copyright 1999-2008 Gentoo Foundation
 
-require python [ python_dep=2.4 ]
+require python [ blacklist=3 multibuild=false ]
 
 SUMMARY="GStreamer Python bindings"
 HOMEPAGE="http://gstreamer.freedesktop.org/"
@@ -24,4 +24,9 @@ DEPENDENCIES="
 
 # Tests broken with Python 2.6 and current GObject API
 RESTRICT="test"
+
+src_install() {
+    default
+    python_bytecompile
+}
 
