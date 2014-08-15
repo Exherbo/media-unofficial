@@ -3,6 +3,8 @@
 
 require github [ tag=v${PV} ]
 
+export_exlib_phases pkg_setup src_configure
+
 SUMMARY="A console audio player"
 DESCRIPTION="
 cmus is a small and fast text mode music player for Linux and many other UNIX
@@ -67,7 +69,7 @@ SRC_CONFIGURE_OPTIONS=(
     "mp3 mad" mp4 "musepack mpc" opus oss "pulseaudio pulse" vorbis wav wavpack
 )
 
-pkg_setup() {
+cmus_pkg_setup() {
     export LD="${CC}"
 }
 
@@ -76,7 +78,7 @@ option_yesno() {
     echo "CONFIG_${option^^}=$(optionq ${1} && echo y || echo n)"
 }
 
-src_configure() {
+cmus_src_configure() {
     local s
     local configure_arguments=(
         prefix=/usr

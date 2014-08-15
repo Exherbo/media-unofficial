@@ -1,6 +1,8 @@
 # Copyright 2012 Ivan Dives
 # Distributed under the terms of the GNU General Public License v2
 
+export_exlib_phases src_configure
+
 SUMMARY="Skins and Plugins for the Audacious music player"
 HOMEPAGE="http://www.audacious-media-player.org/"
 DOWNLOADS="http://distfiles.audacious-media-player.org/${PNV}.tar.bz2"
@@ -112,7 +114,7 @@ DEPENDENCIES="
         gnomeshortcuts? ( gnome-desktop/gnome-settings-daemon:3.0 )
 "
 
-src_configure() {
+audacious-plugins_src_configure() {
     local myopts=(
         # Output Plugins
         $(option_enable oss oss4)                 # Open Sound System

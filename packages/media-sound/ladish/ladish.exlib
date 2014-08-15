@@ -3,6 +3,8 @@
 
 require waf
 
+export_exlib_phases src_configure
+
 SUMMARY="LADI Session Handler is a session management system for JACK applications
 on GNU/Linux."
 DESCRIPTION="
@@ -28,7 +30,7 @@ DEPENDENCIES="
 
 BUGS_TO="adriaan@leijnse.net"
 
-src_configure() {
+ladish_src_configure() {
     # waf configure from ladish doesn't support waf.exlib arguments
     ewaf configure --prefix=/usr/ --libdir=/usr/$LIBDIR
 }

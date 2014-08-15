@@ -3,6 +3,8 @@
 
 require googlecode
 
+export_exlib_phases src_prepare
+
 SUMMARY="Secure audiodisc ripper"
 DESCRIPTION="
 Through multiple times ripping the same track and correcting any differences 
@@ -38,7 +40,7 @@ DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/sydbox-violation.patch )
 DEFAULT_SRC_CONFIGURE_PARAMS=( --enable-cli )
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( 'gtk gtk2' )
 
-src_prepare() {
+rubyripper_src_prepare() {
     default
 
     for lang in ${LANGS}; do
