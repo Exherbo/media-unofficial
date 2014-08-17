@@ -7,9 +7,11 @@ ZYN_REPOROOT="git://git.code.sf.net/p/zynaddsubfx"
 SCM_REPOSITORY=${ZYN_REPOROOT}/code
 SCM_CHECKOUT_TO=${PN}
 SCM_instruments_REPOSITORY=${ZYN_REPOROOT}/instruments
-SCM_instruments_CHECKOUT_TO=${PN}
-SCM_EXTERNAL_REFS="instruments:instruments"
-SCM_SECONDARY_REPOSITORIES="instruments"
+SCM_instruments_CHECKOUT_TO=${PN}/instruments
+SCM_rtosc_REPOSITORY="git://github.com/fundamental/rtosc.git"
+SCM_rtosc_CHECKOUT_TO=${PN}/rtosc
+SCM_EXTERNAL_REFS="instruments:instruments rtosc:rtosc"
+SCM_SECONDARY_REPOSITORIES="instruments rtosc"
 require scm-git cmake [ api=2 ]
 
 SUMMARY="ZynAddSubFX is a real time software audio synthesizer."
@@ -58,7 +60,7 @@ src_configure() {
 src_compile() {
     emake
 
-    edo cd "${WORKBASE}"/${PNVR}
+    edo cd "${WORKBASE}"/${PNV}
     for dir in ExternalPrograms/{Controller,Spliter}; do
         emake -C "$dir"
     done
@@ -67,7 +69,7 @@ src_compile() {
 src_install() {
     default
 
-    edo cd "${WORKBASE}"/${PNVR}
+    edo cd "${WORKBASE}"/${PNV}
     dobin ExternalPrograms/Spliter/spliter
     dobin ExternalPrograms/Controller/controller
 
