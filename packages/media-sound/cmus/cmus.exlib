@@ -12,43 +12,63 @@ HOMEPAGE="https://cmus.github.io/"
 
 LICENCES="GPL-2"
 SLOT="0"
-MYOPTIONS="aac alsa ao arts ffmpeg flac mikmod modplug mp4 mpc oss pulse tremor vorbis wav wavpack
-    modplug [[ description = [ Build with modplug support ] ]]
-    mp3     [[ description = [ Support mp3 decoding with mad ] ]]
-    mp4     [[ description = [ Support mp4 decoding ] ]]
-    mpc     [[ description = [ Support Musepack files decoding ] ]]
-    tremor  [[ description = [ Use Tremor for decoding OggVorbis files (on hardware with no FPU) ]
-    ]]
-    wavpack [[ description = [ Support wv decoding ] ]]
+MYOPTIONS="
+    aac           [[ description = [ Support AAC decoding ] ]]
+    alsa
+    ao
+    cue           [[ description = [ Support for CUE metadata files ] ]]
+    ffmpeg
+    flac          [[ description = [ Support FLAC decoding ] ]]
+    jack
+    libav         [[ requires    = ffmpeg ]]
+    libsamplerate [[ description = [ Use libsamplerate to resample to JACK's rate ]
+                     requires    = jack ]]
+    mikmod
+    modplug       [[ description = [ Build with modplug support (.mod, .x3m) ] ]]
+    mp3           [[ description = [ Support mp3 decoding with mad ] ]]
+    mp4           [[ description = [ Support mp4 decoding ] ]]
+    musepack      [[ description = [ Support Musepack files decoding ] ]]
+    opus          [[ description = [ Support Opus decoding with libopus ] ]]
+    oss
+    pulseaudio
+    vorbis        [[ description = [ Support Ogg/Vorbis decoding ] ]]
+    wav           [[ description = [ Support WAV decoding ] ]]
+    wavpack       [[ description = [ Support WavPack decoding ] ]]
 "
 
 DEPENDENCIES="
     build+run:
         sys-libs/ncurses
 
-        aac?     ( media-libs/faad2 )
-        alsa?    ( sys-sound/alsa-lib )
-        ao?      ( media-libs/libao )
-        arts?    ( kde/kdemultimedia )
-        ffmpeg?  ( media/ffmpeg )
-        flac?    ( media-libs/flac )
-        mp3?     ( media-libs/libmad )
-        mikmod?  ( media-libs/mikmod )
-        modplug? ( media-libs/libmodplug )
+        aac?           ( media-libs/faad2 )
+        alsa?          ( sys-sound/alsa-lib[>=1.0.11] )
+        ao?            ( media-libs/libao )
+        cue?           ( media-libs/libcue[>=1.3] )
+        ffmpeg? (
+            !libav?    ( media/ffmpeg )
+            libav?     ( media/libav )
+        )
+        flac?          ( media-libs/flac )
+        jack?          ( media-sound/jack-audio-connection-kit )
+        libsamplerate? ( media-libs/libsamplerate )
+        mikmod?        ( media-libs/libmikmod )
+        modplug?       ( media-libs/libmodplug )
+        mp3?           ( media-libs/libmad )
         mp4? (
             media-libs/faad2
             media-libs/libmp4v2
         )
-        mpc?     ( media-libs/libmpcdec )
-        pulse?   ( media-sound/pulseaudio )
-        tremor?  ( media-libs/tremor )
-        vorbis?  ( media-libs/libvorbis )
-        wavpack? ( media-sound/wavpack )
+        musepack?      ( media-libs/libmpcdec )
+        opus?          ( media-libs/opus )
+        oss?           ( sys-sound/oss )
+        pulseaudio?    ( media-sound/pulseaudio )
+        vorbis?        ( media-libs/libvorbis )
+        wavpack?       ( media-sound/wavpack )
 "
 
 SRC_CONFIGURE_OPTIONS=(
-    aac alsa ao arts ffmpeg flac "mp3 mad" mikmod modplug mp4 mpc
-    oss pulse tremor vorbis wav wavpack
+    aac alsa ao cue ffmpeg flac jack "libsamplerate samplerate" mikmod modplug
+    "mp3 mad" mp4 "musepack mpc" opus oss "pulseaudio pulse" vorbis wav wavpack
 )
 
 pkg_setup() {
