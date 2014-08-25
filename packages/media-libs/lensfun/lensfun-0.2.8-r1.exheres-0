@@ -2,12 +2,9 @@
 # Copyright 2012 Timo Gurr <tgurr@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake [ api=2 ]
+require sourceforge cmake [ api=2 ]
 
 SUMMARY="A library for rectifying and simulating photographic lens distortions"
-
-HOMEPAGE="http://${PN}.berlios.de"
-DOWNLOADS="mirror://berlios/${PN}/${PNV}.tar.bz2"
 
 LICENCES="LGPL-3 CCPL-Attribution-ShareAlike-3.0"
 SLOT="0"
