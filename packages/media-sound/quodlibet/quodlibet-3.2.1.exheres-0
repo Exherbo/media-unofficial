@@ -22,21 +22,16 @@ player and just want something that can handle tagging, Ex Falso is for you.
 "
 
 HOMEPAGE="https://code.google.com/p/${PN}/"
-
-URL_BASE="https://bitbucket.org/lazka/${PN}-files/raw/default/releases"
-DOWNLOADS="
-    ${URL_BASE}/${PNV}.tar.gz
-    plugins? ( ${URL_BASE}/${PN}-plugins-${PV}.tar.gz )
-"
-
-UPSTREAM_CHANGELOG="https://quodlibet.readthedocs.org/en/latest/changelog.html"
+DOWNLOADS="https://bitbucket.org/lazka/${PN}-files/raw/default/releases/${PNV}.tar.gz"
+UPSTREAM_CHANGELOG="https://${PN}.readthedocs.org/en/latest/changelog.html"
+UPSTREAM_DOCUMENTATION="https://${PN}.readthedocs.org/en/latest/guide/index.html"
 
 BUGS_TO="pyromaniac@thwitt.de"
 
 LICENCES="GPL-2"
 PLATFORMS="~amd64"
 SLOT="0"
-MYOPTIONS="plugins [[ description = [ Installs the plugin pack. Some of these plugins suggest extra dependencies.  ] ]]"
+MYOPTIONS=""
 
 DEPENDENCIES="
     build:
@@ -60,37 +55,17 @@ DEPENDENCIES="
         dev-libs/keybinder[>=0.3.0] [[ description = [ Register global hotkeys ] ]]
         dev-python/feedparser [[ description = [ Support for audio feeds ] ]]
         media-libs/libgpod [[ description = [ Access the contents of an iPod ] ]]
-        sys-apps/udisks:0 [[ description = [ Device support ] ]]
-        plugins? (
-            dev-libs/pyinotify [[ description = [ Install a plugin to automatically update the library ] ]]
-            dev-python/python-musicbrainz2 [[ description = [ Install a plugin for MusicBrainz tagging ] ]]
-            media-plugins/gst-plugins-bad:1.0[gstreamer_plugins:chromaprint] [[ description = [ Install a plugin for audio fingerprinting ] ]]
-            dev-libs/zeitgeist:2.0 [[ description = [ Install the Zeitgeist (activity tracker) plugin ] ]]
-        )
+        sys-apps/udisks:2 [[ description = [ Device support ] ]]
+        dev-libs/pyinotify [[ description = [ Install a plugin to automatically update the library ] ]]
+        dev-python/python-musicbrainz2 [[ description = [ Install a plugin for MusicBrainz tagging ] ]]
+        media-plugins/gst-plugins-bad:1.0[gstreamer_plugins:chromaprint] [[ description = [ Install a plugin for audio fingerprinting ] ]]
+        dev-libs/zeitgeist:2.0 [[ description = [ Install the Zeitgeist (activity tracker) plugin ] ]]
 "
-            # TODO these should go to ::unwritten sometime
-            #dev-python/cddb-py [[ description = [ plugin: CDDB ] ]]
-            # some-category/kakasi [[ description = [ plugin: kakasi ] ]]
+        # TODO these should go to ::unwritten sometime
+        #dev-python/cddb-py [[ description = [ plugin: CDDB ] ]]
+        # some-category/kakasi [[ description = [ plugin: kakasi ] ]]
 
 src_test() {
     ${PYTHON} setup.py test
-}
-
-src_install() {
-    setup-py_src_install
-
-    if option plugins ; then
-        edo cd "${WORKBASE}/quodlibet-plugins-${PV}"
-        insinto /usr/share/${PN}/plugins
-        doins -r editing events gstreamer playorder songsmenu
-        newdoc README README.plugins
-    fi
-}
-
-pkg_postinst() {
-    if option plugins ; then
-        elog "The plugins are in /usr/share/${PN}/plugins. To use them, link"
-        elog "~/.quodlibet/plugins to that directory"
-    fi
 }
 
