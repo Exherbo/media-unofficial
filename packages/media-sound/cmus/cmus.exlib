@@ -20,7 +20,6 @@ MYOPTIONS="
     ffmpeg
     flac          [[ description = [ Support FLAC decoding ] ]]
     jack
-    libav         [[ requires    = ffmpeg ]]
     libsamplerate [[ description = [ Use libsamplerate to resample to JACK's rate ]
                      requires    = jack ]]
     mikmod
@@ -44,10 +43,7 @@ DEPENDENCIES="
         alsa?          ( sys-sound/alsa-lib[>=1.0.11] )
         ao?            ( media-libs/libao )
         cue?           ( media-libs/libcue[>=1.3] )
-        ffmpeg? (
-            !libav?    ( media/ffmpeg )
-            libav?     ( media/libav )
-        )
+        ffmpeg?        ( media/ffmpeg )
         flac?          ( media-libs/flac )
         jack?          ( media-sound/jack-audio-connection-kit )
         libsamplerate? ( media-libs/libsamplerate )
