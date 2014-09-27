@@ -42,10 +42,10 @@ LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
 MYOPTIONS="flac gtk3 mp3 vorbis
-    mp4 [[ description = [ Adds support to tag mp4 files ] ]]
-    opus [[ description = [ Adds support for opus files ] ]]
+    mp4     [[ description = [ Adds support to tag mp4 files ] ]]
+    opus    [[ description = [ Adds support for opus files ] ]]
     wavpack [[ description = [ Add support for wavpack ] ]]
-    speex [[ requires = vorbis ]]
+    speex   [[ requires = vorbis ]]
 
     ( linguas:
         bg ca cs da de el es fr he hu it ja lt nl pl pt_BR ro ru sl sr sr@latin sv tr uk zh_CN zh_TW
@@ -56,9 +56,9 @@ DEPENDENCIES="
     build:
         app-text/docbook-xml-dtd:4.4
         app-text/docbook-xsl-stylesheets
-        dev-libs/libxslt   [[ note = [ xsltproc for man page generation ] ]]
+        dev-libs/libxslt [[ note = [ xsltproc for man page generation ] ]]
         dev-util/intltool[>=0.50.0]
-        gnome-desktop/yelp-tools    [[ note = [ build help ] ]]
+        gnome-desktop/yelp-tools [[ note = [ build help ] ]]
         sys-devel/gettext
         virtual/pkg-config[>=0.24]
     build+run:
