@@ -17,6 +17,7 @@ MYOPTIONS="
     freetype [[ description = [ Support for rendering text on image buffers ] ]]
     gif
     jpeg2000
+    raw      [[ description = [ Enable reading RAW image files from digital photo cameras ] ]]
 "
 
 DEPENDENCIES="
@@ -24,7 +25,6 @@ DEPENDENCIES="
         app-text/txt2man
     build+run:
         dev-libs/boost[>=1.42]
-        dev-libs/openssl
         media-libs/ilmbase
         media-libs/jpeg
         media-libs/libpng:=
@@ -32,9 +32,11 @@ DEPENDENCIES="
         media-libs/openexr
         media-libs/tiff
         sys-libs/zlib
+        virtual/libssl
         freetype? ( media-libs/freetype:2 )
         gif?      ( media-libs/giflib     )
         jpeg2000? ( media-libs/OpenJPEG:0 )
+        raw?      ( media-libs/libraw     )
 "
 
 BUGS_TO="mixi@exherbo.org"
@@ -42,14 +44,19 @@ BUGS_TO="mixi@exherbo.org"
 # tests require e.g. USE_FIELD3D to be enabled
 RESTRICT="test"
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PNV}-GIF-input-plug-Fix-build-with-giflib-5.1.patch
+)
+
 src_configure()
 {
     # USE_FIELD3D, USE_OCIO: unwritten
-    # TODO: get rid of the bundled pugixml, tbb
+    # TODO: get rid of the bundled pugixml
     args=(
-        $(cmake_option freetype USE_FREETYPE)
-        $(cmake_option gif USE_GIF)
-        $(cmake_option jpeg2000 USE_OPENJPEG)
+        $(cmake_use FREETYPE)
+        $(cmake_use GIF)
+        $(cmake_use jpeg2000 OPENJPEG)
+        $(cmake_use raw LIBRAW)
         -DDOC_INSTALL_DIR:STRING=share/doc/${PNVR}
         -DLIB_INSTALL_DIR:STRING=${LIBDIR}
         -DOIIO_BUILD_TESTS:BOOL=FALSE
