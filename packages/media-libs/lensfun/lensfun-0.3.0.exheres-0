@@ -18,20 +18,29 @@ MYOPTIONS="
 DEPENDENCIES="
     build:
         virtual/pkg-config
-        doc? ( app-doc/doxygen )
+        doc? (
+            app-doc/doxygen
+            dev-python/docutils [[ note = [ rst2man ] ]]
+        )
     build+run:
         dev-libs/glib:2
         media-libs/libpng:=
         sys-libs/zlib
 "
 
-CMAKE_SRC_CONFIGURE_PARAMS+=(
-    -DBUILD_AUXFUN:BOOL=TRUE
-    -DBUILD_STATIC:BOOL=FALSE
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PNV}-Search-for-slighty-differently-named-rst2man-executa.patch
 )
 
 src_configure() {
-    local cmakeargs=()
+    local cmakeargs=(
+        -DBUILD_AUXFUN:BOOL=TRUE
+        -DBUILD_STATIC:BOOL=FALSE
+        # Tests are expected to be installed
+        -DBUILD_TESTS:BOOL=FALSE
+        -DINSTALL_HELPER_SCRIPTS:BOOL=TRUE
+        $(cmake_build DOC)
+    )
 
     if option platform:amd64 || option x86_cpu_features:sse ; then
         cmakeargs+=( -DBUILD_FOR_SSE:BOOL=TRUE )
@@ -40,8 +49,6 @@ src_configure() {
     if option platform:amd64 || option x86_cpu_features:sse2 ; then
         cmakeargs+=( -DBUILD_FOR_SSE2:BOOL=TRUE )
     fi
-
-    option doc && cmakeargs+=( -DBUILD_DOC:BOOL=TRUE )
 
     ecmake "${cmakeargs[@]}"
 }
