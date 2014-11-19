@@ -38,9 +38,10 @@ MYOPTIONS="
 "
 
 DEPENDENCIES="
+    build:
+       virtual/pkg-config
     build+run:
         sys-libs/ncurses
-
         aac?           ( media-libs/faad2 )
         alsa?          ( sys-sound/alsa-lib[>=1.0.11] )
         ao?            ( media-libs/libao )
@@ -57,7 +58,7 @@ DEPENDENCIES="
             media-libs/libmp4v2
         )
         musepack?      ( media-libs/libmpcdec )
-        opus?          ( media-libs/opus )
+        opus?          ( media-libs/opusfile )
         oss?           ( sys-sound/oss )
         pulseaudio?    ( media-sound/pulseaudio )
         vorbis?        ( media-libs/libvorbis )
