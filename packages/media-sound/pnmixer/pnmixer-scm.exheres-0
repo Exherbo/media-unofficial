@@ -1,0 +1,53 @@
+# Copyright 2014 Julian Ospald <hasufell@posteo.de>
+# Distributed under the terms of the GNU General Public License v2
+
+require github [ user=nicklan ] autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.13 ] ] gtk-icon-cache
+
+SUMMARY="Volume mixer for the system tray"
+HOMEPAGE="https://github.com/nicklan/pnmixer"
+
+LICENCES="GPL-3"
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS="
+    debug
+    libnotify
+"
+
+DEPENDENCIES="
+    build:
+        sys-devel/gettext
+        virtual/pkg-config
+    build+run:
+        dev-libs/glib:2
+        sys-sound/alsa-lib
+        x11-libs/gtk+:3
+        x11-libs/libX11
+        libnotify? ( x11-libs/libnotify )
+"
+
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    '--enable-minimal-flags'
+    '--with-gtk3'
+)
+
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
+    'debug'
+)
+
+DEFAULT_SRC_CONFIGURE_OPTION_WITHS=(
+    'libnotify'
+)
+
+src_prepare() {
+    default
+    eautoreconf
+    edo glib-gettextize --force --copy
+}
+
+src_install() {
+    default
+    insinto /usr/share/icons/hicolor/128x128/apps
+    newins pixmaps/${PN}-about.png ${PN}.png
+}
+
