@@ -14,9 +14,9 @@ DEPENDENCIES="
     build:
         app-arch/unzip
     build+run:
-        dev-libs/openssl
         media-libs/libogg
         media-libs/opus
+        virtual/libssl
 "
 
 DEFAULT_SRC_CONFIGURE_PARAMS=( --disable-static )
