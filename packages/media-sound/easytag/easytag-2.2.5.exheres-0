@@ -48,7 +48,7 @@ MYOPTIONS="flac gtk3 mp3 vorbis
     speex   [[ requires = vorbis ]]
 
     ( linguas:
-        bg ca cs da de el es fr he hu it ja lt nl pl pt_BR ro ru sl sr sr@latin sv tr uk zh_CN zh_TW
+        bg ca cs da de el es fr he hu it ja lt nb nl pl pt_BR ro ru sl sr sr@latin sv tr uk zh_CN zh_TW
     )
 "
 
