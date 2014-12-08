@@ -9,7 +9,7 @@ of an Ogg Vorbis file to a predefined standardized loudness.
 It is meant as a replacement for the normalization that is commonly used before
 encoding. Although normalization will ensure that each song has the same peak
 volume, this unfortunately does not say anything about the apparent loudness of
-the music, with the end result being that many normalized files still don't 
+the music, with the end result being that many normalized files still don't
 sound equally loud. VorbisGain uses psychoacoustics to address this deficiency.
 Moreover, unlike normalization, it's a lossless procedure which works by adding
 tags to the file. Additionally, it will add hints that can be used to prevent

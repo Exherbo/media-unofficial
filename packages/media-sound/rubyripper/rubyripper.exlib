@@ -7,7 +7,7 @@ export_exlib_phases src_prepare
 
 SUMMARY="Secure audiodisc ripper"
 DESCRIPTION="
-Through multiple times ripping the same track and correcting any differences 
+Through multiple times ripping the same track and correcting any differences
 rubyripper tries to deliver a secure rip.
 "
 
