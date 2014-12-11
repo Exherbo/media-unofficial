@@ -41,7 +41,7 @@ DEPENDENCIES="
         media-libs/freetype:2
         media-libs/glew
         media-libs/ilmbase
-        media-libs/jpeg
+        media-libs/jpeg:=
         media-libs/libpng:=
         media-libs/openexr
         media-libs/tiff

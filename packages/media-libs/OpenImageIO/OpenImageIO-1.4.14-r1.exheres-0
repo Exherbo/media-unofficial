@@ -26,7 +26,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/boost[>=1.42]
         media-libs/ilmbase
-        media-libs/jpeg
+        media-libs/jpeg:=
         media-libs/libpng:=
         media-libs/libwebp
         media-libs/openexr
@@ -34,7 +34,7 @@ DEPENDENCIES="
         sys-libs/zlib
         virtual/libssl
         freetype? ( media-libs/freetype:2 )
-        gif?      ( media-libs/giflib     )
+        gif?      ( media-libs/giflib:=   )
         jpeg2000? ( media-libs/OpenJPEG:0 )
         raw?      ( media-libs/libraw     )
 "
