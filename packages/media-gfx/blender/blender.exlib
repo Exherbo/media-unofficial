@@ -88,6 +88,8 @@ HERE
             die
         fi
     fi
+
+    cmake_src_prepare
 }
 
 blender_src_configure() {

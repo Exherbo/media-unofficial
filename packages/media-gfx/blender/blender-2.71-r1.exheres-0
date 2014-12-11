@@ -6,3 +6,7 @@ require blender
 
 PLATFORMS="~amd64"
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PNV}-Fix-build-with-freetype-2.5.4.patch
+)
+
