@@ -44,6 +44,10 @@ BUGS_TO="mixi@exherbo.org"
 # tests require e.g. USE_FIELD3D to be enabled
 RESTRICT="test"
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PNV}-Fix-build-with-freetype-2.5.4.patch
+)
+
 src_configure()
 {
     # USE_FIELD3D, USE_OCIO: unwritten
