@@ -1,7 +1,7 @@
 # Copyright 2009 Ali Polatel <alip@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require github [ user=swh pn=LRDF rev=7ebc03286f4ec180acae27565028f8d45055df2e ]
+require github [ user=swh pn=LRDF ]
 require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.11 ] ]
 
 SUMMARY="A library for the manipulation of RDF file in LADSPA plugins"
