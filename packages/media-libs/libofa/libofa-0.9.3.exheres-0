@@ -1,7 +1,7 @@
 # Copyright 2009 Ali Polatel <alip@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.11 ] ]
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.13 1.11 ] ]
 require googlecode [ project=musicip-libofa suffix=tar.gz ]
 
 SUMMARY="Open-source audio fingerprint by MusicIP"
@@ -49,9 +49,7 @@ src_prepare() {
     default
 
     # Don't build examples
-    sed -i \
-        -e '/^SUBDIRS/s/examples//' \
-        Makefile.am || die "sed in Makefile.am failed"
+    edo sed -i -e '/^SUBDIRS/s/examples//' Makefile.am
     eautoreconf
 }
 
