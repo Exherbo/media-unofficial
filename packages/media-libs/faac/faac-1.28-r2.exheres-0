@@ -1,7 +1,7 @@
 # Copyright 2009 Anders Ossowicki <arkanoid@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require sourceforge autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.12 1.11 ] ] easy-multibuild
+require sourceforge autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.12 1.11 ] ]
 
 SUMMARY="FAAC is an open source MPEG-4 and MPEG-2 AAC encoder"
 DESCRIPTION="FAAC is an open source MPEG-4 and MPEG-2 AAC encoder. Note that
@@ -13,11 +13,11 @@ HOMEPAGE="http://www.audiocoding.com/faac.html"
 LICENCES="LGPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="multibuild_c: 32 64"
+MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        media-libs/libmp4v2[>=1.9.1_p479][multibuild_c:*(-)?]
+        media-libs/libmp4v2[>=1.9.1_p479]
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=(
