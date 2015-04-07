@@ -3,7 +3,7 @@
 #   Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-require flag-o-matic autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.13 1.10 ] ] easy-multibuild
+require flag-o-matic autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.13 1.10 ] ]
 
 SUMMARY="Audio processing library for changing tempo, pitch and playback rates"
 DESCRIPTION="
@@ -30,7 +30,6 @@ PLATFORMS="~amd64"
 MYOPTIONS="
     platform: amd64
     x86_cpu_features: sse2
-    ( multibuild_c: 32 64 )
 "
 
 DEPENDENCIES=""
