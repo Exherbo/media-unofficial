@@ -1,7 +1,7 @@
 # Copyright 2009 Hong Hao <oahong@gmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
-require easy-multibuild
+require cmake
 
 SUMMARY="A free implementation of OpenAL's ALUT standard"
 HOMEPAGE="http://connect.creativelabs.com/openal"
@@ -12,13 +12,13 @@ DOWNLOADS="http://dev.exherbo.org/distfiles/${PNV}.tar.gz"
 LICENCES="LGPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="multibuild_c: 32 64"
-
+MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        media-libs/openal[multibuild_c:*(-)?]
+        media-libs/openal
 "
 
-DEFAULT_SRC_CONFIGURE_PARAMS=( --hates=docdir )
+# FIXME Add a LIBSUFIX switch
+CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_TESTS:BOOL=OFF )
 
