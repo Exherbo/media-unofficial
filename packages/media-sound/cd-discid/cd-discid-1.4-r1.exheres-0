@@ -19,7 +19,10 @@ SLOT="0"
 MYOPTIONS=""
 
 DEFAULT_SRC_INSTALL_EXTRA_DOCS=( COPYING )
-DEFAULT_SRC_INSTALL_PARAMS=( STRIP="/bin/true" PREFIX="/usr" )
+DEFAULT_SRC_INSTALL_PARAMS=(
+    INSTALL=install STRIP=:
+    PREFIX="/usr" BINDIR=/usr/$(exhost --target)/bin
+)
 
 src_compile() {
     emake CFLAGS="-DVERSION=\"${PV}\" ${CFLAGS}" LDFLAGS="${LDFLAGS}"
