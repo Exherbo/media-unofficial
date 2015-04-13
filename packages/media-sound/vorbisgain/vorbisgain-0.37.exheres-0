@@ -31,5 +31,9 @@ DEPENDENCIES="
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-fix-errno-and-warnings.patch" )
-DEFAULT_SRC_CONFIGURE_PARAMS=( --hates=docdir --enable-recursive )
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --hates=datarootdir
+    --hates=docdir
+    --enable-recursive
+)
 
