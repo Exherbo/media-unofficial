@@ -1,4 +1,4 @@
-# Copyright 2014 Heiko Becker <heirecka@exherb.org>
+# Copyright 2014-2015 Heiko Becker <heirecka@exherb.org>
 # Distributed under the terms of the GNU General Public License v2
 
 require cmake [ api=2 ]
@@ -48,6 +48,6 @@ src_install() {
 
     dolib.so "${WORK}"/libmpcdec/libmpcdec.so
 
-    edo rm -r "${IMAGE}"/usr/include/mpc/.svn
+    edo rm -r "${IMAGE}"/usr/$(exhost --target)/include/mpc/.svn
 }
 
