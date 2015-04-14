@@ -1,4 +1,4 @@
-# Copyright 2014 Heiko Becker <heirecka@exherbo.org>
+# Copyright 2014-2015 Heiko Becker <heirecka@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 MY_PNV=${PN}_r${PV}
@@ -32,7 +32,7 @@ src_install() {
     cmake_src_install
 
     # The headers aren't installed automatically
-    insinto /usr/include
+    insinto /usr/$(exhost --target)/include
     doins -r "${CMAKE_SOURCE}"/include/cuetools
 }
 
