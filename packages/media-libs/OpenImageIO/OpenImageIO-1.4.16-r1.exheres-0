@@ -53,8 +53,8 @@ src_configure()
         $(cmake_use GIF)
         $(cmake_use jpeg2000 OPENJPEG)
         $(cmake_use raw LIBRAW)
-        -DDOC_INSTALL_DIR:STRING=share/doc/${PNVR}
-        -DLIB_INSTALL_DIR:STRING=${LIBDIR}
+        -DDOC_INSTALL_DIR:STRING=/usr/share/doc/${PNVR}
+        -DMAN_INSTALL_DIR:STRING=/usr/share/man/man1
         -DOIIO_BUILD_TESTS:BOOL=FALSE
         -DPYLIB_INSTALL_DIR:STRING=$(python_get_sitedir)
         -DPYTHON_VERSION:STRING=$(python_get_abi)
