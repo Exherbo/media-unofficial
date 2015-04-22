@@ -14,6 +14,9 @@ LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
 
+DEFAULT_SRC_COMPILE_PARAMS=( CC="$CC" )
+DEFAULT_SRC_INSTALL_PARAMS=( INSTALL_DIR="/usr/$(exhost --target)/bin" )
+
 src_install() {
     dobin beep
     doman beep.1.gz
