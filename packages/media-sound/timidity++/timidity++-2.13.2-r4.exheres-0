@@ -38,6 +38,9 @@ DEFAULT_SRC_PREPARE_PATCHES=(
     -p0 "${FILES}"/${PNV}-no_png_set_dither.patch
 )
 
+# TODO: push to upstream patch with using AM_PROG_AR
+DEFAULT_SRC_COMPILE_PARAMS=( AR="$AR" )
+
 src_prepare() {
     default
     # fix header location of speex
@@ -51,8 +54,8 @@ src_configure() {
         option $i && audios="${audios},${i}"
     done
 
-    edo ./configure --prefix=/usr \
-        --mandir=/usr/share/man \
+    edo econf \
+        --hates={dataroot,doc}dir \
         --with-elf \
         --enable-audio=${audios} \
         $(option_enable alsa alsaseq)
