@@ -18,13 +18,13 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build+run:
-        alsa? ( sys-sound/alsa-lib )
-        jack? ( media-sound/jack-audio-connection-kit )
-        vorbis? ( media-libs/libvorbis )
-        flac? ( media-libs/flac )
-        speex? ( media-libs/speex )
-        ao? ( media-libs/libao[>=0.8.5] )
         user/timidity
+        alsa? ( sys-sound/alsa-lib )
+        ao? ( media-libs/libao[>=0.8.5] )
+        flac? ( media-libs/flac[ogg] )
+        jack? ( media-sound/jack-audio-connection-kit )
+        speex? ( media-libs/speex )
+        vorbis? ( media-libs/libvorbis )
     suggestion:
         media-sound/timidity-freepats [[ description = [ instruments ] ]]
 "
