@@ -9,6 +9,7 @@ DOWNLOADS=""
 PLATFORMS="~amd64"
 
 src_prepare() {
+    edo sed -i -e "s/AC_PATH_PROG(AR, ar/AC_PATH_PROG(AR, ${AR}/g" configure.in
     autotools_src_prepare
     edo chmod +x configure
 }
