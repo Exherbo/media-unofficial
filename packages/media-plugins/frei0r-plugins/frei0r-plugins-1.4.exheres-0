@@ -42,17 +42,3 @@ src_configure() {
     ecmake "${cmakeargs[@]}" "${CMAKE_SRC_CONFIGURE_PARAMS[@]}"
 }
 
-src_install() {
-    cmake_src_install
-
-    [[ -d ${IMAGE}/usr/${LIBDIR} ]] || dodir /usr/${LIBDIR}
-    if [[ ${LIBDIR} != lib ]] ; then
-        edo sed \
-            -e "s:/lib:/${LIBDIR}:g" \
-            -i "${IMAGE}"/usr/lib/pkgconfig/frei0r.pc
-
-        edo mv "${IMAGE}"/usr/lib/* "${IMAGE}"/usr/${LIBDIR}
-        edo rmdir "${IMAGE}"/usr/lib
-    fi
-}
-
