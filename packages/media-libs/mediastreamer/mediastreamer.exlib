@@ -4,9 +4,9 @@
 # Based in part on ortp-0.15.0.exheres-0 which is
 #   Copyright 2009 Ingmar Vanhassel
 
-require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.12 1.11 ] ]
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 ] ]
 
-export_exlib_phases src_prepare
+export_exlib_phases src_prepare src_install
 
 SUMMARY="Mediastreamer2 - the multimedia streaming engine"
 DESCRIPTION="
@@ -25,11 +25,11 @@ UPSTREAM_DOCUMENTATION="http://download.savannah.gnu.org/releases-noredirect/lin
 
 LICENCES="GPL-2 GPL-3 [[ note = [ A few header files have no copyright information, other are GPL-2+ or AS-IS ] ]]"
 SLOT="0"
-MYOPTIONS="alsa debug gsm libav opengl portaudio pulseaudio sdl speex theora v4l X
+MYOPTIONS="alsa debug doc gsm libav opengl portaudio pulseaudio sdl speex theora v4l X
     opus  [[ description = [ Opus audio decoding and encoding ] ]]
     upnp  [[ description = [ Support Service Discovery via libupnp ] ]]
     video [[ description = [ Enable video stream support ] ]]
-    vpx   [[ description = [ VP8 support using libvpx ] ]]
+    vpx   [[ description = [ VP8/VP9 support using libvpx ] ]]
 
     ( alsa portaudio pulseaudio ) [[ number-selected = at-least-one ]]
     ( opengl sdl theora v4l vpx X ) [[ requires = video ]]
@@ -40,9 +40,10 @@ DEPENDENCIES="
         app-doc/doxygen
         dev-util/intltool
         virtual/pkg-config[>=0.9.0]
+        doc? ( app-doc/doxygen )
     build+run:
         dev-libs/libpcap
-        net-libs/ortp[>=0.21.0]
+        net-libs/ortp[>=0.24.0]
         alsa? ( sys-sound/alsa-lib )
         gsm? ( media-libs/gsm )
         opengl? (
@@ -70,6 +71,22 @@ DEPENDENCIES="
 # TODO:
 #   test? ( dev-libs/CUnit ) - http://cunit.sourceforge.net/
 
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --enable-external-ortp
+    --enable-non-free-codecs
+    --enable-oss
+    --enable-pcap
+    --disable-artsc
+    --disable-dtls
+    --disable-g729bCN
+    --disable-macaqsnd
+    --disable-macsnd
+    --disable-matroska
+    --disable-qsa
+    --disable-spandsp
+    --disable-strict
+    --disable-zrtp
+)
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     alsa
     debug
@@ -89,26 +106,29 @@ DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     'X x11'
     'X xv'
 )
-
-DEFAULT_SRC_CONFIGURE_PARAMS=(
-    --datadir=/usr/share/${PN}
-    --docdir=/usr/share/doc
-    --disable-artsc
-    --disable-macaqsnd
-    --disable-macsnd
-    --disable-spandsp
-    --enable-external-ortp
-    --enable-ipv6
-    --enable-oss
-)
+DEFAULT_SRC_CONFIGURE_TESTS=( '--enable-tests --disable-tests' )
 
 mediastreamer_src_prepare() {
+    # Respect datarootdir
+    edo sed -e 's:itlocaledir = $(prefix)/$(DATADIRNAME)/locale:itlocaledir = $(datarootdir)/locale:' \
+            -i "${WORK}"/po/Makefile.in.in
+
+    autotools_src_prepare
+}
+
+mediastreamer_src_install() {
     default
 
-    # linux/videodev.h dropped in 2.6.38
-    edo sed -i -e 's:msv4l.c::' src/Makefile.am
-    edo sed -i -e 's:linux/videodev.h ::' configure.ac
+    edo rmdir "${IMAGE}"/usr/$(exhost --target)/lib/mediastreamer{/plugins,}
 
-    eautoreconf
+    if [[ ${PNV} != ${PNVR} ]]; then
+        nonfatal edo mv "${IMAGE}"/usr/share/doc/{${PNV}/*,${PNVR}}
+        nonfatal edo rmdir "${IMAGE}"/usr/share/doc/${PNV}
+    fi
+
+    # There's no option to disable building apidocs, so remove them if not requested
+    if option !doc; then
+        nonfatal edo rm -r "${IMAGE}"/usr/share/doc/${PNVR}/html
+    fi
 }
 
