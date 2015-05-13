@@ -1,9 +1,10 @@
 # Copyright 2009 Jonathan Dahan <jedahan@gmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
-require googlecode [ suffix=tar.gz ]
-
 SUMMARY="A Better CD Encoder"
+
+HOMEPAGE="http://${PN}.einval.com"
+DOWNLOADS="${HOMEPAGE}/download/${PNV}.tar.gz"
 
 LICENCES="GPL-2"
 SLOT="0"
@@ -32,6 +33,11 @@ DEPENDENCIES="
     suggestion:
         media-sound/mkcue [[ description = [ Needed to generate cue sheets ] ]]
 "
+
+src_prepare() {
+    sed -e "/exec_prefix/s:\${prefix}:\${DESTDIR}/usr/$(exhost --target):" \
+        -i Makefile
+}
 
 src_install() {
     if ! optionq musicbrainz ; then
