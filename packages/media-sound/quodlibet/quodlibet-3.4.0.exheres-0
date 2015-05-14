@@ -52,16 +52,16 @@ DEPENDENCIES="
         ) [[ *description = [ Plugins for Gstreamer; select GST_PLUGINS for the outputs and codecs you need. ] ]]
 
         dev-libs/keybinder[>=0.3.0] [[ description = [ Register global hotkeys ] ]]
+        dev-libs/zeitgeist:2.0 [[ description = [ Install the Zeitgeist (activity tracker) plugin ] ]]
+        dev-python/cddb-py [[ description = [ Used by CDDB plugin ] ]]
         dev-python/feedparser [[ description = [ Support for audio feeds ] ]]
-        media-libs/libgpod [[ description = [ Access the contents of an iPod ] ]]
-        sys-apps/udisks:2 [[ description = [ Device support ] ]]
         dev-python/pyinotify [[ description = [ Install a plugin to automatically update the library ] ]]
         dev-python/python-musicbrainz2 [[ description = [ Install a plugin for MusicBrainz tagging ] ]]
+        media-libs/libgpod [[ description = [ Access the contents of an iPod ] ]]
         media-plugins/gst-plugins-bad:1.0[gstreamer_plugins:chromaprint] [[ description = [ Install a plugin for audio fingerprinting ] ]]
-        dev-libs/zeitgeist:2.0 [[ description = [ Install the Zeitgeist (activity tracker) plugin ] ]]
+        sys-apps/udisks:2 [[ description = [ Device support ] ]]
 "
         # TODO these should go to ::unwritten sometime
-        #dev-python/cddb-py [[ description = [ plugin: CDDB ] ]]
         # some-category/kakasi [[ description = [ plugin: kakasi ] ]]
 
 WORK="${WORKBASE}/${PN}-release-${PV}/${PN}"
