@@ -60,6 +60,9 @@ DEFAULT_SRC_PREPARE_PATCHES=(
 )
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(
+    AR="/usr/$(exhost --target)/bin/${AR}"
+    PKG_CONFIG="/usr/$(exhost --target)/bin/${PKG_CONFIG}"
+
     --enable-unicode
     --enable-nyquist
     --with-libsndfile=system
@@ -100,6 +103,17 @@ DEFAULT_SRC_CONFIGURE_OPTION_WITHS=(
 
 AT_M4DIR=( m4 )
 AT_NO_RECURSIVE=1
+
+src_prepare() {
+    edo sed -e "s/pkg-config,/${PKG_CONFIG},/" -i configure.in
+    edo sed -e "s/pkg-config --/\$PKG_CONFIG --/" -i lib-src/FileDialog/configure
+    edo sed -e "s/ar /${AR} /" -i lib-src/lib-widget-extra/Makefile.in \
+                               -i src/Makefile.in
+    edo sed -e "s/AR = ar/AR = ${AR}/" -i lib-src/libnyquist/Makefile.in \
+                                       -i lib-src/portsmf/Makefile.in
+
+    autotools_src_prepare
+}
 
 pkg_postinst() {
     freedesktop-desktop_pkg_postinst
