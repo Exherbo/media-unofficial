@@ -1,0 +1,22 @@
+# Copyright 2009 Ali Polatel <alip@exherbo.org>
+# Copyright 2015 Kylie McClain <somasis@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require pypi
+require setup-py [ import='distutils' blacklist='3' ]
+
+SUMMARY="Python MPD client library"
+DESCRIPTION="An MPD (Music Player Daemon) client library written in pure Python."
+
+LICENCES="LGPL-3"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+"
+
+BUGS_TO="alip@exherbo.org"
+
