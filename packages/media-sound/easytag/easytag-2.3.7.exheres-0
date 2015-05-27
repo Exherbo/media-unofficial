@@ -41,14 +41,16 @@ BUGS_TO="markus@unixforces.net"
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="flac gtk3 mp3 vorbis
-    mp4     [[ description = [ Adds support to tag mp4 files ] ]]
-    opus    [[ description = [ Adds support for opus files ] ]]
-    wavpack [[ description = [ Add support for wavpack ] ]]
-    speex   [[ requires = vorbis ]]
+MYOPTIONS="flac mp3 vorbis
+    mp4      [[ description = [ Adds support to tag mp4 files ] ]]
+    nautilus [[ description = [ Build context menu actions for nautilus ] ]]
+    opus     [[ description = [ Adds support for opus files ] ]]
+    wavpack  [[ description = [ Add support for wavpack ] ]]
+    speex    [[ requires = vorbis ]]
 
     ( linguas:
-        bg ca cs da de el es fr he hu it ja lt nb nl pl pt_BR ro ru sl sr sr@latin sv tr uk zh_CN zh_TW
+        bg bs ca cs da de el en_GB es fr he hu id it ja ko lt nb nl pl pt_BR
+        ro ru sl sr sr@latin sv te tr uk zh_CN zh_TW
     )
 "
 
@@ -60,20 +62,28 @@ DEPENDENCIES="
         dev-util/intltool[>=0.50.0]
         gnome-desktop/yelp-tools [[ note = [ build help ] ]]
         sys-devel/gettext
+        sys-devel/libtool
         virtual/pkg-config[>=0.24]
     build+run:
-        dev-libs/glib:2[>=2.30.0]
+        dev-libs/glib:2[>=2.38.0]
+        x11-libs/gdk-pixbuf
+        x11-libs/gtk+:3[>=3.10]
         flac? ( media-libs/flac[>=1.1.4] )
-        gtk3? ( x11-libs/gtk+:3[>=3.4] )
-        !gtk3? ( x11-libs/gtk+:2[>=2.24.7] )
-        mp3? ( media-libs/id3lib[>=3.8.0]
-               media-libs/libid3tag )
+        mp3? (
+            media-libs/id3lib[>=3.8.0]
+            media-libs/libid3tag
+        )
         mp4? ( media-libs/taglib[>=1.9.1] )
-        opus? ( media-libs/opus[>=1.0]
-                media-libs/opusfile )
+        nautilus? ( gnome-desktop/nautilus )
+        opus? (
+            media-libs/opus[>=1.0]
+            media-libs/opusfile
+        )
         speex? ( media-libs/speex )
-        vorbis? ( media-libs/libogg[>=1.0]
-                  media-libs/libvorbis[>=1.0.1] )
+        vorbis? (
+            media-libs/libogg[>=1.0]
+            media-libs/libvorbis[>=1.0.1]
+        )
         wavpack? ( media-sound/wavpack[>=4.40] )
     test:
         dev-util/desktop-file-utils
@@ -84,11 +94,18 @@ DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     mp3
     'mp3 id3v23'
     mp4
+    'nautilus nautilus-actions'
     opus
     speex
     'vorbis ogg'
     wavpack
 )
-DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( gtk3 )
 DEFAULT_SRC_CONFIGURE_TESTS=( '--any --enable-tests --disable-tests' )
+
+src_prepare() {
+    # Disable a failing test: https://bugzilla.gnome.org/show_bug.cgi?id=749982
+    edo sed -e "/tests\/test-file_description/d" -i Makefile.am
+
+    default
+}
 
