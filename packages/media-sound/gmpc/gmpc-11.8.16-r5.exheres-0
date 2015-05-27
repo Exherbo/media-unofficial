@@ -12,3 +12,8 @@ DEPENDENCIES="
         x11-libs/gtk+:2[>=2.12]
 "
 
+src_prepare() {
+    edo intltoolize --force --copy --automake
+    default
+}
+
