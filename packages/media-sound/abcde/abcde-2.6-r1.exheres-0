@@ -34,7 +34,10 @@ DEPENDENCIES="
         media-sound/mkcue [[ description = [ Needed to generate cue sheets ] ]]
 "
 
-DEFAULT_SRC_INSTALL_PARAMS=( exec_prefix=\${DESTDIR}/usr/$(exhost --target) )
+DEFAULT_SRC_INSTALL_PARAMS=(
+    INSTALL=install
+    exec_prefix=\${DESTDIR}/usr/$(exhost --target)
+)
 
 src_install() {
     if ! optionq musicbrainz ; then
