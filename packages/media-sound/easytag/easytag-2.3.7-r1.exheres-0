@@ -3,7 +3,7 @@
 #   Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-require gnome.org [ suffix=.tar.xz ]
+require gnome.org [ suffix=.tar.xz ] gsettings
 
 SUMMARY="GTK+ utility for editing MP2, MP3, MP4, FLAC, Ogg and other media tags"
 DESCRIPTION="
@@ -66,6 +66,7 @@ DEPENDENCIES="
         virtual/pkg-config[>=0.24]
     build+run:
         dev-libs/glib:2[>=2.38.0]
+        gnome-desktop/gsettings-desktop-schemas
         x11-libs/gdk-pixbuf
         x11-libs/gtk+:3[>=3.10]
         flac? ( media-libs/flac[>=1.1.4] )
