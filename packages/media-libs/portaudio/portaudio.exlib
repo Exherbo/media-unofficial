@@ -3,6 +3,8 @@
 
 require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 1.13 1.12 1.11 1.10 ] ]
 
+export_exlib_phases src_prepare
+
 SUMMARY="PortAudio - portable cross-platform Audio API"
 DESCRIPTION="
 PortAudio is a free, cross platform, open-source, audio I/O library.  It lets you write simple audio
@@ -26,7 +28,6 @@ DEPENDENCIES="
         jack? ( media-sound/jack-audio-connection-kit )
 "
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PN}-multiarch.patch )
 DEFAULT_SRC_CONFIGURE_PARAMS=( '--without-oss' )
 DEFAULT_SRC_CONFIGURE_OPTION_WITHS=(
     'alsa'
@@ -35,4 +36,10 @@ DEFAULT_SRC_CONFIGURE_OPTION_WITHS=(
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     'cxx'
 )
+
+portaudio_src_prepare() {
+    # Note(tanderson): Sent upstream 6/08/15
+    edo sed -i -e 's/AC_PATH_PROG/AC_CHECK_TOOL/' configure.in
+    autotools_src_prepare
+}
 

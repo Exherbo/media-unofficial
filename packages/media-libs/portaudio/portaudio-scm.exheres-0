@@ -3,7 +3,7 @@
 
 SCM_REPOSITORY="https://subversion.assembla.com/svn/portaudio/portaudio"
 
-require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.11 ] ] portaudio scm-svn
+require portaudio scm-svn
 
 DOWNLOADS=""
 PLATFORMS="~amd64"
