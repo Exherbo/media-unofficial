@@ -1,17 +1,13 @@
 # Copyright 2009, 2010, 2011 Ali Polatel <alip@exherbo.org>
 # Copyright 2013 Marvin Schmidt <marv@exherbo.org>
+# Copyright 2015 Kylie McClain <somasis@exherbo.org>
 # Based in part upon audacity-1.3.7.ebuild which is:
 #   Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.10 ] ]
+require github [ tag=Audacity-${PV} ]
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 1.10 1.9 ] ]
 require gtk-icon-cache freedesktop-desktop freedesktop-mime
-
-MY_PV=$(ever replace 3 -)
-MY_PNV="${PN}-src-${MY_PV}"
-
-# Overwrite only pnv to make pn=project
-require sourceforge [ pnv="${PN}-minsrc-${MY_PV}" suffix=tar.xz ]
 
 SUMMARY="The Free, Cross-Platform Sound Editor"
 DESCRIPTION="
@@ -29,10 +25,14 @@ BUGS_TO="alip@exherbo.org"
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="alsa jack ffmpeg flac ladspa midi soundtouch mp3 vorbis
-    soundtouch [[ description = [ Required for pitch and tempo changing ] ]]
+MYOPTIONS="jack ffmpeg flac ladspa lv2 midi soundtouch twolame vorbis
+    ffmpeg? ( ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]] )
     id3tag [[ description = [ Enables the ability to modify ID3 tags ] ]]
+    soundtouch [[ description = [ Required for pitch and tempo changing ] ]]
 "
+
+# NOTE(somasis): broken options as of v2.1.0:
+# mp3 fails even if explicitly disabled, alsa fails if disabled too
 
 DEPENDENCIES="
     build:
@@ -42,26 +42,30 @@ DEPENDENCIES="
         dev-libs/expat
         media-libs/libsamplerate[>=0.1.2]
         media-libs/libsndfile[>=1.0.0]
+        media-libs/libmad[>=0.14.2b]
+        media-sound/lame[>=3.70]
+        sys-sound/alsa-lib
         x11-libs/wxGTK:2.8[>=2.8.0]
-        alsa? ( sys-sound/alsa-lib )
-        ffmpeg? ( media/ffmpeg[<0.11] )
+        ffmpeg? (
+            providers:ffmpeg? ( media/ffmpeg )
+            providers:libav? ( media/libav )
+        )
         jack? ( media-sound/jack-audio-connection-kit[>=0.103.0] )
-        mp3? ( media-libs/libmad[>=0.14.2b] )
+        lv2? (
+            media-libs/lilv[>=0.16.0]
+            media-libs/lv2
+        )
         soundtouch? ( media-libs/soundtouch )
+        twolame? ( media-libs/twolame )
         vorbis? ( media-libs/libvorbis[>=1.0] )
-    run:
-        mp3? ( media-sound/lame[>=3.70] )
 "
-
-WORK="${WORKBASE}"/${MY_PNV}
-
-DEFAULT_SRC_PREPARE_PATCHES=(
-    -p1 "${FILES}"/${PN}-1.3.13-automagic.patch
-)
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     AR="/usr/$(exhost --target)/bin/${AR}"
     PKG_CONFIG="/usr/$(exhost --target)/bin/${PKG_CONFIG}"
+
+    # needed for lib-src/lv2
+    PKGCONFIG=${PKG_CONFIG}
 
     --enable-unicode
     --enable-nyquist
@@ -69,9 +73,15 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --with-expat=system
     --disable-dynamic-loading
 
+    # use wxWidgets 2.8 even if 3.0 is installed; upstream says to
+    --with-wx-version=2.8
+
     # use bundled and patched portaudio
     --with-portaudio=local
-    --without-portmixer
+
+    # compile fails without portmixer
+    --with-portmixer
+    --with-alsa
 
     # use libsamplerate for sample rate conversion
     --with-libsamplerate
@@ -81,31 +91,31 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     # Disabled due to missing dependencies
     --without-sbsms
     --without-libvamp
-    --without-libtwolame
 
     # MacOS X only
     --disable-audiounits
     --disable-quicktime
 )
+
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( ladspa )
 DEFAULT_SRC_CONFIGURE_OPTION_WITHS=(
-    'alsa'
-    'ffmpeg'
-    'flac libflac'
-    'id3tag libid3tag'
-    'jack'
+    'ffmpeg ffmpeg system'
+    'flac libflac system'
+    'id3tag libid3tag system'
+    'lv2 lv2 system'
     'midi'
-    'mp3 lame'
-    'mp3 libmad'
-    'soundtouch'
-    'vorbis libvorbis'
+    # 'mp3 lame system'
+    # 'mp3 libmad system'
+    'soundtouch soundtouch system'
+    'twolame libtwolame system'
+    'vorbis libvorbis system'
 )
 
 AT_M4DIR=( m4 )
 AT_NO_RECURSIVE=1
 
 src_prepare() {
-    edo sed -e "s/pkg-config,/${PKG_CONFIG},/" -i configure.in
+    edo sed -e "s/pkg-config,/${PKG_CONFIG},/" -i configure.ac
     edo sed -e "s/pkg-config --/\$PKG_CONFIG --/" -i lib-src/FileDialog/configure
     edo sed -e "s/ar /${AR} /" -i lib-src/lib-widget-extra/Makefile.in \
                                -i src/Makefile.in
