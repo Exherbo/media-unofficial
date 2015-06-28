@@ -1,4 +1,4 @@
-# Copyright 2010 Pierre Lejeune <superheron@gmail.com>
+# Copyright 2010-2015 Pierre Lejeune <superheron@gmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
 require python
@@ -32,6 +32,13 @@ DEPENDENCIES="
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( 'gobject-introspection introspection' )
 DEFAULT_SRC_CONFIGURE_TESTS=( "--enable-tests --disable-tests" )
 DEFAULT_SRC_INSTALL_PARAMS=( "LIB=${LIBDIR}" )
+
+src_prepare() {
+    default
+    # https://bugzilla.gnome.org/show_bug.cgi?id=751615
+    # Sed'ing to avoid requiring autotools
+    edo sed -e 's/pkg-config/\$\(PKG_CONFIG\)/' -i Makefile.in
+}
 
 src_test() {
     emake tests
