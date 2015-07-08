@@ -4,14 +4,13 @@
 MY_PNV=${PN}-src-${PV}
 
 require sourceforge [ suffix=tar.gz pnv=${MY_PNV} ]
-
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 ] ]
 if ! ever is_scm; then
     WORK="${WORKBASE}"/${MY_PNV}
+    DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/guvcview-CPPFLAGS-typo.patch )
 else
     SCM_REPOSITORY="git://git.code.sf.net/p/${PN}/git-master"
     require scm-git
-
-    require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 ] ]
 fi
 
 SUMMARY="GTK+ UVC Viewer"
@@ -31,6 +30,7 @@ MYOPTIONS="pulseaudio"
 DEPENDENCIES="
     build+run:
         dev-libs/glib:2[>=2.10.0]
+        dev-libs/libusb:1
         media-libs/SDL:2[>=2.0]
         media-libs/libpng
         media-libs/portaudio
@@ -39,7 +39,6 @@ DEPENDENCIES="
         sci-libs/gsl
         sys-apps/systemd [[ note = [ libudev is used to enumerate v4l2 devices ] ]]
         x11-libs/gtk+:3[>=3.0.0]
-
         pulseaudio? ( media-sound/pulseaudio[>=0.9.15] )
 "
 
