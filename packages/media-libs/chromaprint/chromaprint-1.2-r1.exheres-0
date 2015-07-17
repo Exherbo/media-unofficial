@@ -11,12 +11,12 @@ SUMMARY="A library that implements an algorithm for extracting fingerprints from
 PLATFORMS="~amd64"
 DEPENDENCIES="
     build+run:
-        !libav? ( media/ffmpeg )
-        libav? ( media/libav )
+        providers:ffmpeg? ( media/ffmpeg )
+        providers:libav? ( media/libav )
 "
 MYOPTIONS="
     examples [[ description = [ Build the example scanning tool fpcalc ] ]]
-    libav
+    ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]]
 "
 BUGS_TO="calvin.walton@kepstin.ca"
 
