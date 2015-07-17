@@ -48,7 +48,3 @@ WORK="$WORKBASE/$PN"
 DEFAULT_SRC_COMPILE_PARAMS+=( -f Makefile.gnu )
 DEFAULT_SRC_INSTALL_EXTRA_DOCS+=( Whatsnew.txt )
 
-src_install() {
-    default
-    [[ $LIBDIR != lib ]] && edo mv "${IMAGE}"/usr/{lib,${LIBDIR}}
-}
