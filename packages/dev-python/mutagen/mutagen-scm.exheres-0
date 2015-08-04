@@ -3,10 +3,6 @@
 
 require mutagen
 
-DOWNLOADS=""
-SCM_REPOSITORY="https://bitbucket.org/lazka/mutagen"
-require scm-hg
-
 BUGS_TO="alip@exherbo.org"
 
 SLOT="0"

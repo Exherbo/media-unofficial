@@ -1,7 +1,8 @@
 # Copyright 2009 Ali Polatel <alip@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require setup-py [ import=distutils multibuild=true blacklist='3.2' ]
+require setup-py [ import=distutils blacklist='3.2' ]
+require bitbucket [ user='lazka' download=${PNV} ]
 
 SUMMARY="Python module to handle audio metadata."
 DESCRIPTION="
@@ -12,8 +13,6 @@ It can read Xing headers to accurately calculate the bitrate and length of MP3s.
 ID3 and APEv2 tags can be edited regardless of audio format. It can also
 manipulate Ogg streams on an individual packet/page level.
 "
-
-DOWNLOADS="https://bitbucket.org/lazka/${PN}/downloads/${PNV}.tar.gz"
 
 REMOTE_IDS="pypi:${PN}"
 LICENCES="GPL-2"
