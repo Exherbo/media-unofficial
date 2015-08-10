@@ -1,0 +1,21 @@
+# Copyright 2015 Kylie McClain <somasis@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake
+require sourceforge [ pnv=${PNV}-Source suffix='tar.xz' ]
+
+SUMMARY="High quality, one-dimensional sample-rate conversion library"
+SLOT="0"
+LICENCES="LGPL-2.1"
+
+MYOPTIONS="openmp"
+
+PLATFORMS="~amd64"
+
+DEPENDENCIES="
+    build+run:
+        openmp? ( sys-libs/libgomp:= )
+"
+
+WORK="${WORKBASE}/${PNV}-Source"
+
