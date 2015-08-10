@@ -38,6 +38,7 @@ DEPENDENCIES="
             media-sound/lame
         )
         ogg? ( media-libs/libogg media-libs/libvorbis )
+        opus? ( media-libs/opus )
         png? ( media-libs/libpng )
         pulseaudio? ( media-sound/pulseaudio )
         sndfile? ( media-libs/libsndfile )
