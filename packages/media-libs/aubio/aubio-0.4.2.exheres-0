@@ -11,15 +11,21 @@ and producing midi streams from live audio. The name aubio comes from 'audio'
 with a typo: several transcription errors are likely to be found in the results
 too.
 "
-HOMEPAGE="http://aubio.piem.org"
-DOWNLOADS="http://aubio.piem.org/pub/${PNV}.tar.bz2"
+HOMEPAGE="http://aubio.org"
+DOWNLOADS="${HOMEPAGE}/pub/${PNV}.tar.bz2"
 
 BUGS_TO="alip@exherbo.org"
-LICENCES="GPL-2"
+
+LICENCES="GPL-3"
 SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS="doc ffmpeg jack libav
-    ( ffmpeg libav ) [[ number-selected = at-most-one ]]"
+MYOPTIONS="
+    doc
+    ffmpeg
+    jack
+
+    ffmpeg? ( ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]] )
+"
 
 DEPENDENCIES="
     build:
@@ -31,36 +37,42 @@ DEPENDENCIES="
         media-libs/libsndfile[>=1.0.4]
         media-libs/libsamplerate[>=0.0.15]
         dev-lang/python:=
-        ffmpeg? ( media/ffmpeg[>=2.0] )
+        ffmpeg? (
+            providers:ffmpeg? ( media/ffmpeg[>=2.0] )
+            providers:libav? ( media/libav[>=9] )
+        )
         jack? ( media-sound/jack-audio-connection-kit )
-        libav? ( media/libav[>=9] )
         python? ( dev-python/numpy[python_abis:*(-)?] )
 "
 
+WAF_SRC_CONFIGURE_PARAMS=(
+    --docdir=/usr/share/doc/${PNVR}/html
+    --mandir=/usr/share/man/man1
+    --enable-complex
+    --enable-double
+    --enable-fftw3f
+    --disable-samplerate
+    --disable-sndfile
+)
+WAF_SRC_CONFIGURE_OPTION_ENABLES=(
+    "ffmpeg avcodec"
+    jack
+)
+
 WAF_SRC_COMPILE_PARAMS=( --notests )
-WAF_SRC_TEST_PARAMS=( --alltests )
 
 src_prepare() {
     default
 
-    # the build system doesn't respect libdir for aubio target
-    edo sed -e "s:\/lib:\/${LIBDIR}:" -i src/wscript_build
-    option doc || \
-        edo sed -e "s/find_program('doxygen'/find_program('disable-doxy'/" \
-                -i wscript
+    if ! option doc ; then
+        edo sed \
+            -e "s/find_program('doxygen'/find_program('disable-doxy'/" \
+            -i wscript
+    fi
 }
 
 src_configure() {
-    ewaf --jobs=1 configure \
-        --prefix=/usr/ \
-        --bindir=/usr/bin/ \
-        --libdir=/usr/${LIBDIR}/ \
-        --datadir=/usr/share/ \
-        --docdir=/usr/share/doc/${PNVR}/html/ \
-        --enable-double \
-        --enable-fftw3f \
-        $( (option ffmpeg || option libav) && echo --enable-avcodec || echo --disable-avcodec) \
-        $(option_enable jack)
+    waf_src_configure
 
     if option python ; then
         pushd python
