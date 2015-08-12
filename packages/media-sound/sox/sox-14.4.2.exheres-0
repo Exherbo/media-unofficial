@@ -21,7 +21,7 @@ BUGS_TO="alip@exherbo.org"
 LICENCES="LGPL-2.1 GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="alsa ao debug flac id3tag ladspa ogg png pulseaudio sndfile wavpack
+MYOPTIONS="alsa ao debug flac id3tag ladspa ogg opus png pulseaudio sndfile wavpack
     mp3 [[ description = [ Support for mp3 encoding with lame, and decoding with mad ] ]]
 "
 
