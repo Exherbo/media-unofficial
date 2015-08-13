@@ -3,20 +3,32 @@
 # Based in part on timidity++-2.13.2-r10.ebuild from Gentoo
 
 require sourceforge [ project=timidity pn="TiMidity++" ]
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 ] ]
 
 SUMMARY="MIDI software synthesizer"
 DESCRIPTION="
-A handy MIDI to WAV converter with OSS and ALSA output support, useful for playing MIDI without a midi-capable soundcard
+A handy MIDI to WAV converter with OSS and ALSA output support, useful for playing MIDI without a
+midi-capable soundcard
 "
+
+BUGS_TO="adriaan@leijnse.net"
 
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS="
-    alsa baselayout jack vorbis flac speex ao
+    alsa
+    ao
+    baselayout
+    flac
+    jack
+    speex
+    vorbis
 "
 
 DEPENDENCIES="
+    build:
+        virtual/pkg-config
     build+run:
         user/timidity
         alsa? ( sys-sound/alsa-lib )
@@ -29,24 +41,21 @@ DEPENDENCIES="
         media-sound/timidity-freepats [[ description = [ instruments ] ]]
 "
 
-BUGS_TO="adriaan@leijnse.net"
-
-WORK="${WORKBASE}/TiMidity++-${PV}"
-
 DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PNV}-{gtk26,gcc4,flac,flac113,protos,polling,decl}.patch
-    -p0 "${FILES}"/${PNV}-no_png_set_dither.patch
+    "${FILES}"/${PN}-2.14.0-ar.patch
+    "${FILES}"/${PN}-2.14.0-configure-flags.patch
+    "${FILES}"/${PN}-2.14.0-params.patch
+    "${FILES}"/${PN}-2.14.0-pkg-config.patch
+    "${FILES}"/${PN}-2.14.0-revert-for-required-ctl_speana_data-function.patch
+    "${FILES}"/${PN}-2.14.0-tcltk86.patch
 )
 
 # TODO: push to upstream patch with using AM_PROG_AR
-DEFAULT_SRC_COMPILE_PARAMS=( AR="$AR" )
+DEFAULT_SRC_COMPILE_PARAMS=( AR="${AR}" )
 
-src_prepare() {
-    default
-    # fix header location of speex
-    edo sed -i -e "s:#include <speex:#include <speex/speex:g" \
-        configure* timidity/speex_a.c
-}
+WORK="${WORKBASE}/TiMidity++-${PV}"
+
+AT_M4DIR=( autoconf )
 
 src_configure() {
     local audios
@@ -58,6 +67,7 @@ src_configure() {
         --hates={dataroot,doc}dir \
         --with-elf \
         --enable-audio=${audios} \
+        --disable-xft
         $(option_enable alsa alsaseq)
 }
 
