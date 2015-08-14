@@ -65,9 +65,10 @@ src_configure() {
 
     edo econf \
         --hates={dataroot,doc}dir \
-        --with-elf \
         --enable-audio=${audios} \
-        --disable-xft
+        --disable-xft \
+        --with-default-path=/usr/share/timidity \
+        --with-elf \
         $(option_enable alsa alsaseq)
 }
 
