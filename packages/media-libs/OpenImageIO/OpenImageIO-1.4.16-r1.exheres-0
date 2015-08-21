@@ -58,6 +58,7 @@ src_configure()
         -DOIIO_BUILD_TESTS:BOOL=FALSE
         -DPYLIB_INSTALL_DIR:STRING=$(python_get_sitedir)
         -DPYTHON_VERSION:STRING=$(python_get_abi)
+        -DSTOP_ON_WARNING:BOOL=FALSE
         -DUSE_FIELD3D:BOOL=FALSE
         -DUSE_OCIO:BOOL=FALSE
         -DUSE_OPENCV:BOOL=FALSE
