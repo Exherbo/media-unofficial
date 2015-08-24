@@ -1,10 +1,10 @@
 # Copyright 2012 Xavier Barrachina <xabarci@doctor.upv.es>
 # Distributed under the terms of the GNU General Public License v2
 
-require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.11 ] ]
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 ] ]
 
 SUMMARY="Flickcurl is a C library for the Flickr API"
-HOMEPAGE="http://librdf.org/flickcurl/"
+HOMEPAGE="http://librdf.org/${PN}"
 DOWNLOADS="http://download.dajobe.org/${PN}/${PNV}.tar.gz"
 
 REMOTE_IDS="freecode:${PN}"
@@ -16,12 +16,15 @@ MYOPTIONS="doc"
 
 DEPENDENCIES="
     build:
+        virtual/pkg-config[>=0.9.0]
         doc? ( dev-doc/gtk-doc[>=1.3] )
     build+run:
-        dev-libs/libxml2[>=2.6.8]
-        media-libs/raptor[>=1.4]
-        net-misc/curl[>=7.10]
+        dev-libs/libxml2:2.0[>=2.6.8]
+        media-libs/raptor[>=2.0.0]
+        net-misc/curl[>=7.10.0]
 "
+
+DEFAULT_SRC_CONFIGURE_PARAMS=( --disable-static )
 
 src_prepare() {
     if ! option doc ; then
@@ -34,6 +37,7 @@ src_prepare() {
 
 src_install() {
     default
+
     if ! option doc ; then
         doman docs/flick{curl-config,curl,rdf}.1
     fi
