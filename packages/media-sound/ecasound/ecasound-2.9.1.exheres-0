@@ -17,14 +17,18 @@ parameters can be controlled by operator objects like oscillators
 and MIDI-CCs. A versatile console mode user-interface is included
 in the package.
 "
-HOMEPAGE="http://ecasound.seul.org/ecasound/"
-DOWNLOADS="http://ecasound.seul.org/download/${PNV}.tar.gz"
+HOMEPAGE="http://${PN}.seul.org/${PN}"
+DOWNLOADS="http://${PN}.seul.org/download/${PNV}.tar.gz"
 
 BUGS_TO="alip@exherbo.org"
+
 LICENCES="LGPL-2.1 GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS="alsa audiofile debug jack libsamplerate ncurses python ruby sndfile vorbis"
+
+# libkvutils_tester fails, last checked: 2.9.1
+RESTRICT="test"
 
 DEPENDENCIES="
     build+run:
@@ -49,7 +53,7 @@ src_configure() {
     if option python; then
         pyconf=(
             --enable-pyecasound
-            --with-python-includes=/usr/include/python$(python_get_abi)
+            --with-python-includes=/usr/$(exhost --target)/include/python$(python_get_abi)
             --with-python-modules=$(python_get_libdir)
         )
     else
@@ -66,10 +70,14 @@ src_configure() {
         $(option_enable ruby rubyecasound) \
         $(option_enable sndfile) \
         --enable-shared \
-        --with-largefile \
         --enable-sys-readline \
         --disable-arts \
         --disable-oss \
+        --disable-static \
+        --disable-liboil \
+        --disable-liblilv \
+        --disable-liblo \
+        --with-largefile \
         "${pyconf[@]}"
 }
 
