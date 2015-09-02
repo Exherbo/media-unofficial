@@ -3,7 +3,7 @@
 
 require sourceforge [ suffix=tar.gz ]
 
-SUMMARY="programming interface for the 1394 Trade Association AV/C Digital Interface Command Set."
+SUMMARY="Programming interface for the 1394 Trade Association AV/C Digital Interface Command Set"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
@@ -11,9 +11,14 @@ PLATFORMS="~amd64"
 MYOPTIONS=""
 
 DEPENDENCIES="
+    build:
+        virtual/pkg-config[>=0.9.0]
     build+run:
         media-libs/libraw1394[>=1.0.0]
 "
 
-DEFAULT_SRC_CONFIGURE_PARAMS=( --prefix=/usr --hates=docdir)
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --prefix=/usr/$(exhost --target)
+    --disable-static
+)
 
