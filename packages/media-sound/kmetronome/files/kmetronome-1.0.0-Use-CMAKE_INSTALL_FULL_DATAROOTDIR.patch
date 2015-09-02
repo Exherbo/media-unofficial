@@ -1,0 +1,98 @@
+Source: Timo Gurr <tgurr@exherbo.org>
+Upstream: No
+Reason: Use CMAKE_INSTALL_FULL_DATAROOTDIR
+
+diff -Naur kmetronome-1.0.0/cmake_admin/DBusMacros.cmake kmetronome-1.0.0.new/cmake_admin/DBusMacros.cmake
+--- kmetronome-1.0.0/cmake_admin/DBusMacros.cmake	2014-10-12 15:50:36.000000000 +0200
++++ kmetronome-1.0.0.new/cmake_admin/DBusMacros.cmake	2015-09-02 13:58:56.851703863 +0200
+@@ -4,6 +4,6 @@
+         string(REGEX REPLACE "\\.service.*$" ".service" _output_file ${_i})
+         set(_target ${CMAKE_CURRENT_BINARY_DIR}/${_output_file})
+         configure_file(${_service_file} ${_target})
+-        install(FILES ${_target} DESTINATION share/dbus-1/services)
++        install(FILES ${_target} DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/dbus-1/services")
+     endforeach (_i ${ARGN})
+ endmacro(dbus_add_activation_service _sources)
+diff -Naur kmetronome-1.0.0/CMakeLists.txt kmetronome-1.0.0.new/CMakeLists.txt
+--- kmetronome-1.0.0/CMakeLists.txt	2014-10-12 15:50:36.000000000 +0200
++++ kmetronome-1.0.0.new/CMakeLists.txt	2015-09-02 13:56:28.356166180 +0200
+@@ -104,4 +104,4 @@
+ )
+ 
+ install( FILES kmetronome.desktop
+-         DESTINATION share/applications )
++         DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/applications" )
+diff -Naur kmetronome-1.0.0/data/CMakeLists.txt kmetronome-1.0.0.new/data/CMakeLists.txt
+--- kmetronome-1.0.0/data/CMakeLists.txt	2014-10-12 15:50:36.000000000 +0200
++++ kmetronome-1.0.0.new/data/CMakeLists.txt	2015-09-02 13:58:18.688052447 +0200
+@@ -1,2 +1,2 @@
+ INSTALL( FILES drums.ins samples.pat
+-         DESTINATION share/kmetronome )
++         DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/kmetronome" )
+diff -Naur kmetronome-1.0.0/doc/CMakeLists.txt kmetronome-1.0.0.new/doc/CMakeLists.txt
+--- kmetronome-1.0.0/doc/CMakeLists.txt	2014-10-12 15:50:36.000000000 +0200
++++ kmetronome-1.0.0.new/doc/CMakeLists.txt	2015-09-02 13:58:02.013767677 +0200
+@@ -17,6 +17,6 @@
+ # MA 02110-1301, USA
+ 
+ install(FILES kmetronome.1 
+-	DESTINATION share/man/man1)
++	DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/man/man1")
+ install(FILES kmetronome.html kmetronome_1.png kmetronome_2.png kmetronome_3.png
+-	DESTINATION share/kmetronome)
++	DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/kmetronome")
+diff -Naur kmetronome-1.0.0/icons/CMakeLists.txt kmetronome-1.0.0.new/icons/CMakeLists.txt
+--- kmetronome-1.0.0/icons/CMakeLists.txt	2014-10-12 15:50:36.000000000 +0200
++++ kmetronome-1.0.0.new/icons/CMakeLists.txt	2015-09-02 13:56:56.586649280 +0200
+@@ -1,26 +1,26 @@
+ install (FILES kmetronome_16x16.png
+-         DESTINATION share/icons/hicolor/16x16/apps
++         DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/icons/hicolor/16x16/apps"
+          RENAME kmetronome.png)
+ 
+ install (FILES kmetronome_24x24.png
+-         DESTINATION share/icons/hicolor/24x24/apps
++         DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/icons/hicolor/24x24/apps"
+          RENAME kmetronome.png)
+ 
+ install (FILES kmetronome_32x32.png
+-         DESTINATION share/icons/hicolor/32x32/apps
++         DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/icons/hicolor/32x32/apps"
+          RENAME kmetronome.png)
+ 
+ install (FILES kmetronome_48x48.png
+-         DESTINATION share/icons/hicolor/48x48/apps
++         DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/icons/hicolor/48x48/apps"
+          RENAME kmetronome.png)
+ 
+ install (FILES kmetronome_64x64.png
+-         DESTINATION share/icons/hicolor/64x64/apps
++         DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/icons/hicolor/64x64/apps"
+          RENAME kmetronome.png)
+ 
+ install (FILES kmetronome_128x128.png
+-         DESTINATION share/icons/hicolor/128x128/apps
++         DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/icons/hicolor/128x128/apps"
+          RENAME kmetronome.png)
+ 
+ install (FILES kmetronome.svgz
+-         DESTINATION share/icons/hicolor/scalable/apps )
++         DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/icons/hicolor/scalable/apps" )
+diff -Naur kmetronome-1.0.0/src/CMakeLists.txt kmetronome-1.0.0.new/src/CMakeLists.txt
+--- kmetronome-1.0.0/src/CMakeLists.txt	2014-10-12 15:50:36.000000000 +0200
++++ kmetronome-1.0.0.new/src/CMakeLists.txt	2015-09-02 13:57:35.823320180 +0200
+@@ -77,4 +77,4 @@
+          RUNTIME DESTINATION bin )
+ 
+ install( FILES net.sourceforge.kmetronome.xml 
+-         DESTINATION share/dbus-1/interfaces )
++         DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/dbus-1/interfaces" )
+diff -Naur kmetronome-1.0.0/translations/CMakeLists.txt kmetronome-1.0.0.new/translations/CMakeLists.txt
+--- kmetronome-1.0.0/translations/CMakeLists.txt	2014-10-12 15:50:36.000000000 +0200
++++ kmetronome-1.0.0.new/translations/CMakeLists.txt	2015-09-02 13:57:16.527990329 +0200
+@@ -9,4 +9,4 @@
+ ADD_CUSTOM_TARGET(translations ALL DEPENDS ${QM_FILES})
+ 
+ INSTALL( FILES ${QM_FILES}
+-         DESTINATION share/kmetronome/locale )
++         DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/kmetronome/locale" )

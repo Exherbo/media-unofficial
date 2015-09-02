@@ -1,0 +1,16 @@
+Source: Timo Gurr <tgurr@exherbo.org>
+Upstream: No
+Reason: Fix search path for cross
+
+diff -Naur kmetronome-1.0.0/src/kmetronome.cpp kmetronome-1.0.0.new/src/kmetronome.cpp
+--- kmetronome-1.0.0/src/kmetronome.cpp	2014-10-12 15:50:36.000000000 +0200
++++ kmetronome-1.0.0.new/src/kmetronome.cpp	2015-09-02 13:59:42.017474189 +0200
+@@ -44,7 +44,7 @@
+ 
+ static QDir dataDirectory()
+ {
+-    QDir test(QApplication::applicationDirPath() + "/../share/kmetronome/");
++    QDir test(QApplication::applicationDirPath() + "/../../share/kmetronome/");
+     if (test.exists())
+         return test;
+     QStringList candidates = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
