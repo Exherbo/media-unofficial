@@ -8,8 +8,10 @@ require sourceforge [ suffix="tar.gz" ]
 SUMMARY="TAP LADSPA plugins package"
 DESCRIPTION="
 TAP LADSPA plugins package. Contains DeEsser, Dynamics, Equalizer, Reverb,
-Stereo Echo, Tremolo...
+Stereo Echo, Tremolo.
 "
+
+BUGS_TO="alip@exherbo.org"
 
 LICENCES="GPL-2"
 SLOT="0"
@@ -21,16 +23,14 @@ DEPENDENCIES="
         media-libs/ladspa-sdk
 "
 
-BUGS_TO="alip@exherbo.org"
-
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/${PNV}-cflags.patch" )
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PN}-0.7.3-cflags-ldflags.patch )
 
 src_compile() {
     emake CC="${CC}" OPT_CFLAGS="${CFLAGS}" EXTRA_LDFLAGS="${LDFLAGS}"
 }
 
 src_install() {
-    insinto /usr/${LIBDIR}/ladspa
+    insinto /usr/$(exhost --target)/lib/ladspa
     insopts -m0755
     doins *.so
 
