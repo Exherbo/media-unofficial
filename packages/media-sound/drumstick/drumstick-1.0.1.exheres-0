@@ -1,0 +1,53 @@
+# Copyright 2013 Ali Polatel <alip@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require sourceforge cmake [ api=2 ] freedesktop-desktop freedesktop-mime gtk-icon-cache
+
+SUMMARY="MIDI libraries for Qt5/C++"
+DESCRIPTION="
+Drumstick is a tool to play music. This is a set of C++ MIDI libraries using Qt5 objects, idioms
+and style. It contains a C++ wrapper around the ALSA library sequencer interface; ALSA sequencer
+provides software support for MIDI technology on Linux. A complementary library provides classes
+for SMF (Standard MIDI files: .MID/.KAR), Cakewalk (.WRK), and Overture (.OVE) file formats
+processing. A multiplatform realtime MIDI I/O library is also provided.
+"
+
+BUGS_TO="alip@exherbo.org"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="doc"
+
+DEPENDENCIES="
+    build:
+        dev-libs/libxslt [[ note = [ xsltproc for man page generation ] ]]
+        virtual/pkg-config
+    build+run:
+        media-sound/fluidsynth[>=1.1.1]
+        sys-sound/alsa-lib
+        x11-libs/qtbase:5
+        x11-libs/qtsvg:5
+"
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PN}-1.0.1-Use-CMAKE_INSTALL_FULL_DATAROOTDIR.patch
+)
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DLIB_SUFFIX:STRING=
+    -DUSE_DBUS:BOOL=TRUE
+)
+
+pkg_postinst() {
+    freedesktop-desktop_pkg_postinst
+    freedesktop-mime_pkg_postinst
+    gtk-icon-cache_pkg_postinst
+}
+
+pkg_postrm() {
+    freedesktop-desktop_pkg_postrm
+    freedesktop-mime_pkg_postrm
+    gtk-icon-cache_pkg_postrm
+}
+
