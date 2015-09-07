@@ -4,7 +4,7 @@
 require setup-py [ import=distutils blacklist='3.2' ]
 require bitbucket [ user='lazka' download=${PNV} ]
 
-SUMMARY="Python module to handle audio metadata."
+SUMMARY="Python module to handle audio metadata"
 DESCRIPTION="
 Mutagen supports ASF, FLAC, M4A, Monkey's Audio, MP3, Musepack, Ogg FLAC, Ogg
 Speex, Ogg Theora, Ogg Vorbis, True Audio, WavPack and OptimFROG audio files.
@@ -15,13 +15,13 @@ manipulate Ogg streams on an individual packet/page level.
 "
 
 REMOTE_IDS="pypi:${PN}"
+
 LICENCES="GPL-2"
+MYOPTIONS=""
 
 # Disable tests for now; they fail (with a floating-point exception in flac?)
 # for me when run in sandbox
 RESTRICT="test"
-
-MYOPTIONS=""
 
 DEPENDENCIES="
     test:
