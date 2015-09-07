@@ -3,7 +3,7 @@
 #   Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-require gnome.org [ suffix=.tar.xz ] gsettings
+require gnome.org [ suffix=.tar.xz ] freedesktop-desktop gsettings gtk-icon-cache
 
 SUMMARY="GTK+ utility for editing MP2, MP3, MP4, FLAC, Ogg and other media tags"
 DESCRIPTION="
@@ -38,6 +38,7 @@ attached picture
 "
 
 BUGS_TO="markus@unixforces.net"
+
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
@@ -49,8 +50,8 @@ MYOPTIONS="flac mp3 vorbis
     speex    [[ requires = vorbis ]]
 
     ( linguas:
-        bg bs ca cs da de el en_GB es fr he hu id it ja ko lt nb nl pl pt_BR
-        ro ru sl sr sr@latin sv te tr uk zh_CN zh_TW
+        bg bs ca cs da de el en_GB es fr he hu id it ja ko lt nb nl pl pt pt_BR ro ru sl sr
+        sr@latin sv te tr uk zh_CN zh_TW
     )
 "
 
@@ -90,10 +91,6 @@ DEPENDENCIES="
         dev-util/desktop-file-utils
 "
 
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/${PNV}-Fix-file-description-test-with-missing-tag-support.patch
-)
-
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     flac
     mp3
@@ -106,4 +103,16 @@ DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     wavpack
 )
 DEFAULT_SRC_CONFIGURE_TESTS=( '--any --enable-tests --disable-tests' )
+
+pkg_postrm() {
+    freedesktop-desktop_pkg_postrm
+    gsettings_pkg_postrm
+    gtk-icon-cache_pkg_postrm
+}
+
+pkg_postinst() {
+    freedesktop-desktop_pkg_postinst
+    gsettings_pkg_postinst
+    gtk-icon-cache_pkg_postinst
+}
 
