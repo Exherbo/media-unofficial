@@ -1,7 +1,7 @@
 # Copyright 2009, 2012 Ali Polatel <alip@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require sourceforge [ suffix="tar.gz" ]
+require sourceforge [ suffix=tar.gz ] cmake [ api=2 ] freedesktop-desktop
 
 SUMMARY="Virtual midi keyboard for jack midi"
 DESCRIPTION="
@@ -13,18 +13,27 @@ Tracker) did, so you have two and half octaves under your fingers.
 "
 
 BUGS_TO="alip@exherbo.org"
-LICENCES="public-domain"
+
+LICENCES="BSD-2"
 SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS="X"
 
 DEPENDENCIES="
     build+run:
-        media-sound/jack-audio-connection-kit
         dev-libs/glib:2
-        x11-libs/gtk+
+        media-sound/jack-audio-connection-kit
+        x11-libs/gtk+:2[>=2.2]
         X? ( x11-libs/libX11 )
 "
 
-DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( 'X x11' )
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PN}-2.7.1-Use-CMAKE_INSTALL_FULL_DATAROOTDIR.patch
+)
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DJackEnable:BOOL=TRUE
+    -DLashEnable:BOOL=FALSE
+)
+CMAKE_SRC_CONFIGURE_OPTIONS+=( 'X X11Enable' )
 

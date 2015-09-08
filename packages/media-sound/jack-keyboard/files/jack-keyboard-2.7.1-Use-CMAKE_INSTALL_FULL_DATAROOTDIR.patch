@@ -1,0 +1,17 @@
+Source: Timo Gurr <tgurr@exherbo.org>
+Upstream: No
+Reason: Use CMAKE_INSTALL_FULL_DATAROOTDIR
+
+diff -Naur jack-keyboard-2.7.1/CMakeLists.txt jack-keyboard-2.7.1.new/CMakeLists.txt
+--- jack-keyboard-2.7.1/CMakeLists.txt	2011-12-27 10:50:32.000000000 +0100
++++ jack-keyboard-2.7.1.new/CMakeLists.txt	2015-09-08 19:00:13.704672555 +0200
+@@ -64,6 +64,6 @@
+ endif()
+ 
+ install(TARGETS jack-keyboard RUNTIME DESTINATION bin)
+-install(FILES pixmaps/jack-keyboard.png DESTINATION share/pixmaps)
+-install(FILES src/jack-keyboard.desktop DESTINATION share/applications)
+-install(FILES man/jack-keyboard.1 DESTINATION man/man1)
++install(FILES pixmaps/jack-keyboard.png DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/pixmaps")
++install(FILES src/jack-keyboard.desktop DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/applications")
++install(FILES man/jack-keyboard.1 DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/man/man1")
