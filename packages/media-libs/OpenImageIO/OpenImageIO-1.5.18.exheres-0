@@ -1,0 +1,94 @@
+# Copyright 2014 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require github [ pn=oiio user=${PN} tag=Release-${PV} ] cmake [ api=2 ] \
+        python [ blacklist=none multibuild=false ]
+
+SUMMARY="A library for reading and writing images"
+
+BUGS_TO="mixi@exherbo.org"
+
+LICENCES="
+    BSD-3
+    MIT   [[ note = [ bundled pugixml ] ]]
+    GPL-2 [[ note = [ bundled tbb ] ]]
+"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="
+    freetype [[ description = [ Support for rendering text on image buffers ] ]]
+    gif
+    jpeg2000
+    raw [[ description = [ Enable reading RAW image files from digital photo cameras ] ]]
+    ( providers: libressl openssl ) [[ number-selected = exactly-one ]]
+"
+
+# tests require e.g. USE_FIELD3D to be enabled
+RESTRICT="test"
+
+# USE_FIELD3D, USE_OCIO: unwritten
+# TODO: get rid of the bundled pugixml
+DEPENDENCIES="
+    build:
+        app-text/txt2man
+    build+run:
+        dev-libs/boost[>=1.42]
+        media-libs/ilmbase
+        media-libs/jpeg:=
+        media-libs/libpng:=
+        media-libs/libwebp
+        media-libs/openexr
+        media-libs/tiff
+        sys-libs/zlib
+        freetype? ( media-libs/freetype:2 )
+        gif? ( media-libs/giflib:= )
+        jpeg2000? ( media-libs/OpenJPEG:0 )
+        providers:libressl? ( dev-libs/libressl:= )
+        providers:openssl? ( dev-libs/openssl )
+        raw? ( media-libs/libraw )
+"
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/f80e48f22dd58f92a0a9eb9d03cee5c1970af141.patch
+)
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DDOC_INSTALL_DIR:STRING=/usr/share/doc/${PNVR}
+    -DMAN_INSTALL_DIR:STRING=/usr/share/man/man1
+    -DOIIO_BUILD_TESTS:BOOL=FALSE
+    -DSTOP_ON_WARNING:BOOL=FALSE
+    -DUSE_FFMPEG:BOOL=FALSE
+    -DUSE_FIELD3D:BOOL=FALSE
+    -DUSE_OCIO:BOOL=FALSE
+    -DUSE_OPENCV:BOOL=FALSE
+    -DUSE_OPENGL:BOOL=FALSE
+    -DUSE_OPENSSL:BOOL=TRUE
+    -DUSE_QT:BOOL=FALSE
+)
+
+CMAKE_SRC_CONFIGURE_OPTION_USES=(
+    FREETYPE
+    GIF
+    'jpeg2000 OPENJPEG'
+    'raw LIBRAW'
+)
+
+_ecmake_helper() {
+    ecmake \
+        "${CMAKE_SRC_CONFIGURE_PARAMS[@]}" \
+        $(for s in "${CMAKE_SRC_CONFIGURE_OPTION_USES[@]}" ; do
+            cmake_use ${s}
+        done ) \
+        "$@"
+}
+
+src_configure() {
+    local cmakeargs=(
+        -DPYLIB_INSTALL_DIR:STRING=$(python_get_sitedir)
+        -DPYTHON_VERSION:STRING=$(python_get_abi)
+    )
+
+    _ecmake_helper \
+        "${cmakeargs[@]}"
+}
+
