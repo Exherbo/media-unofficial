@@ -27,9 +27,9 @@ LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
 MYOPTIONS="alsa ffmpeg flac id3tag jack ladspa midi mp2 mp3 soundtouch vorbis
-    ffmpeg?     ( ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]] )
     id3tag      [[ description = [ Enables the ability to modify ID3 tags ] ]]
     soundtouch  [[ description = [ Required for pitch and tempo changing ] ]]
+    ffmpeg?     ( ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]] )
 "
 
 
@@ -42,9 +42,9 @@ DEPENDENCIES="
     build+run:
         app-arch/zip[>=2.3]
         dev-libs/expat
+        media-libs/libmad[>=0.14.2b]
         media-libs/libsamplerate[>=0.1.2]
         media-libs/libsndfile[>=1.0.0]
-        media-libs/libmad[>=0.14.2b]
         media-libs/soxr
         media-sound/lame[>=3.70]
         x11-libs/wxGTK:2.8[>=2.8.0]
@@ -54,9 +54,9 @@ DEPENDENCIES="
             providers:libav? ( media/libav )
         )
         jack? ( media-sound/jack-audio-connection-kit[>=0.103.0] )
-        soundtouch? ( media-libs/soundtouch )
         mp2? ( media-libs/twolame )
         mp3? ( media-sound/lame )
+        soundtouch? ( media-libs/soundtouch )
         vorbis? ( media-libs/libvorbis[>=1.0] )
 "
 
@@ -66,8 +66,8 @@ DEPENDENCIES="
 #        )
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(
-    AR="/usr/$(exhost --target)/bin/${AR}"
-    PKG_CONFIG="/usr/$(exhost --target)/bin/${PKG_CONFIG}"
+    AR=$(type -P ${AR})
+    PKG_CONFIG=$(type -P ${PKG_CONFIG})
 
     # needed for lib-src/lv2
     PKGCONFIG=${PKG_CONFIG}
@@ -124,7 +124,7 @@ AT_NO_RECURSIVE=1
 
 src_prepare() {
     edo sed -e "s/pkg-config,/${PKG_CONFIG},/" -i configure.ac
-    edo sed -e "s/pkg-config --/\$PKG_CONFIG --/" -i lib-src/FileDialog/configure
+    edo sed -e "s/pkg-config --/${PKG_CONFIG} --/" -i lib-src/FileDialog/configure
     edo sed -e "s/ar /${AR} /" -i lib-src/lib-widget-extra/Makefile.in \
                                -i src/Makefile.in
     edo sed -e "s/AR = ar/AR = ${AR}/" -i lib-src/libnyquist/Makefile.in \
