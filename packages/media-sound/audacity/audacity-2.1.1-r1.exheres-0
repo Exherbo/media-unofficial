@@ -53,6 +53,7 @@ DEPENDENCIES="
             providers:ffmpeg? ( media/ffmpeg )
             providers:libav? ( media/libav )
         )
+        id3tag? ( media-libs/libid3tag )
         jack? ( media-sound/jack-audio-connection-kit[>=0.103.0] )
         mp2? ( media-libs/twolame )
         mp3? ( media-sound/lame )
