@@ -1,7 +1,7 @@
 # Copyright 2010-2012 Pierre Lejeune <superheron@gmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
-require freedesktop-desktop
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 ] ] freedesktop-desktop
 
 SUMMARY="Graphical Audio CD ripper and encoder"
 DESCRIPTION="
@@ -14,11 +14,19 @@ DOWNLOADS="${HOMEPAGE}/releases/${PNV}.tar.bz2"
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS=""
+MYOPTIONS="
+    ( linguas: af am an ar as az be be@latin bg bn_IN bn br bs_BA ca cs cy da de dz el eo es eu fa
+               ff fi fo fr fy ga gl gu he hi hr ht hu hy ia id is it ja ka kk km ko ku ky la lb lg
+               lt lv mg mk ml mn mr ms my nb ne nl nn oc or pa pl ps pt_BR pt ro ru rw si sk sl sq
+               sr sr@latin sv ta te th tk tl tr tt ug uk ur_PK ur uz uz@cyrillic vi wa wo xh yi
+               zh_CN zh_TW zu )
+"
 
 DEPENDENCIES="
     build:
+        dev-util/intltool[>=0.34.90]
         sys-devel/gettext
+        virtual/pkg-config[>=0.9.0]
     build+run:
         media/cdparanoia
         media-libs/libcddb[>=0.9.5]
@@ -28,7 +36,20 @@ DEPENDENCIES="
         media-libs/mac-port [[ note = [ Adds MonkeyAudio (APE) encoding support ] ]]
         media-libs/mpcenc [[ note = [ Adds Musepack (MPC) encoding support ] ]]
         media-sound/lame [[ note = [ Adds MP3 encoding support ] ]]
+        media-sound/opus-tools [[ note = [ Adds Opus encoding support ] ]]
         media-sound/vorbis-tools [[ note = [ Adds Ogg Vorbis encoding support ] ]]
         media-sound/wavpack [[ note = [ Adds WAV encoding support ] ]]
 "
+
+src_prepare() {
+    # Respect datarootdir
+    edo sed \
+        -e 's:$(prefix)/$(DATADIRNAME)/locale:$(datarootdir)/locale:' \
+        -i src/Makefile.am
+    edo sed \
+        -e 's:itlocaledir = $(prefix)/$(DATADIRNAME)/locale:itlocaledir = $(datarootdir)/locale:' \
+        -i po/Makefile.in.in
+
+    autotools_src_prepare
+}
 
