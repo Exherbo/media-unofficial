@@ -2,7 +2,7 @@
 # Copyright 2009, 2014 Ali Polatel <alip@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require sourceforge [ suffix=tar.gz ]
+require sourceforge [ suffix=tar.gz ] freedesktop-desktop gtk-icon-cache
 
 SUMMARY="A simple Qt application to control the JACK sound server daemon"
 DESCRIPTION="
@@ -13,6 +13,7 @@ including a enhanced patchbay and connection control features.
 "
 
 BUGS_TO="alip@exherbo.org"
+
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
@@ -23,18 +24,40 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build+run:
+        media-sound/jack-audio-connection-kit[>=0.124.1][dbus?]
         sys-sound/alsa-lib
-        media-sound/jack-audio-connection-kit[dbus?]
-        x11-libs/qt:4
+        x11-libs/qt:4[>=4.4]
         dbus? ( sys-apps/dbus )
 "
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     --enable-alsa-seq
+    --enable-jack-metadata
     --enable-jack-midi
+    --enable-jack-port-aliases
+    --enable-qt4
     --enable-system-tray
     --disable-portaudio
+    --disable-qt5
 )
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( debug dbus )
-DEFAULT_SRC_COMPILE_PARAMS=( -j1 )
+
+src_prepare() {
+    # install to /usr/share
+    edo sed \
+        -e 's:$$PREFIX/share:/usr/share:g' \
+        -i src/src.pro
+
+    default
+}
+
+pkg_postinst() {
+    freedesktop-desktop_pkg_postinst
+    gtk-icon-cache_pkg_postinst
+}
+
+pkg_postrm() {
+    freedesktop-desktop_pkg_postrm
+    gtk-icon-cache_pkg_postrm
+}
 
