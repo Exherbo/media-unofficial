@@ -1,7 +1,7 @@
 # Copyright 2009 Pierre Lejeune <superheron@gmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
-require sourceforge [ suffix=tar.gz ] gtk-icon-cache freedesktop-desktop
+require sourceforge [ suffix=tar.gz ] freedesktop-desktop gtk-icon-cache
 
 SUMMARY="Qt GUI Interface for FluidSynth"
 DESCRIPTION="
@@ -16,7 +16,7 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build:
-        x11-libs/qttools [[ note = [ for lupdate ] ]]
+        x11-libs/qttools:5[>=5.1] [[ note = [ for lupdate ] ]]
     build+run:
         media-sound/fluidsynth
         x11-libs/libX11
