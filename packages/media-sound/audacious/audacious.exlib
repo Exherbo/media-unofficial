@@ -1,18 +1,23 @@
-# Copyright (c) 2009 Jan Meier
+# Copyright 2009 Jan Meier
 # Copyright 2012 Ivan Dives
 # Distributed under the terms of the GNU General Public License v2
 
+require freedesktop-desktop gtk-icon-cache
+
 SUMMARY="Audacious is an advanced audio player"
-HOMEPAGE="http://www.audacious-media-player.org/"
-DOWNLOADS="http://distfiles.audacious-media-player.org/${PNV}.tar.bz2"
+HOMEPAGE="http://www.audacious-media-player.org"
+DOWNLOADS="http://distfiles.audacious-media-player.org/${PNV}-gtk3.tar.bz2"
 
 LICENCES="
     GPL-2 [[ note = [ src/audacious/images/{album audio connectivity menu_playlist menu_plugin menu_queue_toggle playlist plugins}.png ] ]]
     GPL-3
 "
+SLOT="0"
 MYOPTIONS="
     chardet [[ description = [ Enable character detection support (via libguess) ] ]]
     dbus [[ description = [ Build mpris backend (can be later used by mpris2 plugin). ] ]]
+    gtk
+    qt5 [[ description = [ Build the Qt5 GUI ] ]]
 "
 
 DEPENDENCIES="
@@ -22,15 +27,38 @@ DEPENDENCIES="
     build+run:
         dev-libs/glib:2
         text-libs/libguess
-        x11-libs/gtk+:3
         x11-libs/libICE
         x11-libs/libSM
         chardet? ( text-libs/libguess )
         dbus? ( dev-libs/dbus-glib:1 )
+        gtk? ( x11-libs/gtk+:3[>=3.4] )
+        qt5? ( x11-libs/qtbase:5 )
     post:
-        media-sound/audacious-plugins[~${PV}]
+        media-sound/audacious-plugins[~${PV}][gtk][qt5?] [[ note = [ some plugins currently fail without gtk ] ]]
 "
 
-DEFAULT_SRC_CONFIGURE_PARAMS=( "--with-buildstamp=Exherbo" )
-DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( "chardet" "dbus" )
+WORK=${WORKBASE}/${PNV}-gtk3
+
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --enable-nls
+    --with-buildstamp=Exherbo
+)
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
+    chardet
+    dbus
+    gtk
+    "qt5 qt"
+)
+
+DEFAULT_SRC_COMPILE_PARAMS=( AR=${AR} RANLIB=${RANLIB} )
+
+pkg_postinst() {
+    freedesktop-desktop_pkg_postinst
+    gtk-icon-cache_pkg_postinst
+}
+
+pkg_postrm() {
+    freedesktop-desktop_pkg_postrm
+    gtk-icon-cache_pkg_postrm
+}
 
