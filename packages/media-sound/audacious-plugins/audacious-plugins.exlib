@@ -1,31 +1,37 @@
 # Copyright 2012 Ivan Dives
 # Distributed under the terms of the GNU General Public License v2
 
-export_exlib_phases src_configure
+require option-renames [ renames=[ 'flsyn fluidsynth' ] ] \
+    autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 ] ]
+
+export_exlib_phases src_prepare src_configure
 
 SUMMARY="Skins and Plugins for the Audacious music player"
-HOMEPAGE="http://www.audacious-media-player.org/"
-DOWNLOADS="http://distfiles.audacious-media-player.org/${PNV}.tar.bz2"
-DESCRIPTION="Plugins that provide gtk+ interface, support for decoding various formats (like flac
+HOMEPAGE="http://www.audacious-media-player.org"
+DOWNLOADS="http://distfiles.audacious-media-player.org/${PNV}-gtk3.tar.bz2"
+DESCRIPTION="Plugins that provide GUI interface, support for decoding various formats (like flac
 or midi), provide desktop environment integration (e.g. notify), allow remote control via dbus, etc.
 Note: some plugins are not on by default and have to be enabled in Preferences -> Plugins."
 
 LICENCES="
     BSD-2 [[ note = [ alsa audpl compressor crossfade ladspa mixer mpg123 mpris2 oss4 resample sdlout unix-io ] ]]
     BSD-3 [[ note = [ the-package psf xsf ] ]]
-    GPL-2 [[ note = [ aac alarm amidi-plug aosd blue_scope bs2b cue filewriter gio gnomeshortcuts hotkey jack m3u metronom mms neon  null OSS pulse_audio sid smb sndfile sndstretch tongen vtx xspf ] ]]
-    GPL-3 [[ note = [ asx cdaudio-ng cd-menu-items ffaudio flacng gtkui mtp_up notify pls search-tool skins song_change ] ]]
+    GPL-2 [[ note = [ aac alarm amidi-plug aosd blue_scope bs2b cue filewriter gnomeshortcuts hotkey jack m3u metronom mms neon null OSS pulse_audio sid sndfile sndstretch tongen vtx xspf ] ]]
+    GPL-3 [[ note = [ asx cdaudio-ng cd-menu-items ffmpeg flacng gtkui notify pls search-tool skins song_change ] ]]
     LGPL-2 [[ note = [ vorbis ] ]]
     LGPL-2.1 [[ note = [ adplug console ] ]]
     MIT [[ note = [ albumart cairo-spectrum crystalizer lyricswiki voice_removal ] ]]
     public-domain [[ note = [ aac ] ]]
 "
-
+SLOT="0"
 MYOPTIONS="
     aac [[ description = [ Support AAC decoding. ] ]]
     adplug [[ description = [ Support for AdPlug formats (like Westwood ADL and Sierra's Adlib). ] ]]
     alsa [[ description = [ Support ALSA audio output and MIDI synthesizing with AlsaMidi. ] ]]
-    flsyn [[ description = [ Support MIDI synthesizing with fluidsynth. ] ]]
+    fluidsynth [[
+        description = [ Support MIDI synthesizing with fluidsynth. ]
+        requires = [ alsa ]
+    ]]
     bs2b [[ description = [ Improve headphone listening of stereo audio records via libbs2b. ] ]]
     cd [[ description = [ AudioCD support. ] ]]
     cue [[ description = [ Support for CUE metadata files from CD/DVDs. ] ]]
@@ -36,20 +42,20 @@ MYOPTIONS="
         description = [ Control audacious with GNOME Shortcuts. ]
         requires = dbus
     ]]
+    gtk
     jack [[ description = [ Support JACK audio output. ] ]]
     mms [[ description = [ Support for mms:// and mmsh:// network streams in Open URL dialog. ] ]]
     modplug [[ description = [ Support for MOD Music formats. ] ]]
     mpeg [[ description = [ Support for mp{1,2,3} and bmu files decoding and dumping audio out to a mp3 file. ] ]]
-    mtp [[ description = [ Support upload to devices that support Media Transfer Protocol. ] ]]
     neon [[ description = [ Support for http:// and https:// protocols in Open URL dialog. ] ]]
     notify [[ description = [ Support for desktop notifications (simple but provides good DE integration). ] ]]
     osd [[ description = [ Support for displaying notifications (more customiseable than notify). ] ]]
     oss [[ description = [ Support OSSv4 audio output. ] ]]
     pulseaudio [[ description = [ Support PulseAudio output. ] ]]
+    qt5 [[ description = [ Build the Qt5 GUI. ] ]]
     resample [[ description = [ Support converting sample rates using libsamplerate. ] ]]
     sdl [[ description = [ Support SDL audio output. ] ]]
     scrobbler [[ description = [ Build audio scrobbler for last.fm. ] ]]
-    samba [[ description = [ Support for smb:// in Open URL dialog. ] ]]
     sndfile [[ description = [ Support reading files containing sampled sound (like Windows WAV and Apple/SGI AIFF). ] ]]
     speedpitch [[ description = [ Support speed and pitch effects using libsamplerate. ] ]]
     vorbis [[ description = [ Support for OGG/Vorbis formats and dumping audio out to a vorbis file. ] ]]
@@ -61,36 +67,36 @@ DEPENDENCIES="
         sys-devel/gettext
         virtual/pkg-config
     build+run:
-        dev-libs/glib:2
+        dev-libs/glib:2[>=2.14]
         dev-libs/libxml2:2.0
-        media-sound/audacious[~${PV}]
-        x11-libs/gtk+:3
+        media-sound/audacious[~${PV}][gtk][qt5?] [[ note = [ some plugins currently fail without gtk ] ]]
         aac? ( media-libs/faad2 )
         adplug? ( dev-libs/libbinio )
-        bs2b? ( media-libs/libbs2b )
+        alsa? ( sys-sound/alsa-lib[>=1.0.16] )
+        bs2b? ( media-libs/libbs2b[>=3.0.0] )
         cd? (
-            dev-libs/libcdio
-            media-libs/libcddb
+            dev-libs/libcdio[>=0.70]
+            media-libs/libcddb[>=1.2.1]
         )
         cue? ( media-libs/libcue )
-        dbus? ( dev-libs/dbus-glib:1 )
-        flsyn? ( media-sound/fluidsynth )
+        dbus? ( dev-libs/dbus-glib:1[>=0.60] )
+        fluidsynth? ( media-sound/fluidsynth[>=1.0.6] )
         ffmpeg? ( media/ffmpeg[>=0.9.1] )
-        flac? ( media-libs/flac )
+        flac? ( media-libs/flac[>=1.2.1] )
+        gtk? ( x11-libs/gtk+:3 )
         jack? (
             media-libs/libsamplerate
             media-sound/jack-audio-connection-kit
         )
-        sndfile? ( media-libs/libsndfile )
+        sndfile? ( media-libs/libsndfile[>=0.19] )
         speedpitch? ( media-libs/libsamplerate )
-        mms? ( media-libs/libmms )
+        mms? ( media-libs/libmms[>=0.3] )
         modplug? ( media-libs/libmodplug )
         mpeg? (
             media-sound/lame
-            media-sound/mpg123
+            media-sound/mpg123[>=1.12]
         )
-        mtp? ( media-libs/libmtp )
-        neon? ( net-misc/neon )
+        neon? ( net-misc/neon[>=0.27] )
         notify? ( x11-libs/libnotify )
         osd? (
             x11-libs/cairo
@@ -99,43 +105,63 @@ DEPENDENCIES="
             x11-libs/pango
         )
         oss? ( sys-sound/oss )
-        pulseaudio? ( media-sound/pulseaudio )
+        pulseaudio? ( media-sound/pulseaudio[>=0.9.5] )
+        qt5? (
+           x11-libs/qtbase:5
+           x11-libs/qtmultimedia:5
+        )
         resample? ( media-libs/libsamplerate )
-        scrobbler? ( net-misc/curl )
-        sdl? ( media-libs/SDL )
-        samba? ( net-fs/samba )
+        scrobbler? ( net-misc/curl[>=7.9.7] )
+        sdl? ( media-libs/SDL:0 )
         vorbis? (
             media-libs/libogg
             media-libs/libvorbis
         )
-        wavpack? ( media-sound/wavpack )
+        wavpack? ( media-sound/wavpack[>=4.31] )
     run:
-        media-sound/audacious[dbus?]
         gnomeshortcuts? ( gnome-desktop/gnome-settings-daemon:3.0 )
 "
 
+WORK=${WORKBASE}/${PNV}-gtk3
+
+audacious-plugins_src_prepare() {
+    # Find pkg-config
+    edo sed \
+        -e "s:pkg-config:${PKG_CONFIG}:g" \
+        -i configure.ac
+
+    autotools_src_prepare
+}
+
 audacious-plugins_src_configure() {
     local myopts=(
+        # System
+        --disable-coreaudio
+        --disable-mac-media-keys
+        --with-system-libxml2
+
+        # GUI Plugins
+        $(option_enable gtk)
+        $(option_enable qt5 qt)
+        $(option_enable qt5 qtglspectrum)
+        $(option_enable qt5 qtaudio)
+
         # Output Plugins
         $(option_enable oss oss4)                 # Open Sound System
         $(option_enable alsa)                     # Advanced Linux Sound Arch.
         $(option_enable pulseaudio pulse)         # PulseAudio
         $(option_enable jack)                     # Jack Audio Connection Kit
         $(option_enable sdl sdlout)               # Simple DirectMedia Layer
-        $(option_enable sdl sdltest)
         $(option_enable mpeg filewriter-mp3)
         $(option_enable flac filewriter-flac)
-        $(option_enable vorbis filewriter-vorbis)
-        $(optionq !mpeg && optionq !flac && optionq !vorbis && echo "--disable-filewriter")
+        $(optionq !mpeg && optionq !flac && echo "--disable-filewriter")
+        $(option_with sdl libsdl 1)
 
         # Input Plugins
         $(option_enable mpeg mp3)                 # MPEG-1 Layer I/II/III
         $(option_enable aac)                      # MPEG-2/4 AAC
-        $(option_enable ffmpeg ffaudio)           # FFaudio
         $(option_enable modplug)                  # Module decoder
-        $(option_enable alsa amidiplug-alsa)
-        $(option_enable flsyn amidiplug-flsyn)
-        $(optionq !alsa && optionq !flsyn && echo "--disable-amidiplug")
+        $(option_enable fluidsynth amidiplug)
         $(option_enable cd cdaudio)               # CD Digital Audio
         $(option_enable sndfile)                  # sndfile extensions
         $(option_enable vorbis)                   # Ogg Vorbis
@@ -144,16 +170,15 @@ audacious-plugins_src_configure() {
         "--disable-sid"                           # Commodore 64 audio
         $(option_enable adplug)                   # libbinio isn't packaged
         $(option_enable wavpack)                  # WavPack 4.31+
+        $(option_with ffmpeg)                     # FFaudio
 
         # General Plugins
         $(option_enable dbus mpris2)              # MPRIS 2 Server
-        # https://github.com/audacious-media-player/audacious-plugins/pull/2
-        $(optionq osd || echo "--disable-aosd")   # Audacious OSD
+        $(option_enable osd aosd)                 # Audacious OSD
         $(option_enable osd aosd-xcomp)           # AOSD X Composite support
         $(option_enable notify)                   # libnotify OSD
         $(option_enable gnomeshortcuts)           # Gnome Shortcuts Plugin
-        $(option_enable scrobbler)                # AudioScrobbler Client
-        $(option_enable mtp mtp_up)               # Upload to MTP device
+        $(option_enable scrobbler scrobbler2)     # AudioScrobbler Client
 
         # Effect Plugins
         $(option_enable bs2b)                     # Bauer stereophonic-to-binaural
@@ -163,11 +188,16 @@ audacious-plugins_src_configure() {
         # Transport Plugins
         $(option_enable neon)                     # neon-based http/https
         $(option_enable mms)                      # libmms-based mms
-        "--enable-gio"                            # GIO transport (experimental)
-        $(option_enable samba smb)                # SMB transport (experimental)
 
         # Container Plugins
         $(option_enable cue)                      # CUE playlist format
+
+        # Untested
+        --disable-blur-scope
+        --disable-cairo-spectrum
+        --disable-ladspa
+        --disable-soxr
+        --disable-vtx
     )
 
     econf "${myopts[@]}"
