@@ -25,7 +25,7 @@ DEPENDENCIES="
         gnome-desktop/brasero:3
         gnome-platform/GConf:2
         media-libs/gstreamer:0.10[>=0.10.15]
-        media-libs/libcanberra[gtk][providers:gtk3]
+        media-libs/libcanberra[providers:gtk3]
         media-libs/libdiscid
         media-libs/libmusicbrainz:4
         media-plugins/gst-plugins-base:0.10
