@@ -1,0 +1,81 @@
+# Copyright 2010 Adriaan Leijnse <adriaan@leijnse.net>
+# Copyright 2012 Ali Polatel <alip@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part on rosegarden-10.02.1.ebuild from Gentoo, which is:
+#   Copyright 1999-2010 Gentoo Foundation
+
+require sourceforge [ suffix=tar.bz2 ] freedesktop-desktop freedesktop-mime gtk-icon-cache \
+    autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 ] ]
+
+SUMMARY="Audio and MIDI sequencer, score editor, music composition and editing environment"
+DESCRIPTION="
+Rosegarden is an easy-to-learn, attractive application that runs on Linux, ideal
+for composers, musicians, music students, and small studio or home recording
+environments.
+"
+HOMEPAGE="http://rosegardenmusic.com"
+
+BUGS_TO="adriaan@leijnse.net"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="
+    debug
+    lirc [[ description = [ Enable LIRC (Linux Infrared Remote Control) support ] ]]
+"
+
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+        x11-utils/makedepend
+    build+run:
+        media-libs/dssi
+        media-libs/ladspa-sdk
+        media-libs/liblo[>=0.7]
+        media-libs/liblrdf[>=0.2]
+        media-libs/libsamplerate[>=0.1.2]
+        media-libs/libsndfile[>=1.0.16]
+        media-sound/jack-audio-connection-kit
+        sys-sound/alsa-lib[>=0.9]
+        x11-libs/libSM
+        x11-libs/libX11
+        x11-libs/qt:4
+        lirc? ( remote/lirc )
+"
+
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --with-qtdir=/usr/$(exhost --target)
+    --with-qtlibdir=/usr/$(exhost --target)/lib/qt4
+    --with-x
+)
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( debug )
+
+src_prepare() {
+    edo sed \
+        -e 's:$(PREFIX)/share:/usr/share:' \
+        -i Makefile.in
+
+    autotools_src_prepare
+}
+
+src_configure() {
+    # no configure flag available
+    export ac_cv_header_lirc_lirc_client_h=$(option lirc yes no)
+    export ac_cv_lib_lirc_client_lirc_init=$(option lirc yes no)
+
+    default
+}
+
+pkg_postinst() {
+    freedesktop-desktop_pkg_postinst
+    freedesktop-mime_pkg_postinst
+    gtk-icon-cache_pkg_postinst
+}
+
+pkg_postrm() {
+    freedesktop-desktop_pkg_postrm
+    freedesktop-mime_pkg_postrm
+    gtk-icon-cache_pkg_postrm
+}
+
