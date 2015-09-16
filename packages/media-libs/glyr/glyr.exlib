@@ -1,7 +1,7 @@
 # Copyright 2011 Quentin "Sardem FF7" Glidic <sardemff7+exherbo@sardemff7.net>
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake github [ user=sahib ]
+require github [ user=sahib ] cmake [ api=2 ]
 
 SUMMARY="A music related metadata searchengine, both with commandline interface and C API"
 DESCRIPTION="
@@ -31,12 +31,11 @@ SLOT="0"
 MYOPTIONS=""
 
 DEPENDENCIES="
+    build:
+        virtual/pkg-config
     build+run:
+        dev-db/sqlite:3
         dev-libs/glib:2[>=2.10]
         net-misc/curl
 "
-
-CMAKE_SRC_CONFIGURE_PARAMS=(
-    -DSWIG_RUBY:BOOL=FALSE
-)
 
