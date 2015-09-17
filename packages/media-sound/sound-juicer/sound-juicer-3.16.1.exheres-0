@@ -1,0 +1,55 @@
+# Copyright 2009 Pierre Lejeune <superheron@gmail.com>
+# Distributed under the terms of the GNU General Public License v2
+
+require gnome.org [ suffix='.tar.xz' ] freedesktop-desktop gsettings gtk-icon-cache
+
+SUMMARY="Gstreamer-based CD ripper"
+DESCRIPTION="
+Sound Juicer is a clean, mean, and lean CD ripper for GNOME 3.
+"
+HOMEPAGE="https://wiki.gnome.org/Apps/SoundJuicer"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        dev-util/intltool[>=0.50.0]
+        gnome-desktop/yelp-tools
+        sys-devel/gettext
+        virtual/pkg-config
+    build+run:
+        app-text/iso-codes
+        dev-libs/glib:2[>=2.38]
+        gnome-desktop/brasero:3
+        gnome-desktop/gsettings-desktop-schemas
+        media-libs/gstreamer:1.0
+        media-libs/libcanberra[providers:gtk3]
+        media-libs/libdiscid
+        media-libs/libmusicbrainz:5[>=5.0.1]
+        media-plugins/gst-plugins-base:1.0
+        x11-libs/gtk+:3[>=3.4.0]
+    recommendation:
+        media-plugins/gst-plugins-base:1.0[gstreamer_plugins:vorbis]
+        media-plugins/gst-plugins-good:1.0[gstreamer_plugins:flac][gstreamer_plugins:wavpack]
+"
+
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --enable-nls
+    --disable-appstream-util
+)
+
+pkg_postinst() {
+    gsettings_pkg_postinst
+    gtk-icon-cache_pkg_postinst
+    freedesktop-desktop_pkg_postinst
+}
+
+pkg_postrm() {
+    gsettings_pkg_postrm
+    gtk-icon-cache_pkg_postrm
+    freedesktop-desktop_pkg_postrm
+}
+
