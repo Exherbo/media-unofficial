@@ -1,7 +1,10 @@
 # Copyright 2009 Ali Polatel <alip@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake
+SCM_SVN_RAW_URI=1
+SCM_REPOSITORY="http://svn.code.sf.net/p/flake-enc/code/"
+
+require scm-svn cmake [ api=2 ]
 
 SUMMARY="Flac encoder alternative"
 DESCRIPTION="
@@ -13,9 +16,6 @@ released, this will become more stable.
 "
 HOMEPAGE="http://flake-enc.sourceforge.net/"
 DOWNLOADS=""
-SCM_SVN_RAW_URI=1
-SCM_REPOSITORY="https://flake-enc.svn.sourceforge.net/svnroot/flake-enc"
-require scm-svn
 
 BUGS_TO="alip@exherbo.org"
 LICENCES="LGPL-2.1"
