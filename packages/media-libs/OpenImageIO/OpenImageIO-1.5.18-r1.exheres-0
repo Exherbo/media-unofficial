@@ -20,6 +20,8 @@ MYOPTIONS="
     gif
     jpeg2000
     raw [[ description = [ Enable reading RAW image files from digital photo cameras ] ]]
+
+    ( providers: ijg-jpeg jpeg-turbo ) [[ number-selected = exactly-one ]]
     ( providers: libressl openssl ) [[ number-selected = exactly-one ]]
 "
 
@@ -34,7 +36,6 @@ DEPENDENCIES="
     build+run:
         dev-libs/boost[>=1.42]
         media-libs/ilmbase
-        media-libs/jpeg:=
         media-libs/libpng:=
         media-libs/libwebp
         media-libs/openexr
@@ -43,6 +44,8 @@ DEPENDENCIES="
         freetype? ( media-libs/freetype:2 )
         gif? ( media-libs/giflib:= )
         jpeg2000? ( media-libs/OpenJPEG:0 )
+        providers:ijg-jpeg? ( media-libs/jpeg:= )
+        providers:jpeg-turbo? ( media-libs/libjpeg-turbo )
         providers:libressl? ( dev-libs/libressl:= )
         providers:openssl? ( dev-libs/openssl )
         raw? ( media-libs/libraw )
