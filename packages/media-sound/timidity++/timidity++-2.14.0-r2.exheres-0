@@ -19,7 +19,6 @@ PLATFORMS="~amd64"
 MYOPTIONS="
     alsa
     ao
-    baselayout
     flac
     jack
     speex
@@ -75,14 +74,6 @@ src_configure() {
 src_install() {
     default
 
-    if option baselayout ; then
-        # these are only for the ALSA sequencer mode
-        if option alsa; then
-            newconfd "${FILES}"/conf.d.timidity timidity
-            newinitd "${FILES}"/init.d.timidity timidity
-        fi
-    fi
-
     insinto /etc
     doins "${FILES}/timidity.cfg"
 
@@ -97,13 +88,5 @@ src_install() {
 
     insinto /usr/share/pixmaps
     doins "${FILES}"/timidity.xpm
-}
-
-pkg_postinst() {
-    if option baselayout && option alsa; then
-        elog "An init script for the alsa timidity sequencer has been installed."
-        elog "If you wish to use the timidity virtual sequencer, edit /etc/conf.d/timidity"
-        elog "and run 'rc-update add timidity <runlevel> && /etc/init.d/timidity start'"
-    fi
 }
 
