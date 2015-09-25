@@ -1,8 +1,9 @@
+# Copyright 2015 Xavier Barrachina <xv.barrachina@gmail.com>
 # Copyright 2009 Jonathan Dahan <jedahan@gmail.com>
 # Copyright 2012 Ali Polatel <alip@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require googlecode [ suffix=tar.gz ]
+require sourceforge [ suffix=tar.gz ]
 
 SUMMARY="IceCast live streamer, delivering ogg and mp3 streams simultaneously to multiple hosts"
 DESCRIPTION="DarkIce is an IceCast, IceCast2 and ShoutCast live audio streamer.
@@ -11,44 +12,39 @@ and sends the mp3 stream to one or more IceCast and/or ShoutCast servers, the
 Ogg Vorbis stream to one or more IceCast2 servers.
 "
 
-BUGS_TO="jedahan@gmail.com"
-
 SLOT="0"
 PLATFORMS="~amd64"
-LICENCES="GPL-2"
-MYOPTIONS="aac alsa baselayout jack libsamplerate mp2 mp3 vorbis
+LICENCES="GPL-3"
+MYOPTIONS="aac alsa jack libsamplerate mp2 mp3 opus vorbis
     ( alsa jack ) [[ number-selected = at-least-one ]]
     ( aac mp2 mp3 vorbis ) [[ number-selected = at-least-one ]]
 "
 
 DEPENDENCIES="
     build+run:
-        aac? ( media-libs/faac )
-        alsa? ( sys-sound/alsa-lib )
-        jack? ( media-sound/jack-audio-connection-kit )
-        libsamplerate? ( media-libs/libsamplerate )
-        mp2? ( media-libs/twolame )
-        mp3? ( media-sound/lame )
-        vorbis? ( media-libs/libvorbis )
+        aac? ( media-libs/faac[>=1.28] )
+        alsa? ( sys-sound/alsa-lib[>=1.0.29] )
+        jack? ( media-sound/jack-audio-connection-kit[>=0.124] )
+        libsamplerate? ( media-libs/libsamplerate[>=0.1.8] )
+        mp2? ( media-libs/twolame[>=0.3.6] )
+        mp3? ( media-sound/lame[>=3.89] )
+        opus? ( media-libs/opus[>=1.1] )
+        vorbis? ( media-libs/libvorbis[>=1.3.5] )
 "
 
-BUGS_TO="alip@exherbo.org"
-
-SRC_CONFIGURE_OPTIONS_WITH=(
-    'aac faac'
-    'mp3 lame'
-    'jack'
-    'mp2 twolame'
-    'vorbis'
-    'libsamplerate' 'samplerate'
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --without-aacplus
+    --without-pulseaudio
 )
 
-src_install() {
-    default
-
-    if option baselayout ; then
-        doinitd "${FILES}"/darkice
-        doconfd "${FILES}"/darkice.conf
-    fi
-}
+DEFAULT_SRC_CONFIGURE_OPTION_WITHS=(
+    'aac faac'
+    'alsa'
+    'jack'
+    'libsamplerate samplerate'
+    'mp2 twolame'
+    'mp3 lame'
+    'opus'
+    'vorbis'
+)
 
