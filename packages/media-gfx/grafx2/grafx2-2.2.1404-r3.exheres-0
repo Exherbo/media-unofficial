@@ -28,7 +28,7 @@ UPSTREAM_DOCUMENTATION="${HOMEPAGE}/wiki/UserManual"
 
 DEPENDENCIES="
     media-libs/SDL:0
-    media-libs/SDL_image
+    media-libs/SDL_image:1
     media-libs/SDL_ttf
     media-libs/freetype:2
 "
