@@ -34,7 +34,6 @@ DEPENDENCIES="
         jpeg2000? ( media-libs/jasper )
         lcms? ( media-libs/lcms )
         mng? ( media-libs/libmng )
-        openexr? ( media-libs/openexr )
         opengl? (
             x11-dri/freeglut
             x11-dri/glu
@@ -50,6 +49,8 @@ DEPENDENCIES="
             x11-libs/libXrender
         )
 "
+# Currentyl fails to build when enabled, also see below
+#        openexr? ( media-libs/openexr )
 
 WORK="$WORKBASE/${PN,,}-$PV"
 
@@ -61,6 +62,8 @@ DEFAULT_SRC_PREPARE_PATCHES=(
 )
 
 DEFAULT_SRC_CONFIGURE_PARAMS+=(
+    # Remove if it compiles with openexr again
+    --disable-exr
     --enable-ILU
     --enable-ILUT
     --enable-jpeg
@@ -76,7 +79,7 @@ DEFAULT_SRC_CONFIGURE_OPTION_WITHS+=(
 
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES+=(
     '!debug asm'
-    'openexr exr'
+    #'openexr exr'
     'jpeg2000 jp2'
     lcms
     mng
@@ -89,6 +92,9 @@ DEFAULT_SRC_CONFIGURE_OPTION_ENABLES+=(
 )
 
 AT_M4DIR=( m4 )
+
+# Tests even fail to build
+RESTRICT="test"
 
 src_install() {
     default
