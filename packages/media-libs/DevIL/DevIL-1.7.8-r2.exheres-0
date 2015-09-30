@@ -13,7 +13,9 @@ can load, save, convert, manipulate, filter and display a wide variety of image 
 LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="debug examples jpeg jpeg2000 lcms mng openexr opengl png sdl tiff X"
+MYOPTIONS="debug examples jpeg2000 lcms mng openexr opengl sdl tiff X
+    ( providers: ijg-jpeg jpeg-turbo ) [[ number-selected = exactly-one ]]
+"
 
 REMOTE_IDS+="freecode:devil"
 
@@ -28,17 +30,19 @@ DEPENDENCIES="
     build:
         virtual/pkg-config
     build+run:
-        jpeg? ( media-libs/jpeg )
+        media-libs/libpng:=[>=1.4]
         jpeg2000? ( media-libs/jasper )
         lcms? ( media-libs/lcms )
         mng? ( media-libs/libmng )
         openexr? ( media-libs/openexr )
         opengl? (
             x11-dri/freeglut
+            x11-dri/glu
             x11-dri/mesa
         )
-        png? ( media-libs/libpng[>=1.4] )
-        sdl? ( media-libs/SDL )
+        providers:ijg-jpeg? ( media-libs/jpeg:= )
+        providers:jpeg-turbo? ( media-libs/libjpeg-turbo )
+        sdl? ( media-libs/SDL:0 )
         tiff? ( media-libs/tiff )
         X? (
             x11-libs/libX11
@@ -57,6 +61,8 @@ DEFAULT_SRC_PREPARE_PATCHES=(
 DEFAULT_SRC_CONFIGURE_PARAMS+=(
     --enable-ILU
     --enable-ILUT
+    --enable-jpeg
+    --enable-png
     --without-libsquish
     --without-nvtt
     --disable-allegro
@@ -70,11 +76,9 @@ DEFAULT_SRC_CONFIGURE_OPTION_ENABLES+=(
     '!debug asm'
     'openexr exr'
     'jpeg2000 jp2'
-    jpeg
     lcms
     mng
     opengl
-    png
     sdl
     tiff
     'X shm'
