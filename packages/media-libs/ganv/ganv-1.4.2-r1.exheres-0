@@ -26,6 +26,7 @@ RESTRICT="test"
 
 DEPENDENCIES="
     build+run:
+        gnome-bindings/glibmm:2.4[>=2.46.1]
         gnome-bindings/gtkmm:2.4[>=2.10.0]
         x11-libs/gtk+:2[>=2.0.0]
         graphviz? ( media-gfx/graphviz[>=2.30][gtk] )
@@ -38,6 +39,8 @@ src_configure() {
         --test
         $(option !graphviz && echo --no-graphviz)
     )
+
+    CXXFLAGS="${CXXFLAGS} -std=gnu++11"
 
     waf_src_configure
 }
