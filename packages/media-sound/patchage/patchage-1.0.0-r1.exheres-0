@@ -47,6 +47,8 @@ src_configure() {
         $(option debug && echo --debug)
     )
 
+    DEFAULT_SRC_CONFIGURE_PARAMS=( CXXFLAGS="${CXXFLAGS} -std=gnu++11" )
+
     waf_src_configure
 }
 
