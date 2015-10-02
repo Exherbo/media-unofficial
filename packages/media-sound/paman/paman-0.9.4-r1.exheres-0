@@ -17,10 +17,16 @@ DEPENDENCIES="
     build:
         doc? ( net-www/lynx )
     build+run:
+        dev-cpp/libsigc++[>=2.6.1]
+        dev-libs/glib[>=2.46.0]
+        gnome-bindings/atkmm[>=2.24.1]
+        gnome-bindings/glibmm[>=2.46]
         gnome-bindings/gtkmm:2.4
         gnome-bindings/libglademm:2.4
         media-sound/pulseaudio[>=0.9.5]
 "
 
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( 'doc lynx' )
+
+DEFAULT_SRC_CONFIGURE_PARAMS=( CXXFLAGS="${CXXFLAGS} -std=gnu++11" )
 
