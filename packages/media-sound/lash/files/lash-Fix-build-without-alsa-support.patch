@@ -1,0 +1,26 @@
+Upstream: yes
+
+From a809352efaf1e35d737f5e85be1f781ff613b1fd Mon Sep 17 00:00:00 2001
+From: Nedko Arnaudov <nedko@arnaudov.name>
+Date: Sat, 23 May 2009 19:15:15 +0300
+Subject: [PATCH] Fix build without alsa support
+
+---
+ lashd/server.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/lashd/server.h b/lashd/server.h
+index eade4c2..cd914d8 100644
+--- a/lashd/server.h
++++ b/lashd/server.h
+@@ -26,6 +26,7 @@
+ #include <stdbool.h>
+ #include <sys/types.h>
+ #include <dbus/dbus.h>
++#include <uuid/uuid.h>
+ 
+ #include "types.h"
+ #include "dbus/service.h"
+-- 
+2.6.0
+

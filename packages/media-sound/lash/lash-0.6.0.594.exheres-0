@@ -21,8 +21,9 @@ DEPENDENCIES="
         doc? ( app-text/texi2html )
     build+run:
         dev-libs/libxml2
-        sys-libs/readline
         sys-apps/dbus[>=1.0.0]
+        sys-apps/util-linux
+        sys-libs/readline
         alsa? ( sys-sound/alsa-lib[>=0.9.1] )
         gtk?  ( x11-libs/gtk+:2 )
         !jack-dbus? ( media-sound/jack-audio-connection-kit )
@@ -31,10 +32,13 @@ DEPENDENCIES="
 
 BUGS_TO="adriaan@leijnse.net"
 
+AT_M4DIR=( m4 )
+
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( debug )
 DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( alsa jack-dbus 'gtk gtk2' python )
 DEFAULT_SRC_PREPARE_PATCHES=(
         "${FILES}"/${PN}-Search-for-pkg-config.patch
+        "${FILES}"/${PN}-Fix-build-without-alsa-support.patch
     -p0 "${FILES}"/${PNV}-texi2html.patch
 )
 
