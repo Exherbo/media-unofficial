@@ -3,6 +3,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 require python [ blacklist='3' multibuild=false with_opt=true ]
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 ] ]
 
 SUMMARY="LASH is a session management system for GNU/Linux audio applications"
 HOMEPAGE="http://savannah.nongnu.org/projects/lash"
@@ -32,7 +33,10 @@ BUGS_TO="adriaan@leijnse.net"
 
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( debug )
 DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( alsa jack-dbus 'gtk gtk2' python )
-DEFAULT_SRC_PREPARE_PATCHES=( -p0 "${FILES}/${PNV}-texi2html.patch" )
+DEFAULT_SRC_PREPARE_PATCHES=(
+        "${FILES}"/${PN}-Search-for-pkg-config.patch
+    -p0 "${FILES}"/${PNV}-texi2html.patch
+)
 
 src_configure() {
     option doc || export lash_texi2html='no'

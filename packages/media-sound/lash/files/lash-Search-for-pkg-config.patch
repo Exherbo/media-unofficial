@@ -1,0 +1,81 @@
+Upstream: To be honest, I didn't bother. Last commit: 25 July 2009
+
+From aecf5fe3f9a97071fe525b6f9976957f1b49e810 Mon Sep 17 00:00:00 2001
+From: Heiko Becker <heirecka@exherbo.org>
+Date: Mon, 5 Oct 2015 19:25:59 +0200
+Subject: [PATCH] Search for pkg-config
+
+---
+ configure.ac | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index dc437ed..9483904 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -9,7 +9,7 @@ AC_CONFIG_MACRO_DIR([m4])
+ AC_LANG([C])
+ AM_PROG_CC_C_O
+ AC_PROG_LIBTOOL
+-
++AC_PATH_TOOL(PKG_CONFIG, pkg-config, no)
+ 
+ ######################
+ ### --enable-debug ###
+@@ -355,7 +355,7 @@ AM_CONDITIONAL(LASH_OLD_API, [test "x$lash_old_api" = "xyes"])
+ ### JACK ###
+ ############
+ 
+-JACK_VERSION=$(pkg-config --modversion jack)
++JACK_VERSION=$($PKG_CONFIG --modversion jack)
+ AC_DEFINE_UNQUOTED(LASH_JACK_VERSION, "$JACK_VERSION", [The version of jack we're compiling against])
+ AM_CONDITIONAL(HAVE_JACK_DBUS, [test "x$lash_jack_dbus" = "xyes"])
+ if test "x$lash_jack_dbus" = "xyes"; then
+@@ -370,7 +370,7 @@ fi
+ ### D-Bus ###
+ #############
+ 
+-DBUS_VERSION=$(pkg-config --modversion dbus-1)
++DBUS_VERSION=$($PKG_CONFIG --modversion dbus-1)
+ AC_SUBST(DBUS_CFLAGS)
+ AC_SUBST(DBUS_LIBS)
+ AC_DEFINE_UNQUOTED(LASH_DBUS_VERSION, "$DBUS_VERSION", [The version of D-Bus we're compiling against])
+@@ -398,7 +398,7 @@ AC_DEFINE_UNQUOTED(DBUS_SERVICES_DIR, "$DBUS_SERVICES_DIR", [Where services dir
+ 
+ if test "x$HAVE_UUID" = "xpc"
+ then
+-  UUID_VERSION=$(pkg-config --modversion uuid)
++  UUID_VERSION=$($PKG_CONFIG --modversion uuid)
+   PC_REQUIRES="$PC_REQUIRES uuid"
+ else
+   UUID_VERSION="unknown"
+@@ -414,7 +414,7 @@ AC_DEFINE_UNQUOTED(LASH_UUID_VERSION, "$UUID_VERSION", [The version of libuuid w
+ ### libxml2 ###
+ ###############
+ 
+-XML2_VERSION=$(pkg-config --modversion libxml-2.0)
++XML2_VERSION=$($PKG_CONFIG --modversion libxml-2.0)
+ AC_SUBST(XML2_CFLAGS)
+ AC_SUBST(XML2_LIBS)
+ AC_DEFINE_UNQUOTED(LASH_XML2_VERSION, "$XML2_VERSION", [The version of libxml2 we're compiling against])
+@@ -426,7 +426,7 @@ PC_REQUIRES="$PC_REQUIRES libxml-2.0"
+ ############
+ 
+ if test "x$HAVE_ALSA" = "xyes"; then
+-  ALSA_VERSION=$(pkg-config --modversion alsa)
++  ALSA_VERSION=$($PKG_CONFIG --modversion alsa)
+   AC_SUBST(ALSA_CFLAGS)
+   AC_SUBST(ALSA_LIBS)
+   AC_DEFINE(HAVE_ALSA, 1, [ALSA sequencer support])
+@@ -441,7 +441,7 @@ AM_CONDITIONAL(HAVE_ALSA, [test "x$HAVE_ALSA" = "xyes"])
+ ##############
+ 
+ if test "x$HAVE_GTK2" = "xyes"; then
+-  GTK2_VERSION=$(pkg-config --modversion gtk+-2.0)
++  GTK2_VERSION=$($PKG_CONFIG --modversion gtk+-2.0)
+   AC_SUBST(GTK2_CFLAGS)
+   AC_SUBST(GTK2_LIBS)
+   AC_DEFINE(HAVE_GTK2, 1, [Whether or not GTK+ 2 support is enabled])
+-- 
+2.6.0
+
