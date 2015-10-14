@@ -1,7 +1,7 @@
 # Copyright 2011-2015 Quentin "Sardem FF7" Glidic <sardemff7@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require espeak
+require espeak [ test_release=true ]
 
 PLATFORMS="~amd64 ~x86"
 

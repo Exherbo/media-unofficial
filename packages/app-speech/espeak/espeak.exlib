@@ -1,12 +1,19 @@
 # Copyright 2009 Maxime Coste
+# Copyright 2011-2015 Quentin "Sardem FF7" Glidic <sardemff7@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
 export_exlib_phases pkg_setup src_prepare src_compile src_install
 
+myexparam -b test_release=false
 
 SUMMARY="open source software speech synthetizer"
 HOMEPAGE="http://espeak.sourceforge.net"
-DOWNLOADS="mirror://sourceforge/${PN}/${PNV}-source.zip"
+if exparam -b test_release; then
+    DOWNLOADS="${HOMEPAGE}/test/${PNV}.zip"
+else
+    DOWNLOADS="mirror://sourceforge/${PN}/${PNV}-source.zip"
+    WORK="${WORKBASE}/${PNV}-source"
+fi
 
 LICENCES="GPL"
 SLOT="0"
@@ -21,7 +28,7 @@ DEPENDENCIES="
         pulseaudio? ( media-sound/pulseaudio )
 "
 
-WORK="${WORKBASE}/${PNV}-source/src"
+WORK="${WORK}/src"
 
 espeak_pkg_setup() {
     AUDIO=
