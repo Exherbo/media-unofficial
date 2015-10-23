@@ -37,6 +37,7 @@ DEPENDENCIES="
         media-libs/libsamplerate[>=0.1.2]
         media-libs/libsndfile[>=1.0.16]
         media-sound/jack-audio-connection-kit
+        sci-libs/fftw[>=3.0.0]
         sys-sound/alsa-lib[>=0.9]
         x11-libs/libSM
         x11-libs/libX11
