@@ -26,7 +26,9 @@ DEPENDENCIES="
     build+run:
         media-sound/jack-audio-connection-kit[>=0.124.1][dbus?]
         sys-sound/alsa-lib
-        x11-libs/qt:4[>=4.4]
+        x11-libs/qtbase:5[>=5.1][gui]
+        x11-libs/qttools:5[>=5.1] [[ note = [ Qt5LinguistTools ] ]]
+        x11-libs/qtx11extras:5[>=5.1]
         dbus? ( sys-apps/dbus )
 "
 
@@ -35,10 +37,11 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --enable-jack-metadata
     --enable-jack-midi
     --enable-jack-port-aliases
-    --enable-qt4
+    --enable-qt5
     --enable-system-tray
+    --enable-xunique
     --disable-portaudio
-    --disable-qt5
+    --disable-qt4
 )
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( debug dbus )
 
