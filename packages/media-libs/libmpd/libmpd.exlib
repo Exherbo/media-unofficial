@@ -1,6 +1,8 @@
 # Copyright 2008 Thomas Anderson
 # Distributed under the terms of the GNU General Public License v2
 
+require github [ user=DaveDavenport ]
+
 export_exlib_phases src_compile src_install
 
 SUMMARY="A loadable library to interface to mpd"
