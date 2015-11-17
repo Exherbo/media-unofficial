@@ -6,6 +6,7 @@ SCM_REPOSITORY="https://subversion.assembla.com/svn/portaudio/portaudio"
 require portaudio scm-svn
 
 DOWNLOADS=""
+
 PLATFORMS="~amd64"
 
 src_prepare() {
