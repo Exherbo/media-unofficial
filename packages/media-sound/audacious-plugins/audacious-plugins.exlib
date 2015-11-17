@@ -15,18 +15,17 @@ Note: some plugins are not on by default and have to be enabled in Preferences -
 
 LICENCES="
     BSD-2 [[ note = [ alsa audpl compressor crossfade ladspa mixer mpg123 mpris2 oss4 resample sdlout unix-io ] ]]
-    BSD-3 [[ note = [ the-package psf xsf ] ]]
+    BSD-3 [[ note = [ psf xsf ] ]]
     GPL-2 [[ note = [ aac alarm amidi-plug aosd blue_scope bs2b cue filewriter gnomeshortcuts hotkey jack m3u metronom mms neon null OSS pulse_audio sid sndfile sndstretch tongen vtx xspf ] ]]
     GPL-3 [[ note = [ asx cdaudio-ng cd-menu-items ffmpeg flacng gtkui notify pls search-tool skins song_change ] ]]
     LGPL-2 [[ note = [ vorbis ] ]]
     LGPL-2.1 [[ note = [ adplug console ] ]]
-    MIT [[ note = [ albumart cairo-spectrum crystalizer lyricswiki voice_removal ] ]]
+    MIT [[ note = [ albumart cairo-spectrum crystalizer lyricwiki voice_removal ] ]]
     public-domain [[ note = [ aac ] ]]
 "
 SLOT="0"
 MYOPTIONS="
     aac [[ description = [ Support AAC decoding. ] ]]
-    adplug [[ description = [ Support for AdPlug formats (like Westwood ADL and Sierra's Adlib). ] ]]
     alsa [[ description = [ Support ALSA audio output and MIDI synthesizing with AlsaMidi. ] ]]
     fluidsynth [[
         description = [ Support MIDI synthesizing with fluidsynth. ]
@@ -40,22 +39,31 @@ MYOPTIONS="
     flac [[ description = [ Support FLAC decoding and dumping audio out to a flac file. ] ]]
     gnomeshortcuts [[
         description = [ Control audacious with GNOME Shortcuts. ]
-        requires = dbus
+        requires = [ dbus ]
     ]]
     gtk
     jack [[ description = [ Support JACK audio output. ] ]]
     mms [[ description = [ Support for mms:// and mmsh:// network streams in Open URL dialog. ] ]]
     modplug [[ description = [ Support for MOD Music formats. ] ]]
-    mpeg [[ description = [ Support for mp{1,2,3} and bmu files decoding and dumping audio out to a mp3 file. ] ]]
+    mp3 [[ description = [ Support for mp{1,2,3} and bmu files decoding (and dumping audio out to a mp3 file). ] ]]
     neon [[ description = [ Support for http:// and https:// protocols in Open URL dialog. ] ]]
-    notify [[ description = [ Support for desktop notifications (simple but provides good DE integration). ] ]]
-    osd [[ description = [ Support for displaying notifications (more customiseable than notify). ] ]]
+    notify [[
+        description = [ Support for desktop notifications (simple but provides good DE integration). ]
+        requires = [ gtk ]
+    ]]
+    osd [[
+        description = [ Support for displaying notifications (more customiseable than notify). ]
+        requires = [ gtk ]
+    ]]
     oss [[ description = [ Support OSSv4 audio output. ] ]]
     pulseaudio [[ description = [ Support PulseAudio output. ] ]]
     qt5 [[ description = [ Build the Qt5 GUI. ] ]]
     resample [[ description = [ Support converting sample rates using libsamplerate. ] ]]
     sdl [[ description = [ Support SDL audio output. ] ]]
-    scrobbler [[ description = [ Build audio scrobbler for last.fm. ] ]]
+    scrobbler [[
+        description = [ Build audio scrobbler for last.fm. ]
+        requires = [ gtk ]
+    ]]
     sndfile [[ description = [ Support reading files containing sampled sound (like Windows WAV and Apple/SGI AIFF). ] ]]
     speedpitch [[ description = [ Support speed and pitch effects using libsamplerate. ] ]]
     vorbis [[ description = [ Support for OGG/Vorbis formats and dumping audio out to a vorbis file. ] ]]
@@ -71,7 +79,6 @@ DEPENDENCIES="
         dev-libs/libxml2:2.0
         media-sound/audacious[~${PV}][gtk][qt5?] [[ note = [ some plugins currently fail without gtk ] ]]
         aac? ( media-libs/faad2 )
-        adplug? ( dev-libs/libbinio )
         alsa? ( sys-sound/alsa-lib[>=1.0.16] )
         bs2b? ( media-libs/libbs2b[>=3.0.0] )
         cd? (
@@ -92,7 +99,7 @@ DEPENDENCIES="
         speedpitch? ( media-libs/libsamplerate )
         mms? ( media-libs/libmms[>=0.3] )
         modplug? ( media-libs/libmodplug )
-        mpeg? (
+        mp3? (
             media-sound/lame
             media-sound/mpg123[>=1.12]
         )
@@ -142,6 +149,8 @@ audacious-plugins_src_configure() {
 
         # GUI Plugins
         $(option_enable gtk)
+        $(option_enable gtk filewriter)
+        $(option_enable gtk glspectrum)
         $(option_enable qt5 qt)
         $(option_enable qt5 qtglspectrum)
         $(option_enable qt5 qtaudio)
@@ -152,13 +161,12 @@ audacious-plugins_src_configure() {
         $(option_enable pulseaudio pulse)         # PulseAudio
         $(option_enable jack)                     # Jack Audio Connection Kit
         $(option_enable sdl sdlout)               # Simple DirectMedia Layer
-        $(option_enable mpeg filewriter-mp3)
-        $(option_enable flac filewriter-flac)
-        $(optionq !mpeg && optionq !flac && echo "--disable-filewriter")
+        $(optionq !gtk && optionq !mp3 && echo "--disable-filewriter-mp3")
+        $(optionq !gtk && optionq !flac && echo "--disable-filewriter-flac")
         $(option_with sdl libsdl 1)
 
         # Input Plugins
-        $(option_enable mpeg mp3)                 # MPEG-1 Layer I/II/III
+        $(option_enable mp3)                      # MPEG-1 Layer I/II/III
         $(option_enable aac)                      # MPEG-2/4 AAC
         $(option_enable modplug)                  # Module decoder
         $(option_enable fluidsynth amidiplug)
@@ -168,7 +176,6 @@ audacious-plugins_src_configure() {
         $(option_enable flac flacng)              # Free Lossless Audio Codec
         # didn't package libsidplay2
         "--disable-sid"                           # Commodore 64 audio
-        $(option_enable adplug)                   # libbinio isn't packaged
         $(option_enable wavpack)                  # WavPack 4.31+
         $(option_with ffmpeg)                     # FFaudio
 
@@ -193,11 +200,7 @@ audacious-plugins_src_configure() {
         $(option_enable cue)                      # CUE playlist format
 
         # Untested
-        --disable-blur-scope
-        --disable-cairo-spectrum
-        --disable-ladspa
         --disable-soxr
-        --disable-vtx
     )
 
     econf "${myopts[@]}"
