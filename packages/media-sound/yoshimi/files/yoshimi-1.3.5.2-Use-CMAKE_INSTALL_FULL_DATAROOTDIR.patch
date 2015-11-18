@@ -1,3 +1,5 @@
+Upstream: Reported, https://sourceforge.net/p/yoshimi/patches/8/
+
 diff -Naur src/CMakeLists.txt src/CMakeLists.txt
 --- src/CMakeLists.txt	2015-07-11 20:08:16.000000000 +0200
 +++ src/CMakeLists.txt	2015-09-17 17:54:39.730730516 +0200
