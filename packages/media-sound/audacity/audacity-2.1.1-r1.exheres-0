@@ -66,6 +66,10 @@ DEPENDENCIES="
 #            media-libs/lv2
 #        )
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PNV}-musl.patch
+)
+
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     AR=$(type -P ${AR})
     PKG_CONFIG=$(type -P ${PKG_CONFIG})
