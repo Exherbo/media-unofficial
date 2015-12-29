@@ -51,8 +51,8 @@ DEPENDENCIES="
         raw? ( media-libs/libraw )
 "
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/f80e48f22dd58f92a0a9eb9d03cee5c1970af141.patch
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PNV}-Python-ImageCache-binding-fixes-disable-broken-calls.patch
 )
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
