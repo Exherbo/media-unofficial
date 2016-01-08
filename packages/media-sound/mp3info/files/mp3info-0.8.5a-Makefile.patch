@@ -1,30 +1,44 @@
-Source: written by Pierre Lejeune <superheron@gmail.com>
-Upstream: no
+Source: written by Pierre Lejeune <superheron@gmail.com>; modifed by Kylie McClain <somasis@exherbo.org> for multiarch
+Upstream: no, also dead
 Reason: Makefile adaptations for Exherbo
---- mp3info-0.8.5a.orig/Makefile	2006-11-10 01:14:11.000000000 +0100
-+++ mp3info-0.8.5a/Makefile	2009-10-18 17:52:02.657354241 +0200
-@@ -28,9 +28,9 @@
+--- a/Makefile.orig	2016-01-08 08:22:09.904856354 -0500
++++ b/Makefile	2016-01-08 08:22:26.684695761 -0500
+@@ -28,9 +28,10 @@
  # bindir = where binaries get installed (default = /usr/local/bin)
  # mandir = where the manual page gets installed (default = /usr/local/man/man1)
  
 -prefix=/usr/local
 -bindir=${prefix}/bin
 -mandir = $(prefix)/man/man1
-+prefix = $(DESTDIR)/usr
-+bindir = ${prefix}/bin
-+mandir = $(prefix)/share/man/man1
++prefix		=$(DESTDIR)/usr
++exec_prefix	=$(prefix)/$(CHOST)
++bindir		=$(exec_prefix)/bin
++mandir 		=$(prefix)/share/man/man1
  
  # No changes necessary below this line
  
-@@ -41,7 +41,6 @@
+@@ -41,11 +42,8 @@
  XOBJ =  mp3tech.o
  RM = /bin/rm
  INSTALL = /usr/bin/install -c
 -STRIP = strip
  
  LIBS = -lncurses
- CC = gcc
-@@ -69,12 +68,12 @@
+-CC = gcc
+-CFLAGS = -g -O2 -Wall
+ 
+ all: mp3info gmp3info doc
+ 
+@@ -55,7 +53,7 @@
+ 	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBS)
+ 
+ gmp3info: $(XSRC) $(XOBJ) 
+-	$(CC) $(XSRC) $(CFLAGS) -o $@ $(XOBJ) `pkg-config --cflags --libs gtk+-2.0`
++	$(CC) $(XSRC) $(CFLAGS) -o $@ $(XOBJ) `$(PKG_CONFIG) --cflags --libs gtk+-2.0`
+ 
+ mp3info.txt: mp3info.1
+ 	groff -t -e -mandoc -Tascii mp3info.1 | col -bx > mp3info.txt
+@@ -69,12 +67,12 @@
  	$(RM) -f mp3info.txt
  
  install-mp3info: mp3info
@@ -39,3 +53,4 @@ Reason: Makefile adaptations for Exherbo
  	$(INSTALL) gmp3info $(bindir)/gmp3info
  
  install: install-mp3info install-gmp3info
+
