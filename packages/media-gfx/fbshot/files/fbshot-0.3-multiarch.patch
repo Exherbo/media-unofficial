@@ -1,0 +1,29 @@
+Upstream: dead
+Reason: multiarch fixes and newer libpng fix
+
+diff -ru fbshot-0.3.orig/Makefile fbshot-0.3/Makefile
+--- fbshot-0.3.orig/Makefile	2002-11-08 09:31:34.000000000 -0500
++++ fbshot-0.3/Makefile	2016-01-08 08:47:07.122636094 -0500
+@@ -4,8 +4,7 @@
+ ###
+ 
+ all:
+-	gcc fbshot.c -lpng -lz -o fbshot
+-	strip fbshot
++	$(CC) $(CFLAGS) fbshot.c -lpng -lz -o fbshot
+ 
+ install:
+ 	install fbshot /usr/bin/fbshot
+diff -ru fbshot-0.3.orig/fbshot.c fbshot-0.3/fbshot.c
+--- fbshot-0.3.orig/fbshot.c	2002-11-08 10:46:44.000000000 -0500
++++ fbshot-0.3/fbshot.c	2016-01-08 08:46:52.283778255 -0500
+@@ -46,7 +46,8 @@
+ 
+ #include <sys/vt.h>
+ #include <png.h>
+-#include <linux/fb.h> 
++#include <zlib.h>
++#include <linux/fb.h>
+ 
+ #define DEFAULT_FB      "/dev/fb0"
+ #define PACKAGE 	"fbshot"
