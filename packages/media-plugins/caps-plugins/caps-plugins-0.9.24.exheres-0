@@ -13,7 +13,7 @@ oscillation, reverb, equalization and others
 HOMEPAGE="http://quitte.de/dsp/caps.html"
 DOWNLOADS="http://quitte.de/dsp/caps_${PV}.tar.bz2"
 
-LICENCES="GPL-2"
+LICENCES="GPL-3"
 SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS=""
@@ -25,19 +25,12 @@ DEPENDENCIES="
 
 WORK="${WORKBASE}"/${MY_PNV}
 
-src_compile() {
-    emake CFLAGS="${CFLAGS} -fPIC -DPIC" CC="${CXX}" || die "emake failed"
+src_configure() {
+    cat > defines.make <<EOF
+CC      =$(exhost --tool-prefix)c++
+STRIP   =true
+OPTS    +=${CFLAGS}
+DESTDIR =${IMAGE}
+PREFIX  =/usr/$(exhost --target)
+EOF
 }
-
-src_install() {
-    insinto /usr/${LIBDIR}/ladspa
-    insopts -m0755
-    doins *.so
-
-    insinto /usr/share/ladspa/rdf
-    insopts -m0644
-    doins *.rdf
-
-    emagicdocs
-}
-
