@@ -1,0 +1,27 @@
+Upstream: reported, https://sourceforge.net/p/rosegarden/bugs/1489/
+Reason: Fix install paths on multiarch
+
+diff -Naur rosegarden-15.12/data/CMakeLists.txt rosegarden-15.12.new/data/CMakeLists.txt
+--- rosegarden-15.12/data/CMakeLists.txt	2015-12-31 14:49:50.000000000 +0100
++++ rosegarden-15.12.new/data/CMakeLists.txt	2016-01-13 18:03:32.923050568 +0100
+@@ -1,5 +1,5 @@
+ # Install icons
+-set(ICON_INSTALL_DIR "share/icons")
++set(ICON_INSTALL_DIR "${CMAKE_INSTALL_DATAROOTDIR}/icons")
+ set(ICON_SRC_DIR "pixmaps/icons")
+ foreach(_size 16;32;64)
+   set(_dir "${ICON_INSTALL_DIR}/hicolor/${_size}x${_size}/mimetypes")
+@@ -20,10 +20,10 @@
+ endforeach()
+ 
+ # Install mimetype
+-install(FILES mime/rosegarden.xml DESTINATION "share/mime/packages")
++install(FILES mime/rosegarden.xml DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/mime/packages")
+ 
+ # Install desktop file
+-install(FILES desktop/rosegarden.desktop DESTINATION "share/applications")
++install(FILES desktop/rosegarden.desktop DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/applications")
+ 
+ # Install appdata file
+-install(FILES appdata/rosegarden.appdata.xml DESTINATION "share/appdata")
++install(FILES appdata/rosegarden.appdata.xml DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/appdata")
