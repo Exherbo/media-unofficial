@@ -38,14 +38,14 @@ DEPENDENCIES="
         sys-devel/gettext
     build+run:
         gnome-bindings/pygobject:3[>=3.4.0][cairo]
-        x11-libs/gtk+:3[>=3.2.0]
+        x11-libs/gtk+:3[>=3.2.0][gobject-introspection]
     run:
         dev-python/dbus-python
         dev-python/mutagen[>=1.14]
-        media-libs/gstreamer:1.0
+        media-libs/gstreamer:1.0[gobject-introspection]
     suggestion:
         (
-            media-plugins/gst-plugins-base:1.0
+            media-plugins/gst-plugins-base:1.0[gobject-introspection]
             media-plugins/gst-plugins-good:1.0
             media-plugins/gst-plugins-bad:1.0
             media-plugins/gst-plugins-ugly:1.0
@@ -65,10 +65,6 @@ DEPENDENCIES="
         # some-category/kakasi [[ description = [ plugin: kakasi ] ]]
 
 WORK="${WORKBASE}/${PN}-release-${PV}/${PN}"
-
-DEFAULT_SRC_PREPARE_PATCHES=(
-    -p2 "${FILES}"/092e7fc319da2675b9328ee2553fce52085d62e2.patch
-)
 
 src_test() {
     ${PYTHON} setup.py test
