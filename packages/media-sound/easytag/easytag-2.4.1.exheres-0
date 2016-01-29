@@ -76,7 +76,7 @@ DEPENDENCIES="
             media-libs/libid3tag
         )
         mp4? ( media-libs/taglib[>=1.9.1] )
-        nautilus? ( gnome-desktop/nautilus )
+        nautilus? ( gnome-desktop/nautilus[>=3.0] )
         opus? (
             media-libs/opus[>=1.0]
             media-libs/opusfile
