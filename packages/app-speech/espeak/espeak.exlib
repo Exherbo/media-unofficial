@@ -15,7 +15,7 @@ else
     WORK="${WORKBASE}/${PNV}-source"
 fi
 
-LICENCES="GPL"
+LICENCES="GPL-3"
 SLOT="0"
 
 MYOPTIONS="portaudio pulseaudio
