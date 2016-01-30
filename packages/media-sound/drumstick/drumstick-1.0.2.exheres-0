@@ -17,7 +17,7 @@ BUGS_TO="alip@exherbo.org"
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS="doc"
+MYOPTIONS=""
 
 DEPENDENCIES="
     build:
@@ -31,7 +31,7 @@ DEPENDENCIES="
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PN}-1.0.1-Use-CMAKE_INSTALL_FULL_DATAROOTDIR.patch
+    "${FILES}"/${PN}-Use-GNUInstallDirs-to-install-arch-independent-data.patch
 )
 
 CMAKE_SRC_CONFIGURE_PARAMS=(

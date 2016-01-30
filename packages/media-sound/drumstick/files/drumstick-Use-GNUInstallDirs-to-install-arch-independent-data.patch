@@ -1,0 +1,117 @@
+Upstream: submitted, https://sourceforge.net/p/drumstick/patches/2/
+
+From 6fd797927fb83d0903b651147fc940c01e22d146 Mon Sep 17 00:00:00 2001
+From: Heiko Becker <heirecka@exherbo.org>
+Date: Sat, 30 Jan 2016 17:10:11 +0100
+Subject: [PATCH] Use GNUInstallDirs to install arch-independent data
+
+GNUInstallDirs (https://cmake.org/cmake/help/v3.2/module/GNUInstallDirs.html)
+is a cmake module which provides similar params as autotools allowing to
+adjust where files are installed.
+Previously the install location was hard-coded to share/.. which is not
+helpfulon a multiarch layout, where the prefix might be something like
+/usr/${arch} but arch independent files should still go into /usr/share.
+---
+ CMakeLists.txt                   |  4 +++-
+ cmake_admin/CreateManpages.cmake |  2 +-
+ icons/CMakeLists.txt             | 10 +++++-----
+ utils/drumgrid/CMakeLists.txt    |  2 +-
+ utils/guiplayer/CMakeLists.txt   |  2 +-
+ utils/vpiano/CMakeLists.txt      |  2 +-
+ 6 files changed, 12 insertions(+), 10 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 38b9133..900e91b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -37,6 +37,8 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
+ # Additional CMake modules for 3rd party library checks reside here
+ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake_admin")
+ 
++include(GNUInstallDirs)
++
+ # DRUMSTICK version string
+ set(VERSION_MAJOR "1")
+ set(VERSION_MINOR "0")
+@@ -121,7 +123,7 @@ if(${CMAKE_SYSTEM} MATCHES "Linux")
+ 	DESTINATION lib${LIB_SUFFIX}/pkgconfig )
+     # XML mime types
+     set( SHARED_MIME_INFO_MINIMUM_VERSION "0.30" )
+-    set( XDG_MIME_INSTALL_DIR "share/mime/packages" )
++    set( XDG_MIME_INSTALL_DIR "${CMAKE_INSTALL_DATAROOTDIR}/mime/packages" )
+     find_package( SharedMimeInfo )
+     if( SHARED_MIME_INFO_FOUND )
+         install( FILES drumstick.xml DESTINATION ${XDG_MIME_INSTALL_DIR} )
+diff --git a/cmake_admin/CreateManpages.cmake b/cmake_admin/CreateManpages.cmake
+index c5d3478..47afdae 100644
+--- a/cmake_admin/CreateManpages.cmake
++++ b/cmake_admin/CreateManpages.cmake
+@@ -31,5 +31,5 @@ MACRO(CREATE_MANPAGES)
+     ENDFOREACH (it)
+     ADD_CUSTOM_TARGET(manpages ALL DEPENDS ${outfiles})
+     INSTALL ( FILES ${outfiles}
+-              DESTINATION share/man/man1 )
++              DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/man/man1" )
+ ENDMACRO(CREATE_MANPAGES)
+diff --git a/icons/CMakeLists.txt b/icons/CMakeLists.txt
+index 74427e9..a477386 100644
+--- a/icons/CMakeLists.txt
++++ b/icons/CMakeLists.txt
+@@ -1,18 +1,18 @@
+ INSTALL(FILES drumstick_16.png 
+-    DESTINATION share/icons/hicolor/16x16/apps   
++    DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/16x16/apps"
+     RENAME drumstick.png)
+ 
+ INSTALL(FILES drumstick_32.png 
+-    DESTINATION share/icons/hicolor/32x32/apps   
++    DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/32x32/apps"
+     RENAME drumstick.png)
+ 
+ INSTALL(FILES drumstick_48.png 
+-    DESTINATION share/icons/hicolor/48x48/apps   
++    DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/48x48/apps"
+     RENAME drumstick.png)
+ 
+ INSTALL(FILES drumstick_64.png 
+-    DESTINATION share/icons/hicolor/64x64/apps   
++    DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/64x64/apps"
+     RENAME drumstick.png)
+ 
+ INSTALL(FILES drumstick.svgz
+-    DESTINATION share/icons/hicolor/scalable/apps)
++    DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/scalable/apps")
+diff --git a/utils/drumgrid/CMakeLists.txt b/utils/drumgrid/CMakeLists.txt
+index 44ce05e..2d6a558 100644
+--- a/utils/drumgrid/CMakeLists.txt
++++ b/utils/drumgrid/CMakeLists.txt
+@@ -60,5 +60,5 @@ INSTALL(TARGETS drumstick-drumgrid
+         RUNTIME DESTINATION bin)
+ 
+ INSTALL(FILES drumstick-drumgrid.desktop
+-        DESTINATION share/applications)
++        DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/applications")
+         
+diff --git a/utils/guiplayer/CMakeLists.txt b/utils/guiplayer/CMakeLists.txt
+index 79a8a6d..65901ac 100644
+--- a/utils/guiplayer/CMakeLists.txt
++++ b/utils/guiplayer/CMakeLists.txt
+@@ -66,4 +66,4 @@ INSTALL(TARGETS drumstick-guiplayer
+         RUNTIME DESTINATION bin)
+ 
+ INSTALL(FILES drumstick-guiplayer.desktop
+-        DESTINATION share/applications)
++        DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/applications")
+diff --git a/utils/vpiano/CMakeLists.txt b/utils/vpiano/CMakeLists.txt
+index d4e5bcb..c63c7e9 100644
+--- a/utils/vpiano/CMakeLists.txt
++++ b/utils/vpiano/CMakeLists.txt
+@@ -93,4 +93,4 @@ install(TARGETS drumstick-vpiano
+         RUNTIME DESTINATION bin)
+ 
+ install(FILES drumstick-vpiano.desktop
+-        DESTINATION share/applications)
++        DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/applications")
+-- 
+2.7.0
+
