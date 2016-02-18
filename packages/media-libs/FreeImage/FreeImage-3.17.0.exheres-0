@@ -33,10 +33,14 @@ MYOPTIONS=""
 # TODO: Unbundle included libraries
 DEPENDENCIES="
     build:
-        app-arch/unzip
+        virtual/unzip
 "
 
 WORK=${WORKBASE}/${PN}
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PNV}-gcc-5.diff
+)
 
 DEFAULT_SRC_COMPILE_PARAMS=( -f Makefile.gnu )
 
@@ -46,4 +50,12 @@ DEFAULT_SRC_INSTALL_PARAMS=(
 )
 
 DEFAULT_SRC_INSTALL_EXTRA_DOCS=( Whatsnew.txt )
+
+src_prepare() {
+    # fix dos-line endings for the patch to apply cleanly
+    edo sed -i 's/\r$//' -- \
+        "${WORK}"/Source/LibWebP/src/dsp/*
+
+    default
+}
 
