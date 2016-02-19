@@ -1,13 +1,9 @@
 # Copyright 2009 Hong Hao <oahong@gmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake
-
 SUMMARY="A free implementation of OpenAL's ALUT standard"
 HOMEPAGE="http://connect.creativelabs.com/openal"
-# The homepage seems to be down for quite a while, so we mirror the tarball
-#DOWNLOADS="${HOMEPAGE}/Downloads/ALUT/${PNV}.tar.gz"
-DOWNLOADS="http://dev.exherbo.org/distfiles/${PNV}.tar.gz"
+DOWNLOADS="http://connect.creativelabs.com/openal/Downloads/ALUT/${PNV}.tar.gz"
 
 LICENCES="LGPL-2"
 SLOT="0"
@@ -19,6 +15,9 @@ DEPENDENCIES="
         media-libs/openal
 "
 
-# FIXME Add a LIBSUFIX switch
-CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_TESTS:BOOL=OFF )
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --disable-static
+    --hates=datarootdir
+    --hates=docdir
+)
 
