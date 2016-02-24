@@ -25,7 +25,10 @@ BUGS_TO="mforney@mforney.org"
 
 LICENCES="GPL-3"
 SLOT="0"
-MYOPTIONS="pulseaudio"
+MYOPTIONS="
+    pulseaudio
+    ( providers: eudev systemd ) [[ number-selected = exactly-one ]]
+"
 
 DEPENDENCIES="
     build+run:
@@ -37,7 +40,8 @@ DEPENDENCIES="
         media-libs/v4l-utils
         media/ffmpeg
         sci-libs/gsl
-        sys-apps/systemd [[ note = [ libudev is used to enumerate v4l2 devices ] ]]
+        providers:eudev? ( sys-apps/eudev )
+        providers:systemd? ( sys-apps/systemd )
         x11-libs/gtk+:3[>=3.0.0]
         pulseaudio? ( media-sound/pulseaudio[>=0.9.15] )
 "
