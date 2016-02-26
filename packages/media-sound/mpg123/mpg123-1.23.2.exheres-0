@@ -41,7 +41,9 @@ src_configure() {
     option sdl && modules+=( sdl )
 
     econf \
+        --enable-equalizer \
         --enable-ipv6 \
+        --disable-yasm \
         --with-audio="$(echo ${modules[@]} | tr ' ' ',')" \
         $(option_enable debug)
 }
