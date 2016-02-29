@@ -2,7 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 
 SUMMARY="A Better CD Encoder"
-
 HOMEPAGE="http://${PN}.einval.com"
 DOWNLOADS="${HOMEPAGE}/download/${PNV}.tar.gz"
 
@@ -10,8 +9,14 @@ LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
 MYOPTIONS="
-    aac flac mp3 normalize speex vorbis
+    aac
+    flac
+    mp3
     musicbrainz [[ description = [ Install a perl script to work with the MusicBrainz API ] ]]
+    normalize
+    speex
+    vorbis
+    wavpack
 "
 
 DEPENDENCIES="
@@ -27,25 +32,43 @@ DEPENDENCIES="
             dev-perl/MusicBrainz-DiscID
             dev-perl/WebService-MusicBrainz
         )
+        wavpack? ( media-sound/wavpack )
     recommendation:
-        media/cdparanoia
-        vorbis? ( media-sound/vorbisgain )
+        dev-libs/libcdio-paranoia [[
+            description = [ Required to extract audio from a CD ]
+        ]]
+        mp3? ( media-sound/id3v2 ) [[
+            description = [ Required to write ID3 tags ]
+        ]]
+        vorbis? ( media-sound/vorbisgain ) [[
+            description = [ Correct the volume of an Ogg Vorbis file to a predefined standardized loudness ]
+        ]]
     suggestion:
-        media-sound/mkcue [[ description = [ Needed to generate cue sheets ] ]]
+        media-sound/mkcue [[ description = [ Required to generate cue sheets ] ]]
 "
 
 DEFAULT_SRC_INSTALL_PARAMS=(
     INSTALL=install
-    exec_prefix=\${DESTDIR}/usr/$(exhost --target)
+    prefix=/usr/$(exhost --target)
+    sysconfdir=/etc
+    datarootdir=/usr/share
+    docdir=/usr/share/doc/${PNVR}
 )
 
-src_install() {
+src_prepare() {
     if ! optionq musicbrainz ; then
         edo sed -i -e '/abcde-musicbrainz-tool/d' Makefile
         edo rm abcde-musicbrainz-tool examples/musicbrainz-get-tracks
     fi
 
     default
+}
+
+src_install() {
+    default
+
+    dobin abcde cddb-tool
+
     docinto examples/
     dodoc examples/*
 }
