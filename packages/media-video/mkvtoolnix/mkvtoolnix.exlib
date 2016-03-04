@@ -62,7 +62,7 @@ src_prepare() {
 }
 
 src_compile() {
-    edo rake
+    edo rake -m -j${EXJOBS:-1}
 }
 
 src_install() {
