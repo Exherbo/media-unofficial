@@ -49,11 +49,6 @@ DEPENDENCIES="
         lirc? ( remote/lirc )
 "
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PN}-15.12.1-cmake-datarootdir.patch
-    "${FILES}"/${PN}-15.12.1-lirc-optional.patch
-)
-
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DUSE_QT4:BOOL=FALSE
     -DUSE_QT5:BOOL=TRUE
