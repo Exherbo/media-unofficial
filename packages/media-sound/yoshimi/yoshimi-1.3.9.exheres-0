@@ -32,6 +32,7 @@ DEPENDENCIES="
         media-libs/libsndfile
         media-sound/jack-audio-connection-kit[>=0.115.6]
         sci-libs/fftw[>=3.0.22]
+        sys-libs/ncurses
         sys-sound/alsa-lib[>=1.0.17]
         x11-libs/cairo[X]
         x11-libs/fltk
@@ -39,6 +40,10 @@ DEPENDENCIES="
 "
 
 CMAKE_SOURCE=${WORKBASE}/${PNV}/src
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PN}-1.3.9-Use-CMAKE_INSTALL_FULL_DATAROOTDIR.patch
+)
 
 CMAKE_SRC_CONFIGURE_OPTIONS=( "lv2 BuildLV2Plugin" )
 
