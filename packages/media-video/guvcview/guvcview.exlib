@@ -4,20 +4,19 @@
 MY_PNV=${PN}-src-${PV}
 
 require sourceforge [ suffix=tar.gz pnv=${MY_PNV} ]
-require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 ] ]
 if ! ever is_scm; then
     WORK="${WORKBASE}"/${MY_PNV}
-    DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/guvcview-CPPFLAGS-typo.patch )
 else
     SCM_REPOSITORY="git://git.code.sf.net/p/${PN}/git-master"
     require scm-git
+    require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 ] ]
 fi
 
 SUMMARY="GTK+ UVC Viewer"
 DESCRIPTION="
 This project aims at providing a simple GTK interface for capturing and viewing video from devices
 supported by the linux UVC driver, although it should also work with any v4l2 compatible device.
-guvcview is based on luvcview for video rendering, but all controls are build using a GTK2
+guvcview is based on luvcview for video rendering, but all controls are build using a GTK3
 interface.
 "
 
@@ -27,6 +26,7 @@ LICENCES="GPL-3"
 SLOT="0"
 MYOPTIONS="
     pulseaudio
+    ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]]
     ( providers: eudev systemd ) [[ number-selected = exactly-one ]]
 "
 
@@ -38,13 +38,16 @@ DEPENDENCIES="
         media-libs/libpng
         media-libs/portaudio
         media-libs/v4l-utils
-        media/ffmpeg
         sci-libs/gsl
+        x11-libs/gtk+:3[>=3.0.0]
         providers:eudev? ( sys-apps/eudev )
         providers:systemd? ( sys-apps/systemd )
-        x11-libs/gtk+:3[>=3.0.0]
+        providers:ffmpeg? ( media/ffmpeg )
+        providers:libav? ( media/libav )
         pulseaudio? ( media-sound/pulseaudio[>=0.9.15] )
 "
 
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( "pulseaudio pulse" )
 
+# Broken when qt5 is not enabled
+RESTRICT="test"
