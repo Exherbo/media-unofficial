@@ -62,6 +62,6 @@ mpdcron_src_configure() {
 
 mpdcron_src_install() {
     default
-    install-zsh-completions
+    zsh-completion_src_install
 }
 
