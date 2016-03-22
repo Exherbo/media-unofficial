@@ -16,7 +16,7 @@ DOWNLOADS="
     mirror://sourceforge/${PN,,}/${MY_PNV}.pdf
 "
 
-REMOTE_IDS="freshmeat:${PN} sourceforge:${PN}"
+REMOTE_IDS="sourceforge:${PN}"
 
 UPSTREAM_CHANGELOG="${HOMEPAGE}/changeslog.html"
 UPSTREAM_DOCUMENTATION="
