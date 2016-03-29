@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 require freedesktop-desktop gtk-icon-cache gsettings
-require vala [ vala_dep=true vala_slots=[ 0.20 0.18 ] ]
+require vala [ vala_dep=true ]
 
 SUMMARY="Open source photo manager for GNOME"
 DESCRIPTION="
