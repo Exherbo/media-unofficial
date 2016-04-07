@@ -26,6 +26,7 @@ DEPENDENCIES="
     build+run:
         media-sound/jack-audio-connection-kit[>=0.124.1][dbus?]
         sys-sound/alsa-lib
+        x11-libs/libX11
         x11-libs/qtbase:5[>=5.1][gui]
         x11-libs/qttools:5[>=5.1] [[ note = [ Qt5LinguistTools ] ]]
         x11-libs/qtx11extras:5[>=5.1]
@@ -46,7 +47,7 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( debug dbus )
 
 src_prepare() {
-    # install to /usr/share
+    # TODO: report upstream, install to /usr/share
     edo sed \
         -e 's:$$PREFIX/share:/usr/share:g' \
         -i src/src.pro
