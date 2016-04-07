@@ -40,6 +40,7 @@ DEPENDENCIES="
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     --disable-static
     --with-gettext
+    --with-qt-pkg-config
     --without-curl
 )
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( 'qt5 qt' )
