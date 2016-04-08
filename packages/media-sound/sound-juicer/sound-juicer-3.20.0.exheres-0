@@ -30,7 +30,7 @@ DEPENDENCIES="
         media-libs/libdiscid
         media-libs/libmusicbrainz:5[>=5.0.1]
         media-plugins/gst-plugins-base:1.0
-        x11-libs/gtk+:3[>=3.4.0]
+        x11-libs/gtk+:3[>=3.19.6]
     recommendation:
         media-plugins/gst-plugins-base:1.0[gstreamer_plugins:vorbis]
         media-plugins/gst-plugins-good:1.0[gstreamer_plugins:flac][gstreamer_plugins:wavpack]
