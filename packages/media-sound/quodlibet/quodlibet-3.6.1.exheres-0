@@ -37,11 +37,13 @@ DEPENDENCIES="
         dev-util/intltool
         sys-devel/gettext
     build+run:
-        gnome-bindings/pygobject:3[>=3.4.0][cairo]
-        x11-libs/gtk+:3[>=3.2.0][gobject-introspection]
+        dev-python/requests[>=2.2.1][python_abis:*(-)?]
+        gnome-bindings/pygobject:3[>=3.12][cairo]
+        x11-libs/gtk+:3[>=3.10][gobject-introspection]
     run:
         dev-python/dbus-python
-        dev-python/mutagen[>=1.14]
+        dev-python/mutagen[>=1.30]
+        gnome-desktop/libsoup[>=2.44]
         media-libs/gstreamer:1.0[gobject-introspection]
     suggestion:
         (
@@ -53,12 +55,12 @@ DEPENDENCIES="
 
         dev-libs/keybinder[>=0.3.0] [[ description = [ Register global hotkeys ] ]]
         dev-libs/zeitgeist:2.0 [[ description = [ Install the Zeitgeist (activity tracker) plugin ] ]]
-        dev-python/cddb-py [[ description = [ Used by CDDB plugin ] ]]
-        dev-python/feedparser [[ description = [ Support for audio feeds ] ]]
-        dev-python/pyinotify [[ description = [ Install a plugin to automatically update the library ] ]]
-        dev-python/python-musicbrainz2 [[ description = [ Install a plugin for MusicBrainz tagging ] ]]
+        dev-python/feedparser[python_abis:*(-)?] [[ description = [ Support for audio feeds ] ]]
+        dev-python/musicbrainzngs[python_abis:*(-)?] [[ description = [ Install a plugin for MusicBrainz tagging ] ]]
+        dev-python/pyinotify[python_abis:*(-)?] [[ description = [ Install a plugin to automatically update the library ] ]]
         media-libs/libgpod [[ description = [ Access the contents of an iPod ] ]]
         media-plugins/gst-plugins-bad:1.0[gstreamer_plugins:chromaprint] [[ description = [ Install a plugin for audio fingerprinting ] ]]
+        net-libs/webkit:4.0 [[ description = [ Lyrics Window ] ]]
         sys-apps/udisks:2 [[ description = [ Device support ] ]]
 "
         # TODO these should go to ::unwritten sometime
