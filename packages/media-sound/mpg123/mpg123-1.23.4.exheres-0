@@ -4,7 +4,7 @@
 require sourceforge
 
 SUMMARY="A console based decoder/player for mono/stereo mpeg audio files"
-HOMEPAGE="http://www.${PN}.de"
+HOMEPAGE="https://www.${PN}.de"
 
 REMOTE_IDS+=" freecode:${PN}"
 
