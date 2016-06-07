@@ -1,0 +1,26 @@
+From 96fddc8ff251d3c08cbd803a213d33a4b7d81e06 Mon Sep 17 00:00:00 2001
+From: Marvin Schmidt <marv@exherbo.org>
+Date: Fri, 8 Jul 2016 11:34:09 +0200
+Subject: [PATCH] Fix resources path
+Upstream: No, will have to work out an upstreamable fix
+
+---
+ src/AppDirs.vala | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/AppDirs.vala b/src/AppDirs.vala
+index 94be26b..da20fff 100644
+--- a/src/AppDirs.vala
++++ b/src/AppDirs.vala
+@@ -259,7 +259,7 @@ class AppDirs {
+     }
+     
+     public static File get_resources_dir() {
+-        File? install_dir = get_install_dir();
++        File? install_dir = File.new_for_path("/usr");
+         
+         return (install_dir != null) ? install_dir.get_child("share").get_child("shotwell")
+             : get_exec_dir();
+-- 
+2.9.3
+

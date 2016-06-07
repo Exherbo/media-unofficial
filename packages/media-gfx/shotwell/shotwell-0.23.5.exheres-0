@@ -1,6 +1,7 @@
 # Copyright 2010 Pierre Lejeune <superheron@gmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
+require gnome.org [ suffix=tar.xz ]
 require freedesktop-desktop gtk-icon-cache gsettings
 require vala [ vala_dep=true ]
 
@@ -10,53 +11,47 @@ Shotwell is a photo organizer for the GNOME desktop. It lets you import photos f
 organize them in various ways, view them in full-window or fullscreen mode, and export them to share
 with others.
 "
-HOMEPAGE="http://yorba.org/${PN}"
-DOWNLOADS="mirror://gnome/sources/${PN}/$(ever range 1-2)/${PNV}.tar.xz"
+HOMEPAGE="https://wiki.gnome.org/Apps/Shotwell"
 
 LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="doc"
+MYOPTIONS=""
 
 DEPENDENCIES="
     build:
-        sys-devel/gettext
+        gnome-desktop/yelp-tools
+        sys-devel/gettext[>=0.19.7]
+        virtual/pkg-config[>=0.22]
     build+run:
-        base/libgee:1.0[>=0.5.0]
+        base/libgee:0.8[>=0.8.5]
         core/json-glib
         dev-db/sqlite:3[>=3.5.9]
         dev-libs/gexiv2[>=0.4.90]
         dev-libs/glib:2[>=2.30.0]
         dev-libs/libxml2:2.0[>=2.6.32]
         gnome-desktop/libsoup:2.4[>=2.26.0]
-        media-libs/gstreamer:0.10[>=0.10.32]
+        media-libs/gstreamer:1.0[>=1.0.0]
         media-libs/libexif[>=0.6.16]
-        media-libs/libgphoto2[>=2.4.2]
+        media-libs/libgphoto2[>=2.5.0]
         media-libs/libraw[>=0.13.2]
         media-plugins/gst-plugins-base:1.0[>=1.0.0]
         net-libs/rest[>=0.7]
-        net-libs/webkit:3.0[>=1.4.0]
-        sys-devel/m4[>=1.4.13]
+        net-libs/webkit:4.0
         sys-apps/systemd
-        x11-libs/gtk+:3[>=3.0.11]
+        x11-libs/gdk-pixbuf:2.0
+        x11-libs/gtk+:3[>=3.12.2]
     run:
-        gnome-desktop/librsvg[>=2.14.0]
+        gnome-desktop/librsvg
 "
 
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/${PNV}-Build-with-LibRaw-0.15-Closes-7012.patch
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/0001-Fix-resources-path.patch
 )
-
-src_configure() {
-    # not autoconf based
-    edo ./configure                         \
-        --prefix=/usr                       \
-        --disable-desktop-update            \
-        --disable-icon-update               \
-        --disable-schemas-compile           \
-        --lib=${LIBDIR}                     \
-        $(option_enable doc help-install)
-}
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --disable-schemas-compile
+    --disable-unity-support
+)
 
 pkg_postinst() {
     freedesktop-desktop_pkg_postinst
