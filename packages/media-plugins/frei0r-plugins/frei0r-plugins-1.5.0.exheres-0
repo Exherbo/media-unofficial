@@ -10,8 +10,8 @@ Frei0r is a minimalistic plugin API for video effects.
 The main emphasis is on simplicity for an API that will round up the most common video effects into
 simple filters, sources and mixers that can be controlled by parameters.
 "
-HOMEPAGE="http://frei0r.dyne.org"
-DOWNLOADS="http://dev.exherbo.org/~tgurr/distfiles/${PN}/${PNV}.tar.gz"
+HOMEPAGE="https://frei0r.dyne.org"
+DOWNLOADS="https://files.dyne.org/frei0r/releases/${PNV}.tar.gz"
 
 REMOTE_IDS="freecode:frei0r"
 
