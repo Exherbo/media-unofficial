@@ -1,0 +1,80 @@
+Upstream: yes
+
+From 64f23543f7eedf82dd94143bcc0f0b8b751290f7 Mon Sep 17 00:00:00 2001
+From: plcl <plcl@b2133143-ca9b-4e53-b430-e31f198fbdac>
+Date: Wed, 17 Feb 2016 17:50:15 +0000
+Subject: [PATCH] Fix build with GCC 6, by Robin Lee
+
+git-svn-id: svn://svn.code.sf.net/p/drumstick/code/trunk@317 b2133143-ca9b-4e53-b430-e31f198fbdac
+---
+ library/file/qove.cpp           | 4 ++--
+ library/file/qwrk.cpp           | 8 ++++----
+ utils/testevents/testevents.cpp | 4 ++--
+ 3 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/library/file/qove.cpp b/library/file/qove.cpp
+index 516ebd7..c369c08 100644
+--- a/library/file/qove.cpp
++++ b/library/file/qove.cpp
+@@ -11356,7 +11356,7 @@ void QOve::convertSignatures() {
+ 				OVE::MeasureData* measureData = d->ove.getMeasureData(i, j, k);
+ 				QList<OVE::MusicData*> tempoPtrs = measureData->getMusicDatas(OVE::MusicData_Tempo);
+ 
+-				if (k == 0 || (k > 0 && abs(measure->getTypeTempo()	- d->ove.getMeasure(k - 1)->getTypeTempo()) > 0.01)) {
++				if (k == 0 || (k > 0 && std::abs(measure->getTypeTempo()	- d->ove.getMeasure(k - 1)->getTypeTempo()) > 0.01)) {
+ 					int tick = d->mtt.getTick(k, 0);
+ 					int tempo = (int) measure->getTypeTempo();
+ 					tempos[tick] = tempo;
+@@ -11739,7 +11739,7 @@ void QOve::convertNotes(int trackNo, int measureTick, OVE::NoteContainer* contai
+ 				}
+ 				case OVE::Articulation_Arpeggio: {
+ 					//if( art->getChangeSoundEffect() ) {
+-						unsigned int soundEffect = abs(art->getSoundEffect().first) + abs(art->getSoundEffect().second);
++						unsigned int soundEffect = std::abs(art->getSoundEffect().first) + std::abs(art->getSoundEffect().second);
+ 						int tickAmount = (soundEffect / notes.size()) * ((notes.size() - i) - 1);
+ 						startTick -= tickAmount;
+ 					//}
+diff --git a/library/file/qwrk.cpp b/library/file/qwrk.cpp
+index 562da66..f41c63f 100644
+--- a/library/file/qwrk.cpp
++++ b/library/file/qwrk.cpp
+@@ -1047,8 +1047,8 @@ void QWrk::processNewTrack()
+ {
+     qint16 bank = -1;
+     qint16 patch = -1;
+-    qint16 vol = -1;
+-    qint16 pan = -1;
++    //qint16 vol = -1;
++    //qint16 pan = -1;
+     qint8 key = -1;
+     qint8 vel = 0;
+     quint8 port = 0;
+@@ -1061,8 +1061,8 @@ void QWrk::processNewTrack()
+     QString name = readString(len);
+     bank = read16bit();
+     patch = read16bit();
+-    vol = read16bit();
+-    pan = read16bit();
++    /*vol =*/ read16bit();
++    /*pan =*/ read16bit();
+     key = readByte();
+     vel = readByte();
+     readGap(7);
+diff --git a/utils/testevents/testevents.cpp b/utils/testevents/testevents.cpp
+index b980211..94093d5 100644
+--- a/utils/testevents/testevents.cpp
++++ b/utils/testevents/testevents.cpp
+@@ -262,8 +262,8 @@ void QTestEvents::run()
+     dumpEvent(new KeyPressEvent(5, 60, 124));
+     dumpEvent(new ChanPressEvent(6, 111));
+     dumpEvent(new PitchBendEvent(7, 1234));
+-    char sysex[] = {0xf0, 0x41, 0x10, 0x42, 0x12, 0x40, 0, 0x7f, 0, 0x41, 0xf7};
+-    dumpEvent(new SysExEvent(QByteArray(sysex, sizeof(sysex))));
++    QByteArray sysex = QByteArray::fromHex("f04110421240007f0041f7");
++    dumpEvent(new SysExEvent(sysex));
+     QString text = "This can be a copyright, song name, instrument, lyric...";
+     TextEvent te(text, 3);
+     dumpEvent(new TextEvent(te));
+-- 
+2.8.4
+

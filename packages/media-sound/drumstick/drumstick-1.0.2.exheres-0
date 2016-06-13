@@ -32,6 +32,7 @@ DEPENDENCIES="
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/${PN}-Use-GNUInstallDirs-to-install-arch-independent-data.patch
+    "${FILES}"/${PNV}-Fix-build-with-GCC-6-by-Robin-Lee.patch
 )
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
