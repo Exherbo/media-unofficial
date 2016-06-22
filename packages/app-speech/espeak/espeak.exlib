@@ -2,7 +2,7 @@
 # Copyright 2011-2015 Quentin "Sardem FF7" Glidic <sardemff7@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-export_exlib_phases pkg_setup src_prepare src_compile src_install
+export_exlib_phases src_prepare src_compile src_install
 
 myexparam -b test_release=false
 
@@ -30,13 +30,14 @@ DEPENDENCIES="
 
 WORK="${WORK}/src"
 
-espeak_pkg_setup() {
-    AUDIO=
+espeak_make() {
+    local audio=
     if option pulseaudio; then
-        AUDIO=pulseaudio
+        audio=pulseaudio
     elif option portaudio; then
-        AUDIO=portaudio
+        audio=portaudio
     fi
+    emake PREFIX="/usr/$(exhost --target)" CXXFLAGS="${CXXFLAGS}" AUDIO="${audio}" "$@"
 }
 
 espeak_src_prepare() {
@@ -45,10 +46,10 @@ espeak_src_prepare() {
 }
 
 espeak_src_compile() {
-    emake PREFIX="/usr/$(exhost --target)" AUDIO="${AUDIO}"
+    espeak_make
 }
 
 espeak_src_install() {
-    emake DESTDIR="${IMAGE}" PREFIX="/usr/$(exhost --target)" AUDIO="${AUDIO}" install
+    espeak_make DESTDIR="${IMAGE}" install
     edo rmdir "${IMAGE}"/usr/share/espeak-data/{mbrola,soundicons}
 }
