@@ -3,7 +3,7 @@
 #   Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-require gnome.org [ suffix=.tar.xz ] freedesktop-desktop gsettings gtk-icon-cache
+require gnome.org [ suffix=tar.xz ] freedesktop-desktop gsettings gtk-icon-cache
 
 SUMMARY="GTK+ utility for editing MP2, MP3, MP4, FLAC, Ogg and other media tags"
 DESCRIPTION="
