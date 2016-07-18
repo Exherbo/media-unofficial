@@ -27,8 +27,8 @@ DEPENDENCIES="
         virtual/pkg-config[>=0.9.0]
     build+run:
         dev-libs/boost[>=1.47.0]
-        media-libs/libebml[>=1.3.3]
-        media-libs/libmatroska[>=1.4.4]
+        media-libs/libebml[>=1.3.4]
+        media-libs/libmatroska[>=1.4.5]
         media-libs/libogg
         media-libs/libvorbis
         sys-apps/file
