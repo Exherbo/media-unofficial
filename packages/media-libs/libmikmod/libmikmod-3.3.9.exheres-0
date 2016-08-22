@@ -1,0 +1,67 @@
+# Copyright 2012 Pierre Lejeune <superheron@gmail.com>
+# Copyright 2014 Ali Polatel <alip@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require sourceforge [ project=mikmod suffix=tar.gz ]
+
+SUMMARY="Module playing library"
+DESCRIPTION="
+LibMikMod is a module playing library supporting many formats, including mod, s3m, it, and xm.
+"
+HOMEPAGE+=" http://mikmod.raphnet.net"
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="
+    alsa
+    openal
+    pulseaudio
+    sdl
+    arm_cpu_features: simd
+"
+
+DEPENDENCIES="
+    build+run:
+        alsa? ( sys-sound/alsa-lib )
+        openal? ( media-libs/openal )
+        pulseaudio? ( media-sound/pulseaudio )
+        sdl? ( media-libs/SDL:2 )
+"
+
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --enable-aiff
+    --enable-doc
+    --enable-hqmixer
+    --enable-pipe
+    --enable-raw
+    --enable-stdout
+    --enable-threads
+    --enable-wav
+    --disable-alldrv
+    --disable-dl
+    --disable-static
+)
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
+    alsa
+    openal
+    pulseaudio
+    sdl
+    'sdl sdl2'
+)
+
+src_configure() {
+    local myconf=(
+        "${DEFAULT_SRC_CONFIGURE_PARAMS[@]}" \
+        $(for s in "${DEFAULT_SRC_CONFIGURE_OPTION_ENABLES[@]}" ; do \
+            option_enable ${s} ; \
+        done )
+    )
+
+    myconf+=(
+        $(option_enable arm_cpu_features:simd)
+    )
+
+    econf "${myconf[@]}"
+}
+
