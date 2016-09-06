@@ -53,11 +53,16 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DUSE_QT4:BOOL=FALSE
     -DUSE_QT5:BOOL=TRUE
 )
-CMAKE_SRC_CONFIGURE_OPTION_ENABLES=(
-    "lirc LIRC"
-)
 
 CMAKE_SOURCE=${WORKBASE}/${PN}-$(ever range 1-2)
+
+src_configure() {
+    local cmakeargs+=(
+        -DDISABLE_LIRC:BOOL=$(option lirc && echo FALSE || echo TRUE)
+    )
+
+    ecmake "${cmakeargs[@]}" "${CMAKE_SRC_CONFIGURE_PARAMS[@]}"
+}
 
 pkg_postinst() {
     freedesktop-desktop_pkg_postinst
