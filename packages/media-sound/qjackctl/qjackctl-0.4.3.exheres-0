@@ -38,7 +38,6 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --enable-jack-metadata
     --enable-jack-midi
     --enable-jack-port-aliases
-    --enable-qt5
     --enable-system-tray
     --enable-xunique
     --disable-portaudio
@@ -51,6 +50,14 @@ src_prepare() {
     edo sed \
         -e 's:$$PREFIX/share:/usr/share:g' \
         -i src/src.pro
+
+    default
+}
+
+src_configure() {
+    # Qt >= 5.7 requires at least C++11
+    # https://sourceforge.net/p/qjackctl/tickets/31
+    export CXXFLAGS="${CXXFLAGS} -std=c++11"
 
     default
 }
