@@ -16,21 +16,20 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build:
-        dev-util/intltool[>=0.50.0]
         gnome-desktop/yelp-tools
-        sys-devel/gettext
+        sys-devel/gettext[>=0.19.6]
         virtual/pkg-config
     build+run:
         app-text/iso-codes
-        dev-libs/glib:2[>=2.38]
+        dev-libs/glib:2[>=2.49.5]
         gnome-desktop/brasero:3
         gnome-desktop/gsettings-desktop-schemas
         media-libs/gstreamer:1.0
         media-libs/libcanberra[providers:gtk3]
-        media-libs/libdiscid
+        media-libs/libdiscid[>=0.4.0]
         media-libs/libmusicbrainz:5[>=5.0.1]
         media-plugins/gst-plugins-base:1.0
-        x11-libs/gtk+:3[>=3.19.6]
+        x11-libs/gtk+:3[>=3.21.6]
     recommendation:
         media-plugins/gst-plugins-base:1.0[gstreamer_plugins:vorbis]
         media-plugins/gst-plugins-good:1.0[gstreamer_plugins:flac][gstreamer_plugins:wavpack]
