@@ -42,7 +42,7 @@ DEPENDENCIES="
         x11-libs/gtk+:3[>=3.10][gobject-introspection]
     run:
         dev-python/dbus-python
-        dev-python/mutagen[>=1.30]
+        dev-python/mutagen[>=1.32]
         gnome-desktop/libsoup[>=2.44]
         media-libs/gstreamer:1.0[gobject-introspection]
     suggestion:
