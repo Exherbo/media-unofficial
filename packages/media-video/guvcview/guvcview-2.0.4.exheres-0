@@ -1,0 +1,14 @@
+# Copyright 2015 Ivan Diorditsa <ivan.diorditsa@gmail.com>
+# Distributed under the terms of the GNU General Public License v2
+
+require guvcview
+
+PLATFORMS="~amd64"
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/0001-fix-deprecated-libavcodec-warnings.patch
+    "${FILES}"/0002-remove-deprecated-AVPicture-references.patch
+    "${FILES}"/0003-move-deprected-AVCodecContext-pre_me-and-mpeg_quant-.patch
+    "${FILES}"/0004-wrap-VP9-and-HEVC-codecs-with-libavcodec-version.patch
+)
+
