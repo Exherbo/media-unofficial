@@ -33,7 +33,7 @@ DEPENDENCIES="
         libsndfile? ( media-libs/libsndfile )
         portaudio? ( media-libs/portaudio[>=19] )
         pulseaudio? ( media-sound/pulseaudio[>=0.9.8] )
-        readline? ( sys-libs/readline )
+        readline? ( sys-libs/readline:= )
 "
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(
