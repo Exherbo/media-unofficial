@@ -23,6 +23,8 @@ MYOPTIONS="
 "
 
 DEPENDENCIES="
+    build:
+        virtual/pkg-config
     build+run:
         media-sound/jack-audio-connection-kit[>=0.124.1][dbus?]
         sys-sound/alsa-lib
@@ -44,23 +46,6 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --disable-qt4
 )
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( debug dbus )
-
-src_prepare() {
-    # TODO: report upstream, install to /usr/share
-    edo sed \
-        -e 's:$$PREFIX/share:/usr/share:g' \
-        -i src/src.pro
-
-    default
-}
-
-src_configure() {
-    # Qt >= 5.7 requires at least C++11
-    # https://sourceforge.net/p/qjackctl/tickets/31
-    export CXXFLAGS="${CXXFLAGS} -std=c++11"
-
-    default
-}
 
 pkg_postinst() {
     freedesktop-desktop_pkg_postinst
