@@ -16,9 +16,10 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build:
+        virtual/pkg-config
         x11-libs/qttools:5[>=5.1] [[ note = [ for lupdate ] ]]
     build+run:
-        media-sound/fluidsynth
+        media-sound/fluidsynth[>=0.80.0]
         x11-libs/libX11
         x11-libs/libXext
         x11-libs/qtbase:5[>=5.1]
@@ -31,23 +32,6 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --enable-xunique
     --disable-qt4
 )
-
-src_prepare() {
-    # TODO: report upstream, install to /usr/share
-    edo sed \
-        -e 's:$$PREFIX/share:/usr/share:g' \
-        -i src/src.pro
-
-    default
-}
-
-src_configure() {
-    # Qt >= 5.7 requires at least C++11
-    # https://sourceforge.net/p/qjackctl/tickets/31
-    export CXXFLAGS="${CXXFLAGS} -std=c++11"
-
-    default
-}
 
 pkg_postinst() {
     freedesktop-desktop_pkg_postinst
