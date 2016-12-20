@@ -1,6 +1,8 @@
 # Copyright 2009-2012 Pierre Lejeune <superheron@gmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
+require ruby [ multibuild=false with_opt=true ]
+
 SUMMARY="The industry-standard colour ASCII-art library"
 DESCRIPTION="
 libcaca is a graphics library that outputs text
@@ -43,7 +45,6 @@ DEPENDENCIES="
             x11-dri/mesa
         )
         python? ( dev-lang/python:=[>=2.2] )
-        ruby? ( dev-lang/ruby:= )
         slang? ( sys-libs/slang )
 "
 
@@ -71,4 +72,9 @@ DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     'server network'
     'slang'
 )
+
+src_configure() {
+    export ac_cv_path_RUBY=ruby$(ruby_get_abi)
+    default
+}
 
