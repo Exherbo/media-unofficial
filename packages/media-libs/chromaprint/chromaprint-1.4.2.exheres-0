@@ -9,11 +9,10 @@ DOWNLOADS="https://bitbucket.org/acoustid/${PN}/downloads/${PNV}.tar.gz"
 
 BUGS_TO="calvin.walton@kepstin.ca"
 
-LICENCES="LGPL-2.1"
+LICENCES="LGPL-2.1 MIT"
 SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS="
-    examples [[ description = [ Build the example scanning tool fpcalc ] ]]
     ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]]
 "
 
@@ -26,12 +25,7 @@ DEPENDENCIES="
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DBUILD_SHARED_LIBS:BOOL=TRUE
     -DBUILD_TESTS:BOOL=FALSE
-    -DWITH_AVFFT:BOOL=TRUE
-    -DWITH_FFTW3:BOOL=FALSE
-    -DWITH_KISSFFT:BOOL=FALSE
-    -DWITH_VDSP:BOOL=FALSE
-)
-CMAKE_SRC_CONFIGURE_OPTION_BUILDS=(
-    'examples EXAMPLES'
+    -DBUILD_TOOLS:BOOL=TRUE
+    -DFFT_LIB:STRING=avfft
 )
 
