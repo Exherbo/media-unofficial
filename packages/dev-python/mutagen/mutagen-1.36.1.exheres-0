@@ -3,8 +3,5 @@
 
 require mutagen
 
-BUGS_TO="arkanoid@exherbo.org"
-
-SLOT="0"
 PLATFORMS="~x86 ~amd64"
 

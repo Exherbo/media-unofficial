@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 require github [ user=quodlibet tag=release-${PV} ]
-require setup-py [ import=distutils work=${PN}-release-${PV} ]
+require setup-py [ import=distutils work=${PN}-release-${PV} test=pytest ]
 
 SUMMARY="Python module to handle audio metadata"
 DESCRIPTION="
@@ -14,11 +14,14 @@ ID3 and APEv2 tags can be edited regardless of audio format. It can also
 manipulate Ogg streams on an individual packet/page level.
 "
 
+BUGS_TO="alip@exherbo.org"
+REMOTE_IDS+=" pypi:${PN}"
+
 UPSTREAM_CHANGELOG="https://${PN}.readthedocs.io/en/latest/changelog.html"
 UPSTREAM_DOCUMENTATION="https://${PN}.readthedocs.io"
-REMOTE_IDS+="pypi:${PN}"
 
 LICENCES="GPL-2"
+SLOT="0"
 MYOPTIONS=""
 
 DEPENDENCIES="

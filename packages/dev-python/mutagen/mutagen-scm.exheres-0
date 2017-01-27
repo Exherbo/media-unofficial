@@ -3,8 +3,5 @@
 
 require mutagen
 
-BUGS_TO="alip@exherbo.org"
-
-SLOT="0"
 PLATFORMS="~amd64 ~x86"
 
