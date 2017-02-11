@@ -37,7 +37,7 @@ DEPENDENCIES="
         dev-libs/boost[>=1.42]
         media-libs/ilmbase
         media-libs/libpng:=
-        media-libs/libwebp
+        media-libs/libwebp:=
         media-libs/openexr
         media-libs/tiff
         sys-libs/zlib
