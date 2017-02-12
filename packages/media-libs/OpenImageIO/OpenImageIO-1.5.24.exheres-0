@@ -51,10 +51,6 @@ DEPENDENCIES="
         raw? ( media-libs/libraw )
 "
 
-DEFAULT_SRC_PREPARE_PATCHES+=(
-    "${FILES}"/${PNV}-Python-ImageCache-binding-fixes-disable-broken-calls.patch
-)
-
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DDOC_INSTALL_DIR:STRING=/usr/share/doc/${PNVR}
     -DMAN_INSTALL_DIR:STRING=/usr/share/man/man1
