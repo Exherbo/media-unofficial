@@ -43,6 +43,7 @@ DEPENDENCIES="
 "
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --disable-optimization
     --disable-static
     --with-gettext
     --with-qt-pkg-config
