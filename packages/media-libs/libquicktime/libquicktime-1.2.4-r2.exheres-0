@@ -1,0 +1,93 @@
+# Copyright 2009 Thomas Anderson
+# Distributed under the terms of the GNU General Public License
+
+require sourceforge [ suffix=tar.gz ]
+
+SUMMARY="A library for reading and writing QuickTime/AVI/MP4 files"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS="
+    X
+    aac
+    doc
+    dv
+    ffmpeg
+    gtk
+    h264
+    mp3          [[ description = [ Support MP3 encoding with LAME ] ]]
+    opengl
+    schroedinger [[ description = [ Support Dirac encoding and decoding ] ]]
+    vorbis
+
+    ffmpeg? ( ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]] )
+    ( providers: ijg-jpeg jpeg-turbo ) [[ number-selected = exactly-one ]]
+"
+
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+        sys-devel/gettext[>=0.17]
+        doc? ( app-doc/doxygen )
+    build+run:
+        media-libs/libpng:=[>=1.2.23]
+        sys-sound/alsa-lib
+        X? ( x11-libs/libXaw )
+        aac? (
+            media-libs/faac[>=1.24]
+            media-libs/faad2[>=2.0]
+        )
+        dv? ( media-libs/libdv[>=0.102] )
+        ffmpeg? (
+            providers:ffmpeg? ( media/ffmpeg )
+            providers:libav? ( media/libav )
+        )
+        gtk? ( x11-libs/gtk+:2[>=2.4.0] )
+        h264? ( media-libs/x264 )
+        mp3? ( media-sound/lame[>=3.93] )
+        opengl? ( x11-dri/mesa )
+        providers:ijg-jpeg? ( media-libs/jpeg:= )
+        providers:jpeg-turbo? ( media-libs/libjpeg-turbo )
+        schroedinger? ( media-libs/schroedinger[>=1.0.5] )
+        vorbis? ( media-libs/libvorbis[>=1.0] )
+"
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PN}-1.2.4-libav-9.patch
+    "${FILES}"/${PNV}-ffmpeg2.patch
+    "${FILES}"/${PN}-1.2.4-CVE-2016-2399.patch
+    "${FILES}"/${PN}-1.2.4-ffmpeg29.patch
+    "${FILES}"/${PN}-1.2.4-ffmpeg3.patch
+)
+
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --enable-gpl
+    --with-alsa
+    --with-libjpeg
+    --with-libpng
+    --without-sndio
+)
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
+    'ffmpeg libswscale'
+)
+DEFAULT_SRC_CONFIGURE_OPTION_WITHS=(
+    'X x'
+    'aac faac'
+    'aac faad2'
+    'doc doxygen'
+    'dv libdv'
+    'ffmpeg'
+    'gtk'
+    'h264 x264'
+    'mp3 lame'
+    'opengl'
+    'schroedinger'
+    'vorbis vorbis /usr'
+)
+
+src_install() {
+    default
+    option X || edo rmdir "${IMAGE}"/usr/share/man/{man1,}
+}
+
