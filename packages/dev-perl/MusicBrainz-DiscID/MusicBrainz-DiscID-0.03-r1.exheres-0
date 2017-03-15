@@ -1,4 +1,4 @@
-# Copyright 2013 Thomas Witt
+# Copyright 2013-2017 Thomas Witt
 # Distributed under the terms of the GNU General Public License v2
 
 require perl-module [ module_author=NJH ]
@@ -20,7 +20,9 @@ DEPENDENCIES="
         media-libs/libdiscid
 "
 
-BUGS_TO="thomas@thwitt.de"
+BUGS_TO="pyromaniac@exherbo.org"
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-url.patch )
 
 pkg_setup() {
     # Uses LD where it means CC, unconfuse it
@@ -30,5 +32,10 @@ pkg_setup() {
 src_prepare() {
     # bad encoding makes test fail
     edo perl -p -i -e "s/don.t/don\'t/" "${WORK}/lib/MusicBrainz/DiscID.pm"
+
+    # unprefixed pkg-config is banned
+    edo sed -i -e "/my $pkgconfig/s#pkg-config#$(exhost --tool-prefix)&#" "${WORK}/Build.PL"
+
+    default
 }
 
