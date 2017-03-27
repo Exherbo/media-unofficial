@@ -57,7 +57,7 @@ DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( flac )
 src_prepare() {
     default
 
-    # TODO: report upstream, fix multiarch
+    # https://github.com/mbunkus/mkvtoolnix/issues/1923
     edo sed \
         -e "s:strings:/usr/$(exhost --target)/bin/$(exhost --tool-prefix)strings:g" \
         -i ac/endianess.m4
