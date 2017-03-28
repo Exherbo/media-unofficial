@@ -41,6 +41,11 @@ DEPENDENCIES="
 
 CMAKE_SOURCE=${WORKBASE}/${PNV}/src
 
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DEnableGuiReports:BOOL=FALSE
+    -DJackSessionSupport:BOOL=TRUE
+    -DReportNoteOnTimes:BOOL=FALSE
+)
 CMAKE_SRC_CONFIGURE_OPTIONS=( "lv2 BuildLV2Plugin" )
 
 pkg_postinst() {
