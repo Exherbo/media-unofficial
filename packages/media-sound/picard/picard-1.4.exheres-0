@@ -23,8 +23,8 @@ RESTRICT="test"
 DEPENDENCIES="
     build+run:
         dev-python/PyQt4[>=4.5][python_abis:*(-)?]
-        dev-python/mutagen[>=1.20][python_abis:*(-)?]
-        media-libs/libdiscid
+        dev-python/mutagen[>=1.23][python_abis:*(-)?]
+        dev-python/python-discid[python_abis:*(-)?]
     suggestion:
         media-libs/chromaprint [[ description = [ Support for finding AcoustID fingerprints of audio files ] ]]
 "
