@@ -37,7 +37,12 @@ DEPENDENCIES="
         sys-apps/file
         sys-libs/zlib
         flac? ( media-libs/flac )
-        qt5? ( x11-libs/qtbase:5[>=5.3.0][gui] )
+        qt5? (
+            x11-libs/qtbase:5[>=5.3.0][gui]
+            x11-libs/qtmultimedia:5[>=5.3.0]
+        )
+    test:
+        dev-cpp/gtest[>=1.8.0]
     suggestion:
         media/mediainfo[gui] [[
             description = [ Support MediaInfo for displaying additional information ]
@@ -67,6 +72,10 @@ src_prepare() {
 
 src_compile() {
     edo rake -m -j${EXJOBS:-1}
+}
+
+src_test() {
+    edo rake -m -j${EXJOBS:-1} tests:run_unit
 }
 
 src_install() {

@@ -6,7 +6,3 @@ require mkvtoolnix
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/1752969589b5376841b5226c3efa67f58ad83750.patch
-)
-
