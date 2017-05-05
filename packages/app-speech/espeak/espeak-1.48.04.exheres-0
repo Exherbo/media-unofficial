@@ -5,3 +5,7 @@ require espeak
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES+=(
+    "${FILES}"/${PN}-gcc-6-fix.patch
+)
+
