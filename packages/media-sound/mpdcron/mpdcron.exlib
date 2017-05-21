@@ -1,9 +1,9 @@
 # Copyright 2009-2010 Ali Polatel <alip@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-export_exlib_phases src_configure src_install
-
 require zsh-completion
+
+export_exlib_phases src_configure src_install
 
 SUMMARY="cron like daemon for mpd"
 DESCRIPTION="
