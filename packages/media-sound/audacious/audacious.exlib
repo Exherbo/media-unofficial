@@ -4,6 +4,8 @@
 
 require freedesktop-desktop gtk-icon-cache
 
+export_exlib_phases src_prepare pkg_postinst pkg_postrm
+
 SUMMARY="Audacious is an advanced audio player"
 HOMEPAGE="http://www.audacious-media-player.org"
 DOWNLOADS="http://distfiles.audacious-media-player.org/${PNV}-gtk3.tar.bz2"
@@ -49,7 +51,7 @@ DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
 
 DEFAULT_SRC_COMPILE_PARAMS=( AR=${AR} RANLIB=${RANLIB} )
 
-src_prepare() {
+audacious_src_prepare() {
     option qt5 && edo sed \
         -e 's:audacious %U:audacious %U --qt:g' \
         -i audacious.desktop
@@ -57,12 +59,12 @@ src_prepare() {
     default
 }
 
-pkg_postinst() {
+audacious_pkg_postinst() {
     freedesktop-desktop_pkg_postinst
     gtk-icon-cache_pkg_postinst
 }
 
-pkg_postrm() {
+audacious_pkg_postrm() {
     freedesktop-desktop_pkg_postrm
     gtk-icon-cache_pkg_postrm
 }
