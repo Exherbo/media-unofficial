@@ -11,7 +11,7 @@ The main emphasis is on simplicity for an API that will round up the most common
 simple filters, sources and mixers that can be controlled by parameters.
 "
 HOMEPAGE="https://frei0r.dyne.org"
-DOWNLOADS="https://files.dyne.org/frei0r/releases/${PNV}.tar.gz"
+DOWNLOADS="https://files.dyne.org/frei0r/${PNV}.tar.gz"
 
 REMOTE_IDS="freecode:frei0r"
 
