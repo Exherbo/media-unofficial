@@ -27,9 +27,11 @@ DEPENDENCIES="
         base/libgee:0.8[>=0.8.5]
         core/json-glib
         dev-db/sqlite:3[>=3.5.9]
-        dev-libs/gexiv2[>=0.4.90]
-        dev-libs/glib:2[>=2.30.0]
+        dev-libs/gexiv2[>=0.10.4]
+        dev-libs/glib:2[>=2.40.0]
         dev-libs/libxml2:2.0[>=2.6.32]
+        gnome-desktop/gcr
+        gnome-desktop/libgdata
         gnome-desktop/libsoup:2.4[>=2.26.0]
         media-libs/gstreamer:1.0[>=1.0.0]
         media-libs/libexif[>=0.6.16]
@@ -40,15 +42,19 @@ DEPENDENCIES="
         net-libs/webkit:4.0
         sys-apps/systemd
         x11-libs/gdk-pixbuf:2.0
-        x11-libs/gtk+:3[>=3.12.2]
+        x11-libs/gtk+:3[>=3.14.0]
     run:
-        gnome-desktop/librsvg
+        gnome-desktop/librsvg:2
 "
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/0001-Fix-resources-path.patch
-)
 DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --prefix=/usr
+    --exec_prefix=/usr/$(exhost --target)
+
+    --enable-publishers=all
+    --with-authenticator=shotwell
+
+    --disable-debug
     --disable-schemas-compile
     --disable-unity-support
 )
