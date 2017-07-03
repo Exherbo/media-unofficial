@@ -1,0 +1,46 @@
+# Copyright 2013 Calvin Walton
+# Copyright 2009, 2010 Michael Forney
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'picard-0.11.ebuild' from Gentoo, which is:
+#     Copyright 1999-2009 Gentoo Foundation
+
+require setup-py [ import=setuptools blacklist="2 3.3 3.4" multibuild=false ]
+require github [ user=metabrainz tag=release-${PV} ]
+require freedesktop-desktop gtk-icon-cache utf8-locale
+
+
+SUMMARY="Picard is the next generation MusicBrainz tagging application"
+HOMEPAGE+=" https://${PN}.musicbrainz.org"
+
+BUGS_TO="michael@obberon.com calvin.walton@kepstin.ca"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        dev-python/PyQt5[>=5.7.1][python_abis:*(-)?]
+        dev-python/mutagen[>=1.37][python_abis:*(-)?]
+        dev-python/python-discid[python_abis:*(-)?]
+    suggestion:
+        media-libs/chromaprint [[ description = [ Support for finding AcoustID fingerprints of audio files ] ]]
+"
+
+SETUP_PY_SRC_INSTALL_PARAMS=( --install-locales=/usr/share/locale )
+
+pkg_setup() {
+    require_utf8_locale
+}
+
+pkg_postinst() {
+    freedesktop-desktop_pkg_postinst
+    gtk-icon-cache_pkg_postinst
+}
+
+pkg_postrm() {
+    freedesktop-desktop_pkg_postrm
+    gtk-icon-cache_pkg_postrm
+}
+
