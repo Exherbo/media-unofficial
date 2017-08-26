@@ -1,9 +1,9 @@
 # Copyright 2009-2012 Pierre Lejeune <superheron@gmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
-SCM_REPOSITORY="https://subversion.assembla.com/svn/portaudio/portaudio"
+SCM_REPOSITORY="git://git.assembla.com/portaudio.git"
 
-require portaudio scm-svn
+require portaudio scm-git
 
 DOWNLOADS=""
 
