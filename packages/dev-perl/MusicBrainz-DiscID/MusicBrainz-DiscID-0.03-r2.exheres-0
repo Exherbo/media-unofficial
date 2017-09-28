@@ -14,7 +14,6 @@ DEPENDENCIES="
     build:
         dev-perl/Module-Build
         dev-perl/Test-Pod
-        dev-perl/Test-Simple
         virtual/pkg-config
     build+run:
         media-libs/libdiscid
