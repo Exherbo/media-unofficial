@@ -1,4 +1,5 @@
 # Copyright 2009 Pierre Lejeune <superheron@gmail.com>
+# Copyright 2017 Rasmus Thomsen <Rasmus.thomsen@protonmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
 require gnome.org [ suffix='tar.xz' ] freedesktop-desktop gsettings gtk-icon-cache
@@ -16,9 +17,12 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build:
+        dev-libs/appstream-glib
+        dev-libs/libxml2:2.0
+        dev-util/itstool
         gnome-desktop/yelp-tools
         sys-devel/gettext[>=0.19.6]
-        virtual/pkg-config
+        virtual/pkg-config[>=0.16]
     build+run:
         app-text/iso-codes
         dev-libs/glib:2[>=2.49.5]
@@ -30,15 +34,17 @@ DEPENDENCIES="
         media-libs/libmusicbrainz:5[>=5.0.1]
         media-plugins/gst-plugins-base:1.0
         x11-libs/gtk+:3[>=3.21.6]
+    run:
+        media-plugins/gst-plugins-base:1.0[gstreamer_plugins:cdda] [[
+            note = [ Required for accessing CDs ] ]]
     recommendation:
-        media-plugins/gst-plugins-base:1.0[gstreamer_plugins:vorbis]
-        media-plugins/gst-plugins-good:1.0[gstreamer_plugins:flac][gstreamer_plugins:wavpack]
+        media-plugins/gst-plugins-base:1.0[gstreamer_plugins:vorbis] [[
+            description = [ Required to encode rips to Ogg Vorbis ] ]]
+        media-plugins/gst-plugins-good:1.0[gstreamer_plugins:flac] [[
+            description = [ Required to encode rips to FLAC ] ]]
+         media-plugins/gst-plugins-good:1.0[gstreamer_plugins:wavpack] [[
+            description = [ Required to encode rips to Wave ] ]]
 "
-
-DEFAULT_SRC_CONFIGURE_PARAMS=(
-    --enable-nls
-    --disable-appstream-util
-)
 
 pkg_postinst() {
     gsettings_pkg_postinst
