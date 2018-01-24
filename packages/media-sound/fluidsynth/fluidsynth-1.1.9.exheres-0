@@ -1,0 +1,75 @@
+# Copyright 2009-2011 Pierre Lejeune <superheron@gmail.com>
+# Distributed under the terms of the GNU General Public License v2
+
+require github [ user=FluidSynth tag=v${PV} ] cmake [ api=2 cmake_minimum_version=3.0.2 ]
+
+SUMMARY="FluidSynth is a real-time software synthesizer based on the SoundFont 2 specifications"
+DESCRIPTION="
+FluidSynth is a real-time software synthesizer based on the SoundFont 2 specifications.
+
+Features
+
+    * Cross platform support (Linux, Mac OSX and Windows to name a few)
+    * SoundFont 2 support
+    * Realtime effect modulation using SoundFont 2.01 modulators
+    * Shared library which can be used in other programs
+    * Built in command line shell
+    * Playback of MIDI files
+"
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS="
+    alsa
+    dbus
+    jack
+    ladspa
+    lash [[ description = [ Adds support for the LASH Audio Session Handler ] ]]
+    libsndfile [[ description = [ Adds support for libsndfile ] ]]
+    portaudio
+    pulseaudio
+    readline
+"
+
+DEPENDENCIES="
+    build+run:
+        dev-libs/glib:2[>=2.6.5]
+        alsa? ( sys-sound/alsa-lib[>=0.9.1] )
+        dbus? ( sys-apps/dbus[>=1.0.0] )
+        jack? ( media-sound/jack-audio-connection-kit )
+        ladspa? ( media-libs/ladspa-sdk )
+        lash? ( media-sound/lash[>=0.3] )
+        libsndfile? ( media-libs/libsndfile[>=1.0.0] )
+        portaudio? ( media-libs/portaudio[>=19] )
+        pulseaudio? ( media-sound/pulseaudio[>=0.9.8] )
+        readline? ( sys-libs/readline:= )
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DBUILD_SHARED_LIBS:BOOL=TRUE
+    -DLIB_SUFFIX:STRING=
+    -DMAN_INSTALL_DIR:PATH=/usr/share/man/man1
+    -Denable-aufile:BOOL=TRUE
+    -Denable-debug:BOOL=FALSE
+    -Denable-floats:BOOL=FALSE
+    -Denable-fpe-check:BOOL=FALSE
+    -Denable-ipv6:BOOL=TRUE
+    -Denable-ladcca:BOOL=FALSE
+    -Denable-midishare:BOOL=TRUE
+    -Denable-pkgconfig:BOOL=TRUE
+    -Denable-profiling:BOOL=FALSE
+    -Denable-trap-on-fpe:BOOL=FALSE
+)
+CMAKE_SRC_CONFIGURE_OPTIONS=(
+    'alsa enable-alsa'
+    'dbus enable-dbus'
+    'jack enable-jack'
+    'ladspa enable-ladspa'
+    'lash enable-lash'
+    'libsndfile enable-libsndfile'
+    'portaudio enable-portaudio'
+    'pulseaudio enable-pulseaudio'
+    'readline enable-readline'
+)
+
