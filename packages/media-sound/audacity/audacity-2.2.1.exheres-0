@@ -7,7 +7,7 @@
 
 require option-renames [ renames=[ 'twolame mp2' ] ]
 require github [ tag=Audacity-${PV} ]
-require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 1.10 1.9 ] ]
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 ] ]
 require gtk-icon-cache freedesktop-desktop freedesktop-mime
 
 SUMMARY="The Free, Cross-Platform Sound Editor"
@@ -23,18 +23,24 @@ And more!
 "
 
 BUGS_TO="somasis@exherbo.org"
+
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="alsa ffmpeg flac id3tag jack ladspa midi mp2 mp3 soundtouch vorbis
-    id3tag      [[ description = [ Enables the ability to modify ID3 tags ] ]]
-    soundtouch  [[ description = [ Required for pitch and tempo changing ] ]]
-    ffmpeg?     ( ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]] )
+MYOPTIONS="
+    ffmpeg
+    flac
+    ladspa
+    lv2
+    mp2
+    mp3
+    soundtouch [[ description = [ Required for pitch and tempo changing ] ]]
+    vorbis
+    ffmpeg? ( ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]] )
+    ( linguas: af ar be bg bn bs ca_ES@valencia ca cs cy da de el es eu_ES eu fa fr ga gl he hi hr
+               hu hy id it ja ka km ko lt mk my nb nl oc pl pt_BR pt_PT ro ru sk sl sr_RS
+               sr_RS@latin sv ta tg tr uk vi zh_CN zh_TW )
 "
-
-
-# NOTE(somasis): broken as of v2.1.1:
-#   lv2 fails.
 
 DEPENDENCIES="
     build:
@@ -42,33 +48,30 @@ DEPENDENCIES="
     build+run:
         app-arch/zip[>=2.3]
         dev-libs/expat
-        media-libs/libmad[>=0.14.2b]
+        media-libs/libid3tag [[ note = [ fails to build when not present/disabled ] ]]
         media-libs/libsamplerate[>=0.1.2]
         media-libs/libsndfile[>=1.0.0]
         media-libs/soxr
-        media-sound/lame[>=3.70]
-        x11-libs/wxGTK:2.8[>=2.8.0]
-        alsa? ( sys-sound/alsa-lib )
+        media-sound/jack-audio-connection-kit[>=0.103.0] [[ note = [ automagic ] ]]
+        media-sound/lame[>=3.70] [[ note = [ fails to build when not present/disabled ] ]]
+        sys-sound/alsa-lib [[ note = [ automagic ] ]]
+        x11-libs/wxGTK:3.0
         ffmpeg? (
             providers:ffmpeg? ( media/ffmpeg )
             providers:libav? ( media/libav )
         )
-        id3tag? ( media-libs/libid3tag )
-        jack? ( media-sound/jack-audio-connection-kit[>=0.103.0] )
+        lv2? (
+            media-libs/lilv[>=0.16.0]
+            media-libs/lv2
+        )
         mp2? ( media-libs/twolame )
-        mp3? ( media-sound/lame )
+        mp3? ( media-libs/libmad[>=0.14.2b] )
         soundtouch? ( media-libs/soundtouch )
         vorbis? ( media-libs/libvorbis[>=1.0] )
 "
 
-#        lv2? (
-#            media-libs/lilv[>=0.16.0]
-#            media-libs/lv2
-#        )
-
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PNV}-musl.patch
-)
+AT_M4DIR=( m4 )
+AT_NO_RECURSIVE=1
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     AR=$(type -P ${AR})
@@ -77,63 +80,65 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     # needed for lib-src/lv2
     PKGCONFIG=${PKG_CONFIG}
 
-    --enable-unicode
     --enable-nyquist
-    --with-libsndfile=system
-    --with-expat=system
+    --enable-shared
+    --enable-unicode
+    --disable-audiounits
     --disable-dynamic-loading
-
-    # use wxWidgets 2.8 even if 3.0 is installed; upstream says to
-    --with-wx-version=2.8
-
-    # use bundled and patched portaudio
-    --with-portaudio=local
-
-    # compile fails without portmixer
-    --with-portmixer
-    --with-alsa
-
-    # use libsoxr for sample rate conversion
+    --disable-quicktime
+    --disable-static
+    --with-expat=system
+    --with-lame=system
+    --with-libid3tag=system
+    --with-libsamplerate
+    --with-libsndfile=system
     --with-libsoxr=system
-
+    --with-portaudio=local
+    --with-portmidi
+    --with-portmixer
+    --with-widgetextra=local
+    --with-wx-version=3.0
     # Disabled due to missing dependencies
     --without-sbsms
     --without-libvamp
-
-    # lv2 makes the compilation fail. if you care then fix it
-    --without-lv2
-
-    --with-widgetextra=local
-
-    # MacOS X only
-    --disable-audiounits
-    --disable-quicktime
 )
 
-DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( ladspa )
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
+    ladspa
+)
+# lv2 and portaudio system doesn't work, last checked: 2.2.1
 DEFAULT_SRC_CONFIGURE_OPTION_WITHS=(
     'ffmpeg ffmpeg system'
     'flac libflac system'
-    'id3tag libid3tag system'
-#    'lv2 lv2 system'
-    'midi'
+    'lv2 lv2 local'
     'mp2 libtwolame system'
-    'mp3 lame system'
     'mp3 libmad system'
     'soundtouch soundtouch system'
     'vorbis libvorbis system'
 )
 
-AT_M4DIR=( m4 )
-AT_NO_RECURSIVE=1
-
 src_prepare() {
-    edo sed -e "s/pkg-config,/${PKG_CONFIG},/" -i configure.ac
-    edo sed -e "s/pkg-config --/${PKG_CONFIG} --/" -i lib-src/FileDialog/configure
-    edo sed -e "s/ar /${AR} /" -i lib-src/lib-widget-extra/Makefile.in \
-                               -i src/Makefile.in
-    edo sed -e "s/AR = ar/AR = ${AR}/" -i lib-src/libnyquist/Makefile.in \
-                                       -i lib-src/portsmf/Makefile.in
+    # TODO: replace with proper patches, report upstream
+    edo sed \
+        -e "s/pkg-config,/${PKG_CONFIG},/" \
+        -i configure.ac
+    edo sed \
+        -e "s/pkg-config --/${PKG_CONFIG} --/" \
+        -i lib-src/FileDialog/configure
+    edo sed \
+        -e "s/ar /${AR} /" \
+        -i lib-src/lib-widget-extra/Makefile.in \
+        -i lib-src/lv2/build \
+        -i src/Makefile.in
+    edo sed \
+        -e "s/AR = ar/AR = ${AR}/" \
+        -i lib-src/libnyquist/Makefile.in \
+        -i lib-src/portmidi/Makefile.in \
+        -i lib-src/portsmf/Makefile.in
+    edo sed \
+        -e "s/= ar/= ${AR}/" \
+        -e "s/= ranlib/= ${RANLIB}/" \
+        -i lib-src/libvamp/Makefile.in
 
     autotools_src_prepare
 }
