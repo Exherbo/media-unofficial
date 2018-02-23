@@ -34,7 +34,7 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build:
-        x11-proto/xproto
+        x11-proto/xorgproto
     build+run:
         dev-libs/boost[>=1.48.0]
         dev-python/numpy[>=1.7.0][python_abis:*(-)?]
