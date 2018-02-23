@@ -21,7 +21,7 @@ DEPENDENCIES="
         build:
             sys-devel/gettext[>=0.19.7]
             virtual/pkg-config
-            x11-proto/xineramaproto
+            x11-proto/xorgproto
         build+run:
             dev-libs/glib:2[>=2.6]
             gnome-bindings/gtkmm:2.4[>=2.10]
