@@ -1,8 +1,8 @@
 # Copyright 2009 Ali Polatel <alip@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require github [ user=swh pn=LRDF ]
-require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 1.11 ] ]
+require github [ user=swh pn=LRDF tag=v${PV} ]
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 ] ]
 
 SUMMARY="A library for the manipulation of RDF file in LADSPA plugins"
 DESCRIPTION="
@@ -22,7 +22,7 @@ MYOPTIONS="
     ( providers: libressl openssl ) [[ number-selected = exactly-one ]]
 "
 
-# remove_test tails, last checked: 0.5.0
+# Fail at remove_test as of 0.6.1
 RESTRICT="test"
 
 DEPENDENCIES="
@@ -37,11 +37,4 @@ DEPENDENCIES="
 "
 
 DEFAULT_SRC_CONFIGURE_PARAMS=( --disable-static )
-
-src_prepare() {
-    # fix running autotools
-    edo rm -rf m4
-
-    autotools_src_prepare
-}
 
