@@ -43,7 +43,7 @@ DEPENDENCIES="
         sys-libs/zlib
         freetype? ( media-libs/freetype:2 )
         gif? ( media-libs/giflib:= )
-        jpeg2000? ( media-libs/OpenJPEG:0 )
+        jpeg2000? ( media-libs/OpenJPEG:2 )
         providers:ijg-jpeg? ( media-libs/jpeg:= )
         providers:jpeg-turbo? ( media-libs/libjpeg-turbo )
         providers:libressl? ( dev-libs/libressl:= )
