@@ -4,9 +4,8 @@
 # Based in part on ortp-0.15.0.exheres-0 which is
 #   Copyright 2009 Ingmar Vanhassel
 
-require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 ] ]
-
-export_exlib_phases src_prepare src_install
+require github [ user=BelledonneCommunications pn=${PN}$(ever major) ] \
+    cmake [ api=2 cmake_minimum_version=3.0 ]
 
 SUMMARY="Mediastreamer2 - the multimedia streaming engine"
 DESCRIPTION="
@@ -15,36 +14,46 @@ telephony applications. It is the library that is responsible for all the receiv
 of multimedia streams in linphone, including voice/video capture, encoding and decoding, and
 rendering.
 "
-HOMEPAGE="http://www.linphone.org/eng/documentation/dev/${PN}$(ever major)"
-DOWNLOADS="mirror://savannah/linphone/${PN}/${PNV}.tar.gz"
+HOMEPAGE+=" https://www.linphone.org/technical-corner/${PN}$(ever major)/overview"
 
-BUGS_TO="urkud@ya.ru"
-REMOTE_IDS="freecode:${PN}"
-
-UPSTREAM_DOCUMENTATION="http://download.savannah.gnu.org/releases-noredirect/linphone/${PN}/doc/modules.html [[ lang = en ]]"
-
-LICENCES="GPL-2 GPL-3 [[ note = [ A few header files have no copyright information, other are GPL-2+ or AS-IS ] ]]"
+LICENCES="
+    GPL-2
+    GPL-3 [[ note = [ A few header files have no copyright information, other are GPL-2+ or AS-IS ] ]]
+"
 SLOT="0"
-MYOPTIONS="alsa debug doc gsm libav opengl portaudio pulseaudio sdl speex theora v4l X
-    opus  [[ description = [ Opus audio decoding and encoding ] ]]
-    upnp  [[ description = [ Support Service Discovery via libupnp ] ]]
-    video [[ description = [ Enable video stream support ] ]]
-    vpx   [[ description = [ VP8/VP9 support using libvpx ] ]]
+MYOPTIONS="
+    alsa
+    debug
+    doc
+    ffmpeg
+    gsm [[ description = [ GSM codec support ] ]]
+    opengl
+    opus [[ description = [ Opus audio decoding and encoding ] ]]
+    portaudio
+    pulseaudio
+    speex
+    srtp [[ description = [ Secure Real-Time Transport Protocol (SRTP) support ] ]]
+    theora
+    v4l
+    vpx [[ description = [ VP8/VP9 support using libvpx ] ]]
+    X
 
-    ( alsa portaudio pulseaudio ) [[ number-selected = at-least-one ]]
-    ( opengl sdl theora v4l vpx X ) [[ requires = video ]]
+    ffmpeg? ( ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]] )
+    ( providers: jpeg-turbo ) [[ number-selected = exactly-one ]]
 "
 
 DEPENDENCIES="
     build:
-        app-doc/doxygen
-        dev-util/intltool
-        virtual/pkg-config[>=0.9.0]
         doc? ( app-doc/doxygen )
     build+run:
         dev-libs/libpcap
-        net-libs/ortp[>=0.24.0]
+        net-libs/bctoolbox[>=0.4.0]
+        net-libs/ortp[>=1.0.0]
         alsa? ( sys-sound/alsa-lib )
+        ffmpeg? (
+            providers:ffmpeg? ( media/ffmpeg )
+            providers:libav? ( media/libav )
+        )
         gsm? ( media-libs/gsm )
         opengl? (
             media-libs/glew
@@ -52,83 +61,70 @@ DEPENDENCIES="
         )
         opus? ( media-libs/opus[>=0.9.0] )
         portaudio? ( media-libs/portaudio )
+        providers:jpeg-turbo? ( media-libs/libjpeg-turbo )
         pulseaudio? ( media-sound/pulseaudio[>=0.9.21] )
-        speex? ( media-libs/speex[>=1.2-beta3] )
-        theora? ( media-libs/libtheora[>=1.0-alpha7] )
-        upnp? ( net-libs/libupnp[>=1.6&<1.7] )
-        v4l? ( media-libs/v4l-utils )
-        video? (
-            !libav? ( media/ffmpeg )
-            libav? ( media/libav )
+        speex? (
+            media-libs/speex[>=1.2-beta3]
+            media-libs/speexdsp
         )
+        srtp? ( net-libs/libsrtp )
+        theora? ( media-libs/libtheora[>=1.0-alpha7] )
+        v4l? ( media-libs/v4l-utils )
         vpx? ( media-libs/libvpx[>=0.9.6] )
-        sdl? ( media-libs/SDL[>=1.2.0] )
         X? (
             x11-libs/libX11
             x11-libs/libXv
         )
 "
-# TODO:
-#   test? ( dev-libs/CUnit ) - http://cunit.sourceforge.net/
 
-DEFAULT_SRC_CONFIGURE_PARAMS=(
-    --enable-external-ortp
-    --enable-non-free-codecs
-    --enable-oss
-    --enable-pcap
-    --disable-artsc
-    --disable-dtls
-    --disable-g729bCN
-    --disable-macaqsnd
-    --disable-macsnd
-    --disable-matroska
-    --disable-qsa
-    --disable-spandsp
-    --disable-strict
-    --disable-zrtp
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DCMAKE_BUILD_TYPE:STRING=Release
+    -DENABLE_ARTSC:BOOL=FALSE
+    -DENABLE_BV16:BOOL=FALSE
+    -DENABLE_FIXED_POINT:BOOL=FALSE
+    -DENABLE_G726:BOOL=FALSE
+    -DENABLE_G729:BOOL=FALSE
+    -DENABLE_G729B_CNG:BOOL=FALSE
+    -DENABLE_MKV:BOOL=FALSE
+    -DENABLE_NON_FREE_CODECS:BOOL=TRUE
+    -DENABLE_OSS:BOOL=TRUE
+    -DENABLE_PCAP:BOOL=TRUE
+    -DENABLE_QNX:BOOL=FALSE
+    -DENABLE_QSA:BOOL=FALSE
+    -DENABLE_RELATIVE_PREFIX:BOOL=FALSE
+    -DENABLE_RESAMPLE:BOOL=TRUE
+    -DENABLE_SDL:BOOL=FALSE
+    -DENABLE_SHARED:BOOL=TRUE
+    -DENABLE_SOUND:BOOL=TRUE
+    -DENABLE_STATIC:BOOL=FALSE
+    -DENABLE_STRICT:BOOL=FALSE
+    -DENABLE_TOOLS:BOOL=TRUE
+    -DENABLE_VIDEO:BOOL=TRUE
+    -DENABLE_VT_H264:BOOL=FALSE
+    -DENABLE_ZRTP:BOOL=FALSE
 )
-DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
-    alsa
-    debug
-    gsm
-    'opengl glx'
-    opus
-    portaudio
-    pulseaudio
-    sdl
-    speex
-    theora
-    upnp
-    'v4l libv4l1'
-    'v4l libv4l2'
-    video
-    'vpx vp8'
-    'X x11'
-    'X xv'
+CMAKE_SRC_CONFIGURE_OPTION_ENABLES=(
+    'alsa ALSA'
+    'debug DEBUG_LOGS'
+    'doc DOC'
+    'ffmpeg FFMPEG'
+    'gsm GSM'
+    'opengl GL'
+    'opengl GLX'
+    'opus OPUS'
+    'portaudio PORTAUDIO'
+    'pulseaudio PULSEAUDIO'
+    'providers:jpeg-turbo JPEG'
+    'speex SPEEX_CODEC'
+    'speex SPEEX_DSP'
+    'srtp SRTP'
+    'theora THEORA'
+    'v4l V4L'
+    'vpx VPX'
+    'X X11'
+    'X XV'
 )
-DEFAULT_SRC_CONFIGURE_TESTS=( '--enable-tests --disable-tests' )
-
-mediastreamer_src_prepare() {
-    # Respect datarootdir
-    edo sed -e 's:itlocaledir = $(prefix)/$(DATADIRNAME)/locale:itlocaledir = $(datarootdir)/locale:' \
-            -i "${WORK}"/po/Makefile.in.in
-
-    autotools_src_prepare
-}
-
-mediastreamer_src_install() {
-    default
-
-    edo rmdir "${IMAGE}"/usr/$(exhost --target)/lib/mediastreamer{/plugins,}
-
-    if [[ ${PNV} != ${PNVR} ]]; then
-        nonfatal edo mv "${IMAGE}"/usr/share/doc/{${PNV}/*,${PNVR}}
-        nonfatal edo rmdir "${IMAGE}"/usr/share/doc/${PNV}
-    fi
-
-    # There's no option to disable building apidocs, so remove them if not requested
-    if option !doc; then
-        nonfatal edo rm -r "${IMAGE}"/usr/share/doc/${PNVR}/html
-    fi
-}
+CMAKE_SRC_CONFIGURE_TESTS=(
+    '-DENABLE_UNIT_TESTS:BOOL=TRUE -DENABLE_UNIT_TESTS:BOOL=FALSE'
+)
 

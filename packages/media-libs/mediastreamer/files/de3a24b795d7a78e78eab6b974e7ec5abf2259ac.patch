@@ -1,0 +1,28 @@
+From de3a24b795d7a78e78eab6b974e7ec5abf2259ac Mon Sep 17 00:00:00 2001
+From: Simon Morlat <simon.morlat@linphone.org>
+Date: Mon, 14 Aug 2017 11:18:16 +0200
+Subject: [PATCH] allow MS2_GIT_VERSION to be undefined, as it will be the case
+ when building rpms.
+
+---
+ src/base/msfactory.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/src/base/msfactory.c b/src/base/msfactory.c
+index 6562d86cb..f61c68a8d 100644
+--- a/src/base/msfactory.c
++++ b/src/base/msfactory.c
+@@ -24,9 +24,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ #   ifndef MEDIASTREAMER_VERSION
+ #   define MEDIASTREAMER_VERSION "unknown"
+ #   endif
+-#	ifndef MS2_GIT_VERSION
+-#	define MS2_GIT_VERSION "unknown"
+-#	endif
++#endif
++
++#ifndef MS2_GIT_VERSION
++#define MS2_GIT_VERSION "unknown"
+ #endif
+ 
+ #include "mediastreamer2/msfilter.h"

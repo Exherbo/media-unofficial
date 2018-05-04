@@ -1,0 +1,13 @@
+# Copyright 2010 Yury G. Kudryashov
+# Distributed under the terms of the GNU General Public License v2
+
+require mediastreamer
+
+PLATFORMS="~amd64 ~x86"
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PN}-2.16.1-fix-cmake-install-path1.patch
+    "${FILES}"/${PN}-2.16.1-fix-cmake-install-path2.patch
+    "${FILES}"/de3a24b795d7a78e78eab6b974e7ec5abf2259ac.patch
+)
+
