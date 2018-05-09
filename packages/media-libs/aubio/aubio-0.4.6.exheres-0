@@ -48,6 +48,10 @@ DEPENDENCIES="
         python? ( dev-python/numpy[python_abis:*(-)?] )
 "
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/5690daf759b473b9d13b4547ef37adc2695cf524.patch
+)
+
 WAF_SRC_CONFIGURE_PARAMS=(
     --docdir=/usr/share/doc/${PNVR}/html
     --mandir=/usr/share/man/man1
@@ -55,6 +59,7 @@ WAF_SRC_CONFIGURE_PARAMS=(
     --enable-double
     --enable-fftw3
     --disable-fftw3f
+    --disable-intelipp
     --disable-samplerate
     --disable-sndfile
 )
