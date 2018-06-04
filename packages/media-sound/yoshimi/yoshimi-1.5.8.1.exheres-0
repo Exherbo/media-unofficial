@@ -3,8 +3,10 @@
 #   Copyright 1999-2009 Gentoo Foundation
 # Released under the terms of the GNU General Public License v2
 
-require sourceforge [ suffix=tar.bz2 ] cmake [ api=2 ] \
-    freedesktop-desktop gtk-icon-cache
+require sourceforge [ suffix=tar.bz2 ] \
+    cmake [ api=2 cmake_minimum_version=3.0 ] \
+    freedesktop-desktop \
+    gtk-icon-cache
 
 SUMMARY="Yoshimi is a software synthesizer based on ZynAddSubFX 2.4.0"
 DESCRIPTION="
@@ -12,8 +14,6 @@ Yoshimi is a software synthesizer for Linux based on the 2.4.0 release of
 ZynAddSubFX, written by Nasca Octavian Paul. Yoshimi delivers the same synth
 capabilities, along with very good Jack and Alsa midi/audio functionality.
 "
-
-BUGS_TO="alip@exherbo.org"
 
 LICENCES="GPL-2"
 SLOT="0"
@@ -24,7 +24,6 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build:
-        dev-libs/boost
         virtual/pkg-config
     build+run:
         dev-libs/Mini-XML[>=2.5]
@@ -42,11 +41,13 @@ DEPENDENCIES="
 CMAKE_SOURCE=${WORKBASE}/${PNV}/src
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
-    -DEnableGuiReports:BOOL=FALSE
     -DJackSessionSupport:BOOL=TRUE
-    -DReportNoteOnTimes:BOOL=FALSE
+    -DBuildFor{0ld_X86,AMD_X86_64,Core2_X86_64,Debug,NEON,ThisCPU}:BOOL=FALSE
+    -DBuildOptionsBasic:STRING="${CFLAGS}"
 )
-CMAKE_SRC_CONFIGURE_OPTIONS=( "lv2 BuildLV2Plugin" )
+CMAKE_SRC_CONFIGURE_OPTIONS=(
+    "lv2 LV2Plugin"
+)
 
 pkg_postinst() {
     freedesktop-desktop_pkg_postinst
