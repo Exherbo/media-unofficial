@@ -5,3 +5,7 @@ require guvcview
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PN}-2.0.5-ffmpeg4.patch
+)
+
