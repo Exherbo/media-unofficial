@@ -55,10 +55,12 @@ DEPENDENCIES="
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/${PN}-1.2.4-libav-9.patch
-    "${FILES}"/${PNV}-ffmpeg2.patch
+    "${FILES}"/${PN}-1.2.4-ffmpeg2.patch
     "${FILES}"/${PN}-1.2.4-CVE-2016-2399.patch
     "${FILES}"/${PN}-1.2.4-ffmpeg29.patch
     "${FILES}"/${PN}-1.2.4-ffmpeg3.patch
+    "${FILES}"/${PN}-1.2.4-CVE-2017-9122.patch
+    "${FILES}"/${PN}-1.2.4-ffmpeg4.patch
 )
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(
