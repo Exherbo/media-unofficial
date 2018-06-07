@@ -1,0 +1,27 @@
+Source/Upstream: Yes, fixed in git master
+Reason: Fix build with ffmpeg 4
+
+From b595b8cd7fee10824e5351faf2def28ed5778e59 Mon Sep 17 00:00:00 2001
+From: rien333 <rien334@gmail.com>
+Date: Sun, 22 Apr 2018 18:15:30 +0200
+Subject: [PATCH] Fix ffmpeg plugin build (#793)
+
+---
+ ffmpeg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/ffmpeg.c b/ffmpeg.c
+index 049c6d58..eaad5c4f 100644
+--- a/ffmpeg.c
++++ b/ffmpeg.c
+@@ -182,8 +182,8 @@ static int ffmpeg_open(struct input_plugin_data *ip_data)
+ 			break;
+ 		}
+ 
+-		if (codec->capabilities & CODEC_CAP_TRUNCATED)
+-			cc->flags |= CODEC_FLAG_TRUNCATED;
++		if (codec->capabilities & AV_CODEC_CAP_TRUNCATED)
++			cc->flags |= AV_CODEC_FLAG_TRUNCATED;
+ 
+ 		if (avcodec_open2(cc, codec, NULL) < 0) {
+ 			d_print("could not open codec: %d, %s\n", cc->codec_id, avcodec_get_name(cc->codec_id));

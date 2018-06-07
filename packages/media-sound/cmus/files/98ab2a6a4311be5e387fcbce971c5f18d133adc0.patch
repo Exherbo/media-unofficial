@@ -1,3 +1,6 @@
+Source/Upstream: Yes, fixed in git master
+Reason: Replace deprecated FFmpeg API
+
 From 98ab2a6a4311be5e387fcbce971c5f18d133adc0 Mon Sep 17 00:00:00 2001
 From: Andreas Cadhalpun <andreas.cadhalpun@googlemail.com>
 Date: Sat, 9 Jan 2016 22:44:56 +0100

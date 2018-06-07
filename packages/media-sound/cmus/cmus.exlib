@@ -69,11 +69,6 @@ DEPENDENCIES="
         wavpack?       ( media-sound/wavpack )
 "
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/98ab2a6a4311be5e387fcbce971c5f18d133adc0.patch
-    "${FILES}"/903282c3d51a8859099a11a648b6a2148d385e25.patch
-)
-
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     HOSTCC=${CC}
     PKG_CONFIG=${PKG_CONFIG}
