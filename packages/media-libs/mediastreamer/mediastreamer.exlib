@@ -7,6 +7,8 @@
 require github [ user=BelledonneCommunications pn=${PN}$(ever major) ] \
     cmake [ api=2 ]
 
+export_exlib_phases src_install
+
 SUMMARY="Mediastreamer2 - the multimedia streaming engine"
 DESCRIPTION="
 Mediastreamer2 is a powerful and lightweighted streaming engine specialized for voice/video
@@ -127,4 +129,20 @@ CMAKE_SRC_CONFIGURE_OPTION_ENABLES=(
 CMAKE_SRC_CONFIGURE_TESTS=(
     '-DENABLE_UNIT_TESTS:BOOL=TRUE -DENABLE_UNIT_TESTS:BOOL=FALSE'
 )
+
+mediastreamer_src_install() {
+    cmake_src_install
+
+    # pkgconfig file is at least needed by msilbc
+    # TODO: Turn this into a patch using cmake's capabilities and send it upstream
+    edo sed -e "s:@prefix@:/usr/$(exhost --target):" \
+        -e "s:@exec_prefix@:\${prefix}:" \
+        -e "s:@includedir@:\${prefix}/include:" \
+        -e "s:@MEDIASTREAMER_VERSION@:${PV}:" \
+        -e "s:@libdir@:/usr/$(exhost --target):" \
+        -i "${CMAKE_SOURCE}"/mediastreamer.pc.in
+
+    insinto /usr/$(exhost --target)/lib/pkgconfig
+    newins "${CMAKE_SOURCE}"/${PN}.pc.in ${PN}.pc
+}
 
