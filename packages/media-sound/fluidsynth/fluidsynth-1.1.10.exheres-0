@@ -1,7 +1,7 @@
 # Copyright 2009-2011 Pierre Lejeune <superheron@gmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
-require github [ user=FluidSynth tag=v${PV} ] cmake [ api=2 cmake_minimum_version=3.0.2 ]
+require github [ user=FluidSynth tag=v${PV} ] cmake [ api=2 ]
 
 SUMMARY="FluidSynth is a real-time software synthesizer based on the SoundFont 2 specifications"
 DESCRIPTION="

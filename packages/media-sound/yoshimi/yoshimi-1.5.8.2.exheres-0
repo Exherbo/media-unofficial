@@ -4,7 +4,7 @@
 # Released under the terms of the GNU General Public License v2
 
 require sourceforge [ suffix=tar.bz2 ] \
-    cmake [ api=2 cmake_minimum_version=3.0 ] \
+    cmake [ api=2 ] \
     freedesktop-desktop \
     gtk-icon-cache
 
