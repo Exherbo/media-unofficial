@@ -46,7 +46,7 @@ DEPENDENCIES+="
         sci-libs/fftw[>=3.0]
         x11-dri/glu
         x11-dri/mesa
-        x11-libs/qt:4[>=4.6][qt3support][sqlite][webkit]
+        x11-libs/qt:4[>=4.6][qt3support][sqlite]
         x11-libs/libX11
         aac? ( media-libs/faad2
                media-libs/libmp4v2 )
