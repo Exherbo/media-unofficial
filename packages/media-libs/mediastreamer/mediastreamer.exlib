@@ -69,7 +69,7 @@ DEPENDENCIES="
             media-libs/speex[>=1.2-beta3]
             media-libs/speexdsp
         )
-        srtp? ( net-libs/libsrtp )
+        srtp? ( net-libs/libsrtp[>=2.0.0] )
         theora? ( media-libs/libtheora[>=1.0-alpha7] )
         v4l? ( media-libs/v4l-utils )
         vpx? ( media-libs/libvpx[>=0.9.6] )
