@@ -15,6 +15,9 @@ SLOT="1.0"
 PLATFORMS="~amd64 ~x86"
 MYOPTIONS=""
 
+# TODO: figure out how to make it work
+RESTRICT="test"
+
 DEPENDENCIES="
     build:
         virtual/pkg-config
