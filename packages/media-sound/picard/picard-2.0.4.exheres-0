@@ -4,7 +4,8 @@
 # Based in part upon 'picard-0.11.ebuild' from Gentoo, which is:
 #     Copyright 1999-2009 Gentoo Foundation
 
-require setup-py [ import=distutils blacklist=3 multibuild=false ] freedesktop-desktop gtk-icon-cache
+require setup-py [ import=setuptools blacklist="2 3.4" multibuild=false ]
+require freedesktop-desktop gtk-icon-cache
 
 SUMMARY="Picard is the next generation MusicBrainz tagging application"
 HOMEPAGE="https://${PN}.musicbrainz.org"
@@ -17,13 +18,10 @@ SLOT="0"
 PLATFORMS="~amd64 ~x86"
 MYOPTIONS=""
 
-# Tests only work if you do a special "in-place" build
-RESTRICT="test"
-
 DEPENDENCIES="
     build+run:
-        dev-python/PyQt4[>=4.5][python_abis:*(-)?]
-        dev-python/mutagen[>=1.23][python_abis:*(-)?]
+        dev-python/PyQt5[>=5.7][python_abis:*(-)?]
+        dev-python/mutagen[>=1.37][python_abis:*(-)?]
         dev-python/python-discid[python_abis:*(-)?]
     suggestion:
         media-libs/chromaprint [[ description = [ Support for finding AcoustID fingerprints of audio files ] ]]
