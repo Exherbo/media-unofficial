@@ -8,7 +8,7 @@ export_exlib_phases src_prepare pkg_postinst pkg_postrm
 
 SUMMARY="Audacious is an advanced audio player"
 HOMEPAGE="http://www.audacious-media-player.org"
-DOWNLOADS="http://distfiles.audacious-media-player.org/${PNV}-gtk3.tar.bz2"
+DOWNLOADS="http://distfiles.audacious-media-player.org/${PNV}.tar.bz2"
 
 LICENCES="
     BSD-3 [[ note = [ bundled libguess ] ]]
@@ -18,7 +18,7 @@ LICENCES="
 SLOT="0"
 MYOPTIONS="
     dbus [[ description = [ Build mpris backend (can be later used by mpris2 plugin). ] ]]
-    gtk
+    gtk [[ description = [ Build the GTK+ 2 GUI ] ]]
     qt5 [[ description = [ Build the Qt5 GUI ] ]]
 "
 
@@ -27,35 +27,44 @@ DEPENDENCIES="
         sys-devel/gettext
         virtual/pkg-config
     build+run:
-        dev-libs/glib:2
+        dev-libs/glib:2[>=2.32]
         x11-libs/libICE
         x11-libs/libSM
         dbus? ( dev-libs/dbus-glib:1 )
-        gtk? ( x11-libs/gtk+:3[>=3.4] )
+        gtk? (
+            x11-libs/cairo
+            x11-libs/gdk-pixbuf:2.0
+            x11-libs/gtk+:2[>=2.24]
+            x11-libs/pango
+        )
         qt5? ( x11-libs/qtbase:5[>=5.2][gui] )
     post:
-        media-sound/audacious-plugins[~${PV}][gtk][qt5?] [[ note = [ some plugins currently fail without gtk ] ]]
+        media-sound/audacious-plugins[~${PV}][gtk?][qt5?]
 "
-
-WORK=${WORKBASE}/${PNV}-gtk3
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     --enable-nls
     --with-buildstamp=Exherbo
 )
+
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     dbus
     gtk
     "qt5 qt"
 )
 
-DEFAULT_SRC_COMPILE_PARAMS=( AR=${AR} RANLIB=${RANLIB} )
+DEFAULT_SRC_COMPILE_PARAMS=(
+    AR=${AR}
+    RANLIB=${RANLIB}
+)
 
 audacious_src_prepare() {
-    option qt5 && edo sed \
-        -e 's:audacious %U:audacious %U --qt:g' \
-        -i audacious.desktop
-
+    # Prefer Qt if both are enabled
+    if option qt5 && option gtk; then
+        edo sed \
+            -e 's:audacious %U:audacious %U --qt:g' \
+            -i audacious.desktop
+    fi
     default
 }
 
