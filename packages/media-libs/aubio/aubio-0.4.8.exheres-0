@@ -36,7 +36,6 @@ DEPENDENCIES="
             dev-python/Sphinx[python_abis:*(-)?]
         )
     build+run:
-        dev-lang/python:=
         media-libs/libsndfile[>=1.0.4]
         media-libs/libsamplerate[>=0.0.15]
         sci-libs/fftw[>=3.0.0]
@@ -47,10 +46,6 @@ DEPENDENCIES="
         jack? ( media-sound/jack-audio-connection-kit )
         python? ( dev-python/numpy[python_abis:*(-)?] )
 "
-
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/5690daf759b473b9d13b4547ef37adc2695cf524.patch
-)
 
 WAF_SRC_CONFIGURE_PARAMS=(
     --docdir=/usr/share/doc/${PNVR}/html
@@ -84,9 +79,7 @@ src_configure() {
     waf_src_configure
 
     if option python ; then
-        pushd python
         setup-py_src_configure
-        popd
     fi
 }
 
@@ -94,9 +87,7 @@ src_compile() {
     waf_src_compile
 
     if option python ; then
-        edo pushd python
         setup-py_src_compile
-        edo popd
     fi
 }
 
@@ -116,9 +107,7 @@ src_install() {
     waf_src_install
 
     if option python ; then
-        edo pushd python
         setup-py_src_install
-        edo popd
     fi
 }
 
