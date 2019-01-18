@@ -1,0 +1,22 @@
+# Copyright 2019 Danilo Spinella <danyspin97@protonmail.com>
+# Distributed under the terms of the GNU General Public License v2
+
+require github [ user='karlstav' ]
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.16 ] ]
+
+SUMMARY="Console-based Audio Visualizer for Alsa"
+
+LICENCES="MIT"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        media-sound/pulseaudio
+        sys-sound/alsa-lib
+        sci-libs/fftw
+"
+
+BUGS_TO="danyspin97@protonmail.com"
+
