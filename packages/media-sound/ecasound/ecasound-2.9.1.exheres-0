@@ -4,6 +4,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 require python [ with_opt=true blacklist="3" multibuild=false ]
+require ruby [ with_opt=true multibuild=true multiunpack=false ]
 
 SUMMARY="A software package designed for multitrack audio processing"
 DESCRIPTION="
@@ -25,7 +26,7 @@ BUGS_TO="alip@exherbo.org"
 LICENCES="LGPL-2.1 GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS="alsa audiofile debug jack libsamplerate ncurses ruby sndfile vorbis"
+MYOPTIONS="alsa audiofile debug jack libsamplerate ncurses sndfile vorbis"
 
 # libkvutils_tester fails, last checked: 2.9.1
 RESTRICT="test"
@@ -39,7 +40,6 @@ DEPENDENCIES="
         jack? ( media-sound/jack-audio-connection-kit )
         libsamplerate? ( media-libs/libsamplerate )
         ncurses? ( sys-libs/ncurses )
-        ruby? ( dev-lang/ruby:= )
         sndfile? ( media-libs/libsndfile )
         vorbis? ( media-libs/libvorbis )
 "
@@ -78,5 +78,30 @@ src_configure() {
         --disable-liblo \
         --with-largefile \
         "${pyconf[@]}"
+}
+
+src_compile() {
+    default
+}
+
+install_prepare_one_multibuild() {
+    edo mkdir -p "${WORKBASE}"/RUBY_ABIS/$(ruby_get_abi)
+}
+
+install_one_multibuild() {
+    for i in $(ruby_get_abi);
+    do
+        insinto /usr/$(exhost --target)/lib/ruby/site_ruby/${i}/
+        doins "${IMAGE}"/ecasound.rb
+    done
+}
+
+src_install() {
+    default
+
+    if optionq ruby; then
+        easy-multibuild_src_install
+        edo rm "${IMAGE}"/ecasound.rb
+    fi
 }
 
