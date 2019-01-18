@@ -3,7 +3,7 @@
 #   Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-require python
+require python [ with_opt=true blacklist="3" multibuild=false ]
 
 SUMMARY="A software package designed for multitrack audio processing"
 DESCRIPTION="
@@ -25,7 +25,7 @@ BUGS_TO="alip@exherbo.org"
 LICENCES="LGPL-2.1 GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS="alsa audiofile debug jack libsamplerate ncurses python ruby sndfile vorbis"
+MYOPTIONS="alsa audiofile debug jack libsamplerate ncurses ruby sndfile vorbis"
 
 # libkvutils_tester fails, last checked: 2.9.1
 RESTRICT="test"
@@ -39,7 +39,6 @@ DEPENDENCIES="
         jack? ( media-sound/jack-audio-connection-kit )
         libsamplerate? ( media-libs/libsamplerate )
         ncurses? ( sys-libs/ncurses )
-        python? ( dev-lang/python:= )
         ruby? ( dev-lang/ruby:= )
         sndfile? ( media-libs/libsndfile )
         vorbis? ( media-libs/libvorbis )
