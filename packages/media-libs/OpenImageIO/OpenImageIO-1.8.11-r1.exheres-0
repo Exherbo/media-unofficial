@@ -34,7 +34,7 @@ DEPENDENCIES="
     build:
         app-text/txt2man
     build+run:
-        dev-libs/boost[>=1.42]
+        dev-libs/boost[>=1.42][python(+)][python_abis:*(-)?]
         media-libs/ilmbase
         media-libs/libpng:=
         media-libs/libwebp:=
