@@ -3,7 +3,7 @@
 # Based in part on timidity++-2.13.2-r10.ebuild from Gentoo
 
 require sourceforge [ project=timidity pn="TiMidity++" ]
-require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 ] ]
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.16 1.15 ] ]
 
 SUMMARY="MIDI software synthesizer"
 DESCRIPTION="
