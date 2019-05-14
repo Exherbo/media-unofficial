@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 require github [ user=swh pn=LRDF tag=v${PV} ]
-require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 ] ]
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.16 1.15 ] ]
 
 SUMMARY="A library for the manipulation of RDF file in LADSPA plugins"
 DESCRIPTION="
