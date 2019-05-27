@@ -1,8 +1,7 @@
 # Copyright 2014 Johannes Nixdorf <mixi@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require github [ pn=oiio user=${PN} tag=Release-${PV} ] cmake [ api=2 ] \
-        python [ blacklist=none multibuild=false ]
+require github [ pn=oiio user=${PN} tag=Release-${PV} ] cmake [ api=2 ]
 
 SUMMARY="A library for reading and writing images"
 
@@ -34,11 +33,11 @@ DEPENDENCIES="
     build:
         app-text/txt2man
     build+run:
-        dev-libs/boost[>=1.42][python(+)][python_abis:*(-)?]
+        dev-libs/boost[>=1.42]
         media-libs/ilmbase
         media-libs/libpng:=
         media-libs/libwebp:=
-        media-libs/openexr
+        media-libs/openexr[>=2.0.0]
         media-libs/tiff
         sys-libs/zlib
         freetype? ( media-libs/freetype:2 )
@@ -66,6 +65,7 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DUSE_OPENGL:BOOL=FALSE
     -DUSE_OPENSSL:BOOL=TRUE
     -DUSE_QT:BOOL=FALSE
+    -DUSE_PYTHON:BOOL=FALSE
 )
 
 CMAKE_SRC_CONFIGURE_OPTION_USES=(
@@ -84,14 +84,3 @@ _ecmake_helper() {
         done ) \
         "$@"
 }
-
-src_configure() {
-    local cmakeargs=(
-        -DPYLIB_INSTALL_DIR:STRING=$(python_get_sitedir)
-        -DPYTHON_VERSION:STRING=$(python_get_abi)
-    )
-
-    _ecmake_helper \
-        "${cmakeargs[@]}"
-}
-
