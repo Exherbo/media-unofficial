@@ -1,0 +1,55 @@
+Upstream: Yes, fixed in git master
+
+From 7b785ec46a8f767e1a311d62202439d4625e22d4 Mon Sep 17 00:00:00 2001
+From: Paulo Assis <pj.assis@gmail.com>
+Date: Thu, 13 Dec 2018 22:23:26 +0000
+Subject: [PATCH 2/3] fix v4l2core_prepare_valid_format by searching the format
+ list for a supported format
+
+---
+ gview_v4l2core/v4l2_core.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
+
+diff --git a/gview_v4l2core/v4l2_core.c b/gview_v4l2core/v4l2_core.c
+index e284d7d..46da848 100644
+--- a/gview_v4l2core/v4l2_core.c
++++ b/gview_v4l2core/v4l2_core.c
+@@ -1588,8 +1588,15 @@ void v4l2core_prepare_new_format(v4l2_dev_t *vd, int new_format)
+ 
+ 	if(format_index < 0)
+ 		format_index = 0;
+-
+-	my_pixelformat = vd->list_stream_formats[format_index].format;
++	
++	if(vd->list_stream_formats[format_index].dec_support)
++		my_pixelformat = vd->list_stream_formats[format_index].format;
++	else
++	{
++		fprintf (stderr, "V4L2_CORE: format %i is not suported.\n", format_index);
++		fprintf (stderr, "V4L2_CORE: preparing a valid format instead.\n");
++		v4l2core_prepare_valid_format(vd);
++	}
+ }
+ 
+ /*
+@@ -1608,8 +1615,16 @@ void v4l2core_prepare_valid_format(v4l2_dev_t *vd)
+ 	assert(vd != NULL);
+ 
+ 	int format_index = 0;
++	for(format_index = 0; format_index < vd->numb_formats; ++format_index)
++	{
++		if(vd->list_stream_formats[format_index].dec_support) 
++		{
++			my_pixelformat = vd->list_stream_formats[format_index].format;
++			return;
++		}
++	}
+ 
+-	my_pixelformat = vd->list_stream_formats[format_index].format;
++	fprintf(stderr, "V4L2_CORE: couldn't prepare a valid format for device (no format supported)\n");
+ }
+ 
+ /*
+-- 
+2.21.0
+

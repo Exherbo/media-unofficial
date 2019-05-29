@@ -1,0 +1,117 @@
+Upstream: Yes, fixed in git master
+
+From 8141c9b26f49628d6c6717e86030f5e8220670cd Mon Sep 17 00:00:00 2001
+From: Paulo Assis <pj.assis@gmail.com>
+Date: Wed, 1 May 2019 22:46:44 +0100
+Subject: [PATCH 3/3] fix build warnings
+
+---
+ guvcview/gui_gtk3_callbacks.c   |  6 +++---
+ guvcview/gui_qt5_callbacks.cpp  |  6 +++---
+ guvcview/guvcview.c             | 10 +++++-----
+ gview_v4l2core/soft_autofocus.c | 14 +++++++-------
+ 4 files changed, 18 insertions(+), 18 deletions(-)
+
+diff --git a/guvcview/gui_gtk3_callbacks.c b/guvcview/gui_gtk3_callbacks.c
+index ce37118..99546d2 100644
+--- a/guvcview/gui_gtk3_callbacks.c
++++ b/guvcview/gui_gtk3_callbacks.c
+@@ -1713,13 +1713,13 @@ void audio_api_changed(GtkComboBox *combo, void *data)
+ 	switch(api)
+ 	{
+ 		case AUDIO_NONE:
+-			strncpy(my_config->audio, "none", 5);
++			strncpy(my_config->audio, "none", 6);
+ 			break;
+ 		case AUDIO_PULSE:
+-			strncpy(my_config->audio, "pulse", 5);
++			strncpy(my_config->audio, "pulse", 6);
+ 			break;
+ 		default:
+-			strncpy(my_config->audio, "port", 5);
++			strncpy(my_config->audio, "port", 6);
+ 			break;
+ 	}
+ 
+diff --git a/guvcview/gui_qt5_callbacks.cpp b/guvcview/gui_qt5_callbacks.cpp
+index a8f2eb5..41cf785 100644
+--- a/guvcview/gui_qt5_callbacks.cpp
++++ b/guvcview/gui_qt5_callbacks.cpp
+@@ -1361,13 +1361,13 @@ void MainWindow::audio_api_changed(int index)
+ 	switch(index)
+ 	{
+ 		case AUDIO_NONE:
+-			strncpy(my_config->audio, "none", 5);
++			strncpy(my_config->audio, "none", 6);
+ 			break;
+ 		case AUDIO_PULSE:
+-			strncpy(my_config->audio, "pulse", 5);
++			strncpy(my_config->audio, "pulse", 6);
+ 			break;
+ 		default:
+-			strncpy(my_config->audio, "port", 5);
++			strncpy(my_config->audio, "port", 6);
+ 			break;
+ 	}
+ 
+diff --git a/guvcview/guvcview.c b/guvcview/guvcview.c
+index 0b9096f..aebe1ef 100644
+--- a/guvcview/guvcview.c
++++ b/guvcview/guvcview.c
+@@ -210,11 +210,11 @@ int main(int argc, char *argv[])
+ #elif HAS_GTK3
+ 		gui = GUI_GTK3;
+ 		fprintf(stderr, "Guvcview was not build with Qt5 support: using Gtk3\n");
+-		strncpy(my_config->gui, "gtk3", 4);
++		strncpy(my_config->gui, "gtk3", 5);
+ #else
+ 		gui = GUI_NONE;
+ 		fprintf(stderr, "Guvcview was not build with gui support\n");
+-		strncpy(my_config->gui, "none", 4);
++		strncpy(my_config->gui, "none", 5);
+ #endif
+ 	}
+ 
+@@ -246,9 +246,9 @@ int main(int argc, char *argv[])
+ 	v4l2_dev_t *vd = create_v4l2_device_handler(my_options->device);
+ 	if(!vd)
+ 	{
+-		char message[50];
+-		snprintf(message, 49, "no video device (%s) found", my_options->device);
+-		gui_error("Guvcview error", "no video device found", 1);
++		char message[55];
++		snprintf(message, 54, "no video device (%s) found", my_options->device);
++		gui_error("Guvcview error", message, 1);
+ 		options_clean();
+ 		return -1;
+ 	}
+diff --git a/gview_v4l2core/soft_autofocus.c b/gview_v4l2core/soft_autofocus.c
+index 8512b45..8478844 100644
+--- a/gview_v4l2core/soft_autofocus.c
++++ b/gview_v4l2core/soft_autofocus.c
+@@ -602,15 +602,15 @@ int soft_autofocus_get_focus_value()
+ 	if (step2 <= 0 ) step2 = 1;
+ 	int focus=0;
+ 
+-	switch (focus_ctx->flag)
++	/*--------- first time - run sharpness algorithm -----------------*/
++	if(focus_ctx->ind >= 20)
+ 	{
+-		/*--------- first time - run sharpness algorithm -----------------*/
+-		if(focus_ctx->ind >= 20)
+-		{
+-			fprintf (stderr, "V4L2_CORE: (soft_autofocus) ind=%d exceeds 20\n", focus_ctx->ind);
+-			focus_ctx->ind = 10;
+-		}
++		fprintf (stderr, "V4L2_CORE: (soft_autofocus) ind=%d exceeds 20\n", focus_ctx->ind);
++		focus_ctx->ind = 10;
++	}
+ 
++	switch (focus_ctx->flag)
++	{
+ 		case 0: /*sample left to right at higher step*/
+ 			focus_ctx->arr_sharp[focus_ctx->ind] = focus_ctx->sharpness;
+ 			focus_ctx->arr_foc[focus_ctx->ind] = focus_ctx->focus;
+-- 
+2.21.0
+
