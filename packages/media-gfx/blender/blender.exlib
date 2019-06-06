@@ -8,7 +8,7 @@ MY_PV=${PV/b}
 require cmake [ api=2 ] \
     flag-o-matic \
     freedesktop-desktop \
-    python [ blacklist="2 3.4" multibuild=false ]
+    python [ blacklist="2" multibuild=false ]
 
 export_exlib_phases src_prepare src_configure src_install
 
