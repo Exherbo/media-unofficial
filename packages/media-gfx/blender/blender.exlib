@@ -1,6 +1,7 @@
 # Copyright 2009 Michael Forney
 # Copyright 2011-2015 Pierre Lejeune <superheron@gmail.com>
 # Copyright 2014 Johannes Nixdorf <mixi@exherbo.org>
+# Copyright 2019 Ridai Govinda Pombo <ridai.govinda@gmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
 MY_PV=${PV/b}
@@ -187,6 +188,19 @@ blender_src_configure() {
     )
 
     ecmake "${args[@]}"
+
+    # Fixes the infamous implicit + "-isystem /usr/include " insertion bug by CMake for some components provided by blender.
+    # A long investigation led me to think that we might have some sort of CMake issue, actually:
+    #  1. https://developers.redhat.com/blog/2016/02/29/why-cstdlib-is-more-complicated-than-you-might-think/
+    #  2. https://stackoverflow.com/questions/37218953/isystem-on-a-system-include-directory-causes-errors
+    #  3. https://gitlab.kitware.com/cmake/cmake/issues/19095
+    #  4. https://gitlab.kitware.com/cmake/cmake/merge_requests/3157 (as Exherbo upgraded to 3.14.5, this MR should be already merged)
+    # CMake tries to parse implicit include info, that comes from the actual toolchain:
+    # /usr/share/cmake/Modules/CMakeParseImplicitIncludeInfo.cmake
+    # But it doesn't detect anything for a GNU CC toolchain, so it is inserting " -isystem /usr/include " in some invocations of a CPP compiler.
+    # It happens a lot at Exherbo because it always cross-compile.
+    # I asked CMake upstream why this parser won't check for GCC information (4).
+    edo find -name flags.make -exec sed -i -e 's: -isystem /usr/include : :g' {} \;
 }
 
 blender_src_install() {
