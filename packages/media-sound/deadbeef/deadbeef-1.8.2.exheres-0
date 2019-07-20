@@ -2,8 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 
 require sourceforge
+require gtk-icon-cache freedesktop-desktop
 
-SUMMARY="GTK2 mp3/ogg/flac/ape/sid/mod/nsf/m4a/mpc music player"
+SUMMARY="GTK3 mp3/ogg/flac/ape/sid/mod/nsf/m4a/mpc music player"
 
 LICENCES="GPL-2"
 SLOT="0"
@@ -12,91 +13,114 @@ MYOPTIONS="
     aac
     ape       [[ description = [ Monkey's audio (.ape) support ] ]]
     cdda      [[ description = [ CD-Audio support ] ]]
-    converter [[
-        description = [ Convert from any supported format ]
-	    requires = gtk
-    ]]
-    curl
+    converter [[ description = [ Convert from any supported format ] ]]
     dts
     flac
     game      [[ description = [ sid, nfs, ay, support ] ]]
-    gtk
-    lastfm    [[
-        description = [ last.fm/libre.fm scrobbler ]
-        requires = curl
-    ]]
-    m3u       [[ description = [ m3u support ] ]]
+    lastfm    [[ description = [ last.fm/libre.fm scrobbler ] ]]
     midi      [[ description = [ MIDI music format support ] ]]
     mp3
     musepack
     notify    [[ description = [ Notification-daemon support ] ]]
+    opus      [[ description = [ Opus streaming codec support ] ]]
     vorbis
     vtx       [[ description = [ VTX ZX-Spectrum music format support ] ]]
     wavpack   [[ description = [ Wavepack audio format support ] ]]
     zip       [[ description = [ Zip archives support ] ]]
 
-    ( alsa oss pulseaudio ) [[ number-selected = at-least-one ]]
+    ( alsa pulseaudio ) [[ number-selected = at-least-one ]]
+    ( providers: ijg-jpeg jpeg-turbo ) [[ number-selected = exactly-one ]]
 "
 
 DEPENDENCIES="
     build:
         dev-util/intltool
-        dev-util/pkg-config
+        sys-devel/gettext
+        virtual/pkg-config
+        ape? ( dev-lang/yasm )
     build+run:
+        dev-libs/atk
+        dev-libs/glib:2
+        dev-libs/jansson
+        media-libs/libpng:=
         media-libs/libsamplerate
         media-libs/libsndfile
-
+        net-misc/curl[>=7.10]
+        x11-libs/cairo
+        x11-libs/gdk-pixbuf:2.0
+        x11-libs/gtk+:3
+        x11-libs/libX11
+        x11-libs/pango
         aac?        ( media-libs/faad2 )
         alsa?       ( sys-sound/alsa-lib )
-        cdda?       ( dev-libs/libcdio media-libs/libcddb )
-        curl?       ( net-misc/curl[>=7.10] )
+        cdda?       (
+            dev-libs/libcdio
+            dev-libs/libcdio-paranoia
+            media-libs/libcddb
+        )
+        dts?        ( media-libs/libdca )
         flac?       ( media-libs/flac )
         game?       ( sys-libs/zlib )
-        gtk?        ( x11-libs/gtk+:2[>=2.12] )
         mp3?        ( media-libs/libmad )
         notify?     ( sys-apps/dbus )
-        oss?        ( media-libs/oss )
+        opus?       (
+            media-libs/libogg
+            media-libs/opusfile
+        )
         pulseaudio? ( media-sound/pulseaudio )
-        vorbis?     ( media-libs/libvorbis media-libs/libogg )
+        vorbis?     (
+            media-libs/libvorbis
+            media-libs/libogg
+        )
         wavpack?    ( media-sound/wavpack )
         zip?        (
             app-arch/libzip
             sys-libs/zlib
         )
+        providers:ijg-jpeg? ( media-libs/jpeg:= )
+        providers:jpeg-turbo? ( media-libs/libjpeg-turbo )
 "
 
 BUGS_TO="jedahan@gmail.com"
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(
-    --enable-adplug
-    --enable-artwork
     --disable-ffmpeg
-    --enable-sndfile
-    --enable-supereq
+    --disable-gtk2 # use gtk3
+    --disable-libmpg123 # use libmad
+    --disable-nullout
+    --disable-oss
 )
+
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     'aac'
     'alsa'
     'ape ffap'
     'cdda'
     'converter'
-    'curl vfs-curl'
     'dts dca'
     'flac'
     'game gme'
     'game sid'
-    'gtk gtkui'
     'lastfm lfm'
     'midi wildmidi'
-    'm3u'
-    'mp3 mad'
+    'mp3 libmad'
     'musepack'
     'notify'
-    'oss'
+    'opus'
     'pulseaudio pulse'
     'vorbis'
     'vtx'
     'wavpack'
     'zip vfs-zip'
 )
+
+pkg_postinst() {
+    freedesktop-desktop_pkg_postinst
+    gtk-icon-cache_pkg_postinst
+}
+
+pkg_postrm() {
+    freedesktop-desktop_pkg_postrm
+    gtk-icon-cache_pkg_postrm
+}
 
