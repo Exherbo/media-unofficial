@@ -47,6 +47,7 @@ DEPENDENCIES="
         dev-libs/boost[>=1.48.0]
         dev-libs/libglvnd
         dev-python/numpy[>=1.7.0][python_abis:*(-)?]
+        media-libs/OpenColorIO
         media-libs/OpenImageIO
         media-libs/freetype:2
         media-libs/glew
@@ -166,7 +167,7 @@ blender_src_configure() {
         -DWITH_MOD_REMESH:BOOL=TRUE
         -DWITH_MOD_SMOKE:BOOL=TRUE
         -DWITH_OPENCOLLADA:BOOL=FALSE
-        -DWITH_OPENCOLORIO:BOOL=FALSE
+        -DWITH_OPENCOLORIO:BOOL=TRUE
         -DWITH_OPENGL_DRAW_TESTS:BOOL=FALSE
         -DWITH_OPENGL_RENDER_TESTS:BOOL=FALSE
         -DWITH_OPENIMAGEIO:BOOL=TRUE
