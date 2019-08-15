@@ -1,0 +1,50 @@
+# Copyright 2019 Rune Morling <ermo.exherbo.org@spammesenseless.net>
+# Distributed under the terms of the GNU General Public license v2
+
+require github [ user=imageworks tag=v${PV} ] cmake [ api=2 ]
+
+SUMMARY="A color management framework for visual effects and animation"
+
+BUGS_TO="ermo.exherbo.org@spammesenseless.net"
+
+LICENCES="
+    BSD-3
+    ICC [[ note = [ bundled SampleICC ] ]]
+    ZLIB [[ note = [ bundled MD5 ] ]]
+"
+SLOT=0
+PLATFORMS="~amd64"
+MYOPTIONS="python"
+
+DEPENDENCIES="
+    build+run:
+        ( dev-libs/expat )
+        ( dev-libs/yaml-cpp )
+        ( media-libs/OpenImageIO )
+        ( media-libs/lcms2 )
+        python? ( dev-lang/python:2.7 )
+"
+
+# don't want to deal with this yet
+RESTRICT="test"
+
+src_prepare() {
+    _SOURCES="${WORK}"/../"${PNV}"
+
+    edo sed -i "s/-Werror//g" "${_SOURCES}"/src/core/CMakeLists.txt
+    edo sed -i "s/-Werror//g" "${_SOURCES}"/src/pyglue/CMakeLists.txt
+    edo sed -i "s/push(hidden)/push(default)/g" "${_SOURCES}"/src/core/OCIOYaml.cpp
+
+    cd "${_SOURCES}"
+    edo patch -Np1 -i "${FILES}"/gnu_installdirs_cmake.patch
+}
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DOCIO_BUILD_TESTS:BOOL=FALSE
+    -DOCIO_BUILD_APPS:BOOL=FALSE
+)
+
+CMAKE_SRC_CONFIGURE_OPTION_BUILDS=(
+    'python OCIO_BUILD_PYTHON'
+)
+
