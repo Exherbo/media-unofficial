@@ -49,6 +49,7 @@ DEPENDENCIES="
         dev-python/numpy[>=1.7.0][python_abis:*(-)?]
         media-libs/OpenColorIO
         media-libs/OpenImageIO
+        media-libs/OpenSubdiv
         media-libs/freetype:2
         media-libs/glew
         media-libs/ilmbase
@@ -171,7 +172,7 @@ blender_src_configure() {
         -DWITH_OPENGL_DRAW_TESTS:BOOL=FALSE
         -DWITH_OPENGL_RENDER_TESTS:BOOL=FALSE
         -DWITH_OPENIMAGEIO:BOOL=TRUE
-        -DWITH_OPENSUBDIV:BOOL=FALSE
+        -DWITH_OPENSUBDIV:BOOL=TRUE
         -DWITH_OPENVDB:BOOL=FALSE
         -DWITH_OPENVDB_3_ABI_COMPATIBLE:BOOL=FALSE
         -DWITH_OPENVDB_BLOSC:BOOL=FALSE
