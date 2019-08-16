@@ -1,0 +1,40 @@
+# Copyright 2019 Rune Morling <ermo.exherbo.org@spammesenseless.net>
+# Distributed under the terms of the GNU General Public license v2
+
+_tag=v3_4_0
+
+require github [ user=PixarAnimationStudios tag=${_tag} ] cmake [ api=2 ]
+
+SUMMARY="An Open-Source subdivision surface library"
+
+HOMEPAGE="http://graphics.pixar.com/opensubdiv5"
+
+BUGS_TO="ermo.exherbo.org@spammesenseless.net"
+
+LICENCES="Apache-2.0"
+SLOT=0
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        ( media-libs/glew )
+"
+
+# don't want to deal with this yet
+RESTRICT="test"
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DGLEW_LOCATION="/usr/$(exhost --target)"
+    -DNO_EXAMPLES=1
+    -DNO_TUTORIALS=1
+    -DNO_REGRESSION=1
+    -DNO_PTEX=1
+    -DNO_DOC=1
+    -DNO_TBB=1
+    -DNO_CUDA=1
+    -DNO_OPENCL=1
+    -DNO_CLEW=1
+    -DNO_METAL=1
+)
+
