@@ -3,9 +3,8 @@
 #   Copyright 1999-2009 Gentoo Foundation
 # Released under the terms of the GNU General Public License v2
 
-require sourceforge [ suffix=tar.bz2 ] \
+require github \
     cmake [ api=2 ] \
-    freedesktop-desktop \
     gtk-icon-cache
 
 SUMMARY="Yoshimi is a software synthesizer based on ZynAddSubFX 2.4.0"
@@ -14,6 +13,7 @@ Yoshimi is a software synthesizer for Linux based on the 2.4.0 release of
 ZynAddSubFX, written by Nasca Octavian Paul. Yoshimi delivers the same synth
 capabilities, along with very good Jack and Alsa midi/audio functionality.
 "
+HOMEPAGE+=" https://${PN}.github.io"
 
 LICENCES="GPL-2"
 SLOT="0"
@@ -51,14 +51,4 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
 CMAKE_SRC_CONFIGURE_OPTIONS=(
     "lv2 LV2Plugin"
 )
-
-pkg_postinst() {
-    freedesktop-desktop_pkg_postinst
-    gtk-icon-cache_pkg_postinst
-}
-
-pkg_postrm() {
-    freedesktop-desktop_pkg_postrm
-    gtk-icon-cache_pkg_postrm
-}
 
