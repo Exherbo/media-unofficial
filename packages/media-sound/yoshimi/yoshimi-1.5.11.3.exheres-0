@@ -32,6 +32,8 @@ DEPENDENCIES="
         media-sound/jack-audio-connection-kit[>=0.115.6]
         sci-libs/fftw[>=3.0.22]
         sys-libs/ncurses
+        sys-libs/readline:=
+        sys-libs/zlib
         sys-sound/alsa-lib[>=1.0.17]
         x11-libs/cairo[X]
         x11-libs/fltk
@@ -44,6 +46,7 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DJackSessionSupport:BOOL=TRUE
     -DBuildFor{0ld_X86,AMD_X86_64,Core2_X86_64,Debug,NEON,ThisCPU}:BOOL=FALSE
     -DBuildOptionsBasic:STRING="${CFLAGS}"
+    -DBuildWithFLTK:BOOL=TRUE
 )
 CMAKE_SRC_CONFIGURE_OPTIONS=(
     "lv2 LV2Plugin"
