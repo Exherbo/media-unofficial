@@ -9,7 +9,7 @@ MY_PV=${PV/b}
 require cmake [ api=2 ] \
     flag-o-matic \
     freedesktop-desktop \
-    python [ blacklist="2" multibuild=false ]
+    python [ blacklist="2 3.5 3.6" multibuild=false ]
 
 export_exlib_phases src_prepare src_configure src_install
 
@@ -39,11 +39,13 @@ RESTRICT="test"
 
 DEPENDENCIES="
     build:
+        dev-scm/git
         sci-libs/eigen:3[>=3.2.7]
         x11-proto/xorgproto
     build+run:
         app-arch/lzo:2
         dev-libs/boost[>=1.48.0]
+        dev-libs/libglvnd
         dev-python/numpy[>=1.7.0][python_abis:*(-)?]
         media-libs/OpenImageIO
         media-libs/freetype:2
@@ -53,8 +55,6 @@ DEPENDENCIES="
         media-libs/openexr
         media-libs/tiff
         sys-libs/zlib
-        x11-dri/glu
-        x11-dri/mesa
         x11-libs/libX11
         x11-libs/libXfixes
         x11-libs/libXi
@@ -66,12 +66,13 @@ DEPENDENCIES="
         )
         fftw? ( sci-libs/fftw[>=3.0] )
         jack? ( media-sound/jack-audio-connection-kit )
-        jpeg2000? ( media-libs/OpenJPEG:0 )
+        jpeg2000? ( media-libs/OpenJPEG:2 )
         openal? ( media-libs/openal )
-        sdl? ( media-libs/SDL:2 )
-        sndfile? ( media-libs/libsndfile )
+        openmp? ( sys-libs/libgomp:= )
         providers:ijg-jpeg? ( media-libs/jpeg:= )
         providers:jpeg-turbo? ( media-libs/libjpeg-turbo )
+        sdl? ( media-libs/SDL:2 )
+        sndfile? ( media-libs/libsndfile )
     suggestion:
         dev-python/requests[python_abis:*(-)?] [[ description = [ Support to upload models to sketchfab ] ]]
 "
@@ -114,29 +115,41 @@ blender_src_configure() {
         -DPYTHON_VERSION:STRING=$(python_get_abi)
         -DWITH_ALEMBIC:BOOL=FALSE
         -DWITH_ALEMBIC_HDF5:BOOL=FALSE
+        -DWITH_AUDASPACE:BOOL=TRUE
+        -DWITH_BLENDER:BOOL=TRUE
         -DWITH_BOOST:BOOL=TRUE
         -DWITH_BUILDINFO:BOOL=TRUE
         -DWITH_BULLET:BOOL=TRUE
         -DWITH_CODEC_AVI:BOOL=TRUE
         -DWITH_COMPOSITOR:BOOL=TRUE
+        -DWITH_CUDA_DYNLOAD:BOOL=TRUE
         -DWITH_CYCLES:BOOL=TRUE
+        -DWITH_CYCLES_CUBIN_COMPILER:BOOL=FALSE
         -DWITH_CYCLES_CUDA_BINARIES:BOOL=FALSE
-        -DWITH_CYCLES_OPENSUBDIV:BOOL=FALSE
+        -DWITH_CYCLES_CUDA_BUILD_SERIAL:BOOL=FALSE
+        -DWITH_CYCLES_DEBUG:BOOL=FALSE
+        -DWITH_CYCLES_DEVICE_CUDA:BOOL=TRUE
+        -DWITH_CYCLES_DEVICE_OPENCL:BOOL=TRUE
+        -DWITH_CYCLES_EMBREE:BOOL=FALSE
+        -DWITH_CYCLES_LOGGING:BOOL=TRUE
+        -DWITH_CYCLES_NATIVE_ONLY:BOOL=FALSE
+        -DWITH_CYCLES_NETWORK:BOOL=FALSE
         -DWITH_CYCLES_OSL:BOOL=FALSE
         -DWITH_CYCLES_STANDALONE:BOOL=FALSE
         -DWITH_CYCLES_STANDALONE_GUI:BOOL=FALSE
         -DWITH_DOC_MANPAGE:BOOL=TRUE
+        -DWITH_DRACO:BOOL=FALSE
         -DWITH_FREESTYLE:BOOL=TRUE
-        -DWITH_GAMEENGINE:BOOL=TRUE
-        -DWITH_GAMEENGINE_DECKLINK:BOOL=TRUE
         -DWITH_GHOST_XDND:BOOL=TRUE
+        -DWITH_GL_EGL:BOOL=FALSE
+        -DWITH_GL_PROFILE_ES20:BOOL=FALSE
+        -DWITH_GLEW_ES:BOOL=FALSE
         -DWITH_GTESTS:BOOL=FALSE
         -DWITH_HEADLESS:BOOL=FALSE
         -DWITH_IK_ITASC:BOOL=TRUE
         -DWITH_IK_SOLVER:BOOL=TRUE
         -DWITH_IMAGE_CINEON:BOOL=TRUE
         -DWITH_IMAGE_DDS:BOOL=TRUE
-        -DWITH_IMAGE_FRAMESERVER:BOOL=TRUE
         -DWITH_IMAGE_HDR:BOOL=TRUE
         -DWITH_IMAGE_OPENEXR:BOOL=TRUE
         -DWITH_IMAGE_TIFF:BOOL=TRUE
@@ -149,29 +162,29 @@ blender_src_configure() {
         -DWITH_LZO:BOOL=TRUE
         -DWITH_MEM_JEMALLOC:BOOL=FALSE
         -DWITH_MEM_VALGRIND:BOOL=FALSE
-        -DWITH_MOD_BOOLEAN:BOOL=TRUE
         -DWITH_MOD_FLUID:BOOL=TRUE
         -DWITH_MOD_REMESH:BOOL=TRUE
         -DWITH_MOD_SMOKE:BOOL=TRUE
         -DWITH_OPENCOLLADA:BOOL=FALSE
         -DWITH_OPENCOLORIO:BOOL=FALSE
-        -DWITH_OPENGL_TESTS:BOOL=FALSE
+        -DWITH_OPENGL_DRAW_TESTS:BOOL=FALSE
+        -DWITH_OPENGL_RENDER_TESTS:BOOL=FALSE
         -DWITH_OPENIMAGEIO:BOOL=TRUE
         -DWITH_OPENSUBDIV:BOOL=FALSE
         -DWITH_OPENVDB:BOOL=FALSE
+        -DWITH_OPENVDB_3_ABI_COMPATIBLE:BOOL=FALSE
         -DWITH_OPENVDB_BLOSC:BOOL=FALSE
-        -DWITH_PLAYER:BOOL=TRUE
         -DWITH_PYTHON_INSTALL:BOOL=FALSE
         -DWITH_PYTHON_INSTALL_NUMPY:BOOL=FALSE
         -DWITH_PYTHON_INSTALL_REQUESTS:BOOL=FALSE
         -DWITH_PYTHON_MODULE:BOOL=FALSE
         -DWITH_RAYOPTIMIZATION:BOOL=TRUE
         -DWITH_STATIC_LIBS:BOOL=FALSE
+        -DWITH_SYSTEM_AUDASPACE:BOOL=FALSE
         -DWITH_SYSTEM_EIGEN3:BOOL=TRUE
         -DWITH_SYSTEM_GLES:BOOL=TRUE
         -DWITH_SYSTEM_GLEW:BOOL=TRUE
         -DWITH_SYSTEM_LZO:BOOL=TRUE
-        -DWITH_SYSTEM_OPENJPEG:BOOL=TRUE
         -DWITH_X11_ALPHA:BOOL=TRUE
         -DWITH_X11_XF86VMODE:BOOL=TRUE
         -DWITH_X11_XFIXES:BOOL=TRUE
@@ -206,13 +219,11 @@ blender_src_configure() {
 blender_src_install() {
     cmake_src_install
 
-    # TODO: Use CMAKE_INSTALL_FULL_DATAROOTDIR
-    edo mv "${IMAGE}"/usr/{$(exhost --target)/,}share
     # TODO: blender fails to run otherwise
     dodir /usr/$(exhost --target)/share
     dosym /usr/share/${PN} /usr/$(exhost --target)/share/${PN}
 
-    edo mv "${IMAGE}"/usr/share/doc/{${PN},${PNV}}
+    edo mv "${IMAGE}"/usr/share/doc/{${PN},${PNVR}}
 
     keepdir /usr/share/${PN}/${MY_PV}/scripts/addons_contrib
 }

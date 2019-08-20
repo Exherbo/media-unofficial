@@ -1,0 +1,62 @@
+Source: Timo Gurr <tgurr@exherbo.org>
+Upstream: No
+Reason: Fix share install
+
+diff -Naur blender-2.80/CMakeLists.txt blender-2.80.new/CMakeLists.txt
+--- blender-2.80/CMakeLists.txt	2019-07-24 09:41:38.000000000 +0200
++++ blender-2.80.new/CMakeLists.txt	2019-08-08 18:47:47.280624186 +0200
+@@ -42,6 +42,8 @@
+ 
+ cmake_minimum_required(VERSION 3.5)
+ 
++include(GNUInstallDirs)
++
+ # Prever LEGACY OpenGL to eb compatible with all the existing releases and
+ # platforms which don't hare GLVND yet. Only do it if preference was not set
+ # externally.
+diff -Naur blender-2.80/source/creator/CMakeLists.txt blender-2.80.new/source/creator/CMakeLists.txt
+--- blender-2.80/source/creator/CMakeLists.txt	2019-07-24 09:41:39.000000000 +0200
++++ blender-2.80.new/source/creator/CMakeLists.txt	2019-08-08 18:46:44.701523409 +0200
+@@ -329,7 +329,7 @@
+     if(WITH_INSTALL_PORTABLE)
+       set(TARGETDIR_VER ${BLENDER_VERSION})
+     else()
+-      set(TARGETDIR_VER share/blender/${BLENDER_VERSION})
++      set(TARGETDIR_VER "${CMAKE_INSTALL_DATAROOTDIR}/blender/${BLENDER_VERSION}")
+     endif()
+   endif()
+ 
+@@ -524,28 +524,28 @@
+       # manpage only with 'blender' binary
+       install(
+         FILES ${CMAKE_CURRENT_BINARY_DIR}/blender.1
+-        DESTINATION share/man/man1
++        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/man/man1
+       )
+     endif()
+ 
+     # misc files
+     install(
+       FILES ${CMAKE_SOURCE_DIR}/release/freedesktop/blender.desktop
+-      DESTINATION share/applications
++      DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/applications"
+     )
+     install(
+       FILES ${CMAKE_SOURCE_DIR}/release/freedesktop/icons/scalable/apps/blender.svg
+-      DESTINATION share/icons/hicolor/scalable/apps
++      DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/scalable/apps"
+     )
+     install(
+       FILES ${CMAKE_SOURCE_DIR}/release/freedesktop/icons/symbolic/apps/blender-symbolic.svg
+-      DESTINATION share/icons/hicolor/symbolic/apps
++      DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/symbolic/apps"
+     )
+     install(
+       PROGRAMS ${CMAKE_SOURCE_DIR}/release/bin/blender-thumbnailer.py
+       DESTINATION bin
+     )
+-    set(BLENDER_TEXT_FILES_DESTINATION share/doc/blender)
++    set(BLENDER_TEXT_FILES_DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/doc/blender")
+   endif()
+ 
+   if(WITH_PYTHON)
