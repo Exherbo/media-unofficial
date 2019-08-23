@@ -13,7 +13,7 @@ simple filters, sources and mixers that can be controlled by parameters.
 HOMEPAGE="https://frei0r.dyne.org"
 DOWNLOADS="https://files.dyne.org/frei0r/${PNV}.tar.gz"
 
-REMOTE_IDS="freecode:frei0r"
+REMOTE_IDS="freshcode:frei0r"
 
 UPSTREAM_DOCUMENTATION="${HOMEPAGE}/codedoc/html"
 
@@ -38,12 +38,5 @@ DEFAULT_SRC_PREPARE_PATCHES=(
 )
 
 CMAKE_SRC_CONFIGURE_PARAMS=( -DWITHOUT_GAVL:BOOL=TRUE )
-
-src_configure() {
-    local cmakeargs+=(
-        -DWITHOUT_OPENCV:BOOL=$(option facebl0r && echo FALSE || echo TRUE)
-    )
-
-    ecmake "${cmakeargs[@]}" "${CMAKE_SRC_CONFIGURE_PARAMS[@]}"
-}
+CMAKE_SRC_CONFIGURE_OPTIONS=( '!facebl0r WITHOUT_OPENCV' )
 
