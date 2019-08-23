@@ -32,6 +32,11 @@ DEPENDENCIES="
         facebl0r? ( media-libs/opencv[>=1.0.0] )
 "
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PNV}-Include-opencv2-imgproc.hpp-for-CV_RGB.patch
+    "${FILES}"/${PNV}-Check-opencv-version.patch
+)
+
 CMAKE_SRC_CONFIGURE_PARAMS=( -DWITHOUT_GAVL:BOOL=TRUE )
 
 src_configure() {
