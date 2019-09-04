@@ -34,6 +34,7 @@ DEPENDENCIES="
         app-text/txt2man
     build+run:
         dev-libs/boost[>=1.42]
+        media-libs/OpenColorIO
         media-libs/ilmbase
         media-libs/libpng:=
         media-libs/libwebp:=
@@ -60,7 +61,7 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DUSE_FIELD3D:BOOL=FALSE
     -DUSE_NUKE:BOOL=FALSE
     -DUSE_PTEX:BOOL=FALSE
-    -DUSE_OCIO:BOOL=FALSE
+    -DUSE_OCIO:BOOL=TRUE
     -DUSE_OPENCV:BOOL=FALSE
     -DUSE_OPENGL:BOOL=FALSE
     -DUSE_OPENSSL:BOOL=TRUE
