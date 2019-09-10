@@ -1,7 +1,7 @@
 # Copyright 2011 Quentin "Sardem FF7" Glidic <sardemff7+exherbo@sardemff7.net>
 # Distributed under the terms of the GNU General Public License v2
 
-require github [ user=sahib ] cmake [ api=2 ]
+require github [ user=sahib ] cmake
 
 SUMMARY="A music related metadata searchengine, both with commandline interface and C API"
 DESCRIPTION="

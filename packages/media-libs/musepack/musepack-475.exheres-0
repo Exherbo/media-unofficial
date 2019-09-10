@@ -1,7 +1,7 @@
 # Copyright 2014-2015 Heiko Becker <heirecka@exherb.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake [ api=2 ]
+require cmake
 
 SUMMARY="An audio compression format with a strong emphasis on high quality"
 DESCRIPTION="

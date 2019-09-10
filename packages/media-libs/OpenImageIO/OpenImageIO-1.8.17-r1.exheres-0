@@ -1,7 +1,7 @@
 # Copyright 2014 Johannes Nixdorf <mixi@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require github [ pn=oiio user=${PN} tag=Release-${PV} ] cmake [ api=2 ]
+require github [ pn=oiio user=${PN} tag=Release-${PV} ] cmake
 
 SUMMARY="A library for reading and writing images"
 

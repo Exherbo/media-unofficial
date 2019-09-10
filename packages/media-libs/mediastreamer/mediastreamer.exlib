@@ -5,7 +5,7 @@
 #   Copyright 2009 Ingmar Vanhassel
 
 require github [ user=BelledonneCommunications pn=${PN}$(ever major) ] \
-    cmake [ api=2 ]
+    cmake
 
 export_exlib_phases src_install
 

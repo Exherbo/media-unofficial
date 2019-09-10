@@ -5,7 +5,7 @@
 #   Copyright 1999-2010 Gentoo Foundation
 
 require sourceforge [ suffix=tar.bz2 ] \
-    cmake [ api=2 ] \
+    cmake \
     freedesktop-desktop \
     freedesktop-mime \
     gtk-icon-cache

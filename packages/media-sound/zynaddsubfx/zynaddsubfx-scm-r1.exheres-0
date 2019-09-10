@@ -12,7 +12,7 @@ SCM_rtosc_REPOSITORY="git://github.com/fundamental/rtosc.git"
 SCM_rtosc_CHECKOUT_TO=${PN}/rtosc
 SCM_EXTERNAL_REFS="instruments:instruments rtosc:rtosc"
 SCM_SECONDARY_REPOSITORIES="instruments rtosc"
-require scm-git cmake [ api=2 ]
+require scm-git cmake
 
 SUMMARY="ZynAddSubFX is a real time software audio synthesizer."
 DESCRIPTION="ZynnAddSubFX supports jack and alsa, and can be built with DSSI support."

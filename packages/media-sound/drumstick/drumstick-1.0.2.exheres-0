@@ -1,7 +1,7 @@
 # Copyright 2013 Ali Polatel <alip@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require sourceforge cmake [ api=2 ] freedesktop-desktop freedesktop-mime gtk-icon-cache
+require sourceforge cmake freedesktop-desktop freedesktop-mime gtk-icon-cache
 
 SUMMARY="MIDI libraries for Qt5/C++"
 DESCRIPTION="

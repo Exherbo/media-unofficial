@@ -8,7 +8,7 @@
 
 # out-of-source builds fail:
 # http://sourceforge.net/p/portmedia/bugs/10/
-require sourceforge [ project=portmedia ] cmake [ api=2 out_of_source=false ]
+require sourceforge [ project=portmedia ] cmake [ out_of_source=false ]
 
 SUMMARY="Library for real time MIDI input and output"
 DOWNLOADS="mirror://sourceforge/portmedia/${PN}-src-${PV}.zip"

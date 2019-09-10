@@ -1,7 +1,7 @@
 # Copyright 2009 Daniel Mierswa <impulze@impulze.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require sourceforge [ project=openil suffix=tar.gz ] cmake [ api=2 ]
+require sourceforge [ project=openil suffix=tar.gz ] cmake
 
 SUMMARY="Cross-Platform, wide-spreaded, full-featured image library."
 DESCRIPTION="Developer's Image Library (DevIL) is a programmer's library to develop

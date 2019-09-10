@@ -1,7 +1,7 @@
 # Copyright 2009, 2012 Ali Polatel <alip@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require sourceforge [ suffix=tar.gz ] cmake [ api=2 ] freedesktop-desktop
+require sourceforge [ suffix=tar.gz ] cmake freedesktop-desktop
 
 SUMMARY="Virtual midi keyboard for jack midi"
 DESCRIPTION="

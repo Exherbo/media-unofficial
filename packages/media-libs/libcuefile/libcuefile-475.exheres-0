@@ -3,7 +3,7 @@
 
 MY_PNV=${PN}_r${PV}
 
-require cmake [ api=2 ]
+require cmake
 
 SUMMARY="Musepack's cue file library"
 

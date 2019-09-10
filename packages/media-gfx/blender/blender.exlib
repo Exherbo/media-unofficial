@@ -6,7 +6,7 @@
 
 MY_PV=${PV/b}
 
-require cmake [ api=2 ] \
+require cmake \
     flag-o-matic \
     freedesktop-desktop \
     python [ blacklist="2 3.5 3.6" multibuild=false ]

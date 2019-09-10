@@ -1,7 +1,7 @@
 # Copyright 2009 Yury G. Kudryashov <urkud@ya.ru>
 # Distributed under the terms of the GNU General Public License v2
 
-require sourceforge cmake [ api=2 ] freedesktop-desktop gtk-icon-cache
+require sourceforge cmake freedesktop-desktop gtk-icon-cache
 
 SUMMARY="MIDI metronome"
 DESCRIPTION="
