@@ -21,7 +21,7 @@ MYOPTIONS=""
 DEPENDENCIES="
     build:
         sys-devel/gettext
-        dev-util/pkg-config
+        virtual/pkg-config
     build+run:
         media-sound/drumstick[>=1.0.0]
         sys-sound/alsa-lib[>=1.0]
