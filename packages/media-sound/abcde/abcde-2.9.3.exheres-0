@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 SUMMARY="A Better CD Encoder"
-HOMEPAGE="http://${PN}.einval.com"
+HOMEPAGE="https://${PN}.einval.com"
 DOWNLOADS="${HOMEPAGE}/download/${PNV}.tar.gz"
 
 LICENCES="GPL-2"
