@@ -1,7 +1,7 @@
 # Copyright 2009 Yury G. Kudryashov <urkud@ya.ru>
 # Distributed under the terms of the GNU General Public License v2
 
-require sourceforge cmake freedesktop-desktop gtk-icon-cache
+require sourceforge cmake gtk-icon-cache
 
 SUMMARY="MIDI metronome"
 DESCRIPTION="
@@ -34,14 +34,4 @@ DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/${PN}-1.0.0-Use-CMAKE_INSTALL_FULL_DATAROOTDIR.patch
     "${FILES}"/${PN}-1.0.0-cross.patch
 )
-
-pkg_postinst() {
-    freedesktop-desktop_pkg_postinst
-    gtk-icon-cache_pkg_postinst
-}
-
-pkg_postrm() {
-    freedesktop-desktop_pkg_postrm
-    gtk-icon-cache_pkg_postrm
-}
 
