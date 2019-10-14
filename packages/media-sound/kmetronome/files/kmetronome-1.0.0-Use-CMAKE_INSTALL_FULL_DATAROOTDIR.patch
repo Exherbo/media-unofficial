@@ -4,7 +4,7 @@ Reason: Use CMAKE_INSTALL_FULL_DATAROOTDIR
 
 diff -Naur kmetronome-1.0.0/cmake_admin/DBusMacros.cmake kmetronome-1.0.0.new/cmake_admin/DBusMacros.cmake
 --- kmetronome-1.0.0/cmake_admin/DBusMacros.cmake	2014-10-12 15:50:36.000000000 +0200
-+++ kmetronome-1.0.0.new/cmake_admin/DBusMacros.cmake	2015-09-02 13:58:56.851703863 +0200
++++ kmetronome-1.0.0.new/cmake_admin/DBusMacros.cmake	2019-10-14 09:55:00.915570596 +0200
 @@ -4,6 +4,6 @@
          string(REGEX REPLACE "\\.service.*$" ".service" _output_file ${_i})
          set(_target ${CMAKE_CURRENT_BINARY_DIR}/${_output_file})
@@ -15,8 +15,17 @@ diff -Naur kmetronome-1.0.0/cmake_admin/DBusMacros.cmake kmetronome-1.0.0.new/cm
  endmacro(dbus_add_activation_service _sources)
 diff -Naur kmetronome-1.0.0/CMakeLists.txt kmetronome-1.0.0.new/CMakeLists.txt
 --- kmetronome-1.0.0/CMakeLists.txt	2014-10-12 15:50:36.000000000 +0200
-+++ kmetronome-1.0.0.new/CMakeLists.txt	2015-09-02 13:56:28.356166180 +0200
-@@ -104,4 +104,4 @@
++++ kmetronome-1.0.0.new/CMakeLists.txt	2019-10-14 10:48:12.546581432 +0200
+@@ -20,6 +20,8 @@
+ 
+ project(kmetronome)
+ 
++include(GNUInstallDirs)
++
+ set(CMAKE_USE_RELATIVE_PATHS OFF)
+ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_admin")
+ 
+@@ -104,4 +106,4 @@
  )
  
  install( FILES kmetronome.desktop
@@ -24,14 +33,14 @@ diff -Naur kmetronome-1.0.0/CMakeLists.txt kmetronome-1.0.0.new/CMakeLists.txt
 +         DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/applications" )
 diff -Naur kmetronome-1.0.0/data/CMakeLists.txt kmetronome-1.0.0.new/data/CMakeLists.txt
 --- kmetronome-1.0.0/data/CMakeLists.txt	2014-10-12 15:50:36.000000000 +0200
-+++ kmetronome-1.0.0.new/data/CMakeLists.txt	2015-09-02 13:58:18.688052447 +0200
++++ kmetronome-1.0.0.new/data/CMakeLists.txt	2019-10-14 09:55:00.916570597 +0200
 @@ -1,2 +1,2 @@
  INSTALL( FILES drums.ins samples.pat
 -         DESTINATION share/kmetronome )
 +         DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/kmetronome" )
 diff -Naur kmetronome-1.0.0/doc/CMakeLists.txt kmetronome-1.0.0.new/doc/CMakeLists.txt
 --- kmetronome-1.0.0/doc/CMakeLists.txt	2014-10-12 15:50:36.000000000 +0200
-+++ kmetronome-1.0.0.new/doc/CMakeLists.txt	2015-09-02 13:58:02.013767677 +0200
++++ kmetronome-1.0.0.new/doc/CMakeLists.txt	2019-10-14 09:55:00.916570597 +0200
 @@ -17,6 +17,6 @@
  # MA 02110-1301, USA
  
@@ -43,7 +52,7 @@ diff -Naur kmetronome-1.0.0/doc/CMakeLists.txt kmetronome-1.0.0.new/doc/CMakeLis
 +	DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/kmetronome")
 diff -Naur kmetronome-1.0.0/icons/CMakeLists.txt kmetronome-1.0.0.new/icons/CMakeLists.txt
 --- kmetronome-1.0.0/icons/CMakeLists.txt	2014-10-12 15:50:36.000000000 +0200
-+++ kmetronome-1.0.0.new/icons/CMakeLists.txt	2015-09-02 13:56:56.586649280 +0200
++++ kmetronome-1.0.0.new/icons/CMakeLists.txt	2019-10-14 09:55:00.917570597 +0200
 @@ -1,26 +1,26 @@
  install (FILES kmetronome_16x16.png
 -         DESTINATION share/icons/hicolor/16x16/apps
@@ -80,7 +89,7 @@ diff -Naur kmetronome-1.0.0/icons/CMakeLists.txt kmetronome-1.0.0.new/icons/CMak
 +         DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/icons/hicolor/scalable/apps" )
 diff -Naur kmetronome-1.0.0/src/CMakeLists.txt kmetronome-1.0.0.new/src/CMakeLists.txt
 --- kmetronome-1.0.0/src/CMakeLists.txt	2014-10-12 15:50:36.000000000 +0200
-+++ kmetronome-1.0.0.new/src/CMakeLists.txt	2015-09-02 13:57:35.823320180 +0200
++++ kmetronome-1.0.0.new/src/CMakeLists.txt	2019-10-14 09:55:00.917570597 +0200
 @@ -77,4 +77,4 @@
           RUNTIME DESTINATION bin )
  
@@ -89,7 +98,7 @@ diff -Naur kmetronome-1.0.0/src/CMakeLists.txt kmetronome-1.0.0.new/src/CMakeLis
 +         DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/dbus-1/interfaces" )
 diff -Naur kmetronome-1.0.0/translations/CMakeLists.txt kmetronome-1.0.0.new/translations/CMakeLists.txt
 --- kmetronome-1.0.0/translations/CMakeLists.txt	2014-10-12 15:50:36.000000000 +0200
-+++ kmetronome-1.0.0.new/translations/CMakeLists.txt	2015-09-02 13:57:16.527990329 +0200
++++ kmetronome-1.0.0.new/translations/CMakeLists.txt	2019-10-14 09:55:00.917570597 +0200
 @@ -9,4 +9,4 @@
  ADD_CUSTOM_TARGET(translations ALL DEPENDS ${QM_FILES})
  
