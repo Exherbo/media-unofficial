@@ -22,12 +22,12 @@ DEPENDENCIES="
     build:
         sys-devel/gettext
         virtual/pkg-config
+        x11-libs/qttools:5 [[ note = [ Qt5LinguistTools ] ]]
     build+run:
         media-sound/drumstick[>=1.0.0]
         sys-sound/alsa-lib[>=1.0]
         x11-libs/qtbase:5
         x11-libs/qtsvg:5
-        x11-libs/qttools:5
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=(
