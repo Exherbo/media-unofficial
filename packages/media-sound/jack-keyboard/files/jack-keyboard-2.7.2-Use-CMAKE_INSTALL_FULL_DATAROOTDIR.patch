@@ -2,11 +2,20 @@ Source: Timo Gurr <tgurr@exherbo.org>
 Upstream: No
 Reason: Use CMAKE_INSTALL_FULL_DATAROOTDIR
 
-diff -Naur jack-keyboard-2.7.1/CMakeLists.txt jack-keyboard-2.7.1.new/CMakeLists.txt
---- jack-keyboard-2.7.1/CMakeLists.txt	2011-12-27 10:50:32.000000000 +0100
-+++ jack-keyboard-2.7.1.new/CMakeLists.txt	2015-09-08 19:00:13.704672555 +0200
-@@ -64,6 +64,6 @@
- endif()
+diff -Naur jack-keyboard-2.7.2/CMakeLists.txt jack-keyboard-2.7.2.new/CMakeLists.txt
+--- jack-keyboard-2.7.2/CMakeLists.txt	2018-06-21 11:38:38.000000000 +0200
++++ jack-keyboard-2.7.2.new/CMakeLists.txt	2019-10-14 11:57:43.238071523 +0200
+@@ -36,6 +36,8 @@
+ 
+ project(jack-keyboard)
+ 
++include(GNUInstallDirs)
++
+ add_executable(jack-keyboard src/jack-keyboard src/pianokeyboard)
+ 
+ find_package(GTK2 2.2 REQUIRED gtk)
+@@ -66,6 +68,6 @@
+ target_link_libraries(jack-keyboard -lm)
  
  install(TARGETS jack-keyboard RUNTIME DESTINATION bin)
 -install(FILES pixmaps/jack-keyboard.png DESTINATION share/pixmaps)
