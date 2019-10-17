@@ -91,6 +91,7 @@ DEPENDENCIES="
         dev-util/desktop-file-utils
 "
 
+DEFAULT_SRC_CONFIGURE_PARAMS=( --disable-appdata-validate )
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     flac
     mp3
