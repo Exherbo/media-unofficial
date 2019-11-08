@@ -1,0 +1,45 @@
+Source: From Danilo Spinella <danyspin97@protonmail.com>
+Reason: Fix compilation with musl
+Upstream: https://github.com/sahib/glyr/pull/94
+---
+ CMakeLists.txt | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1750bb9..f9bf068 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -93,6 +93,30 @@ PKG_CHECK_MODULES(GLIBPKG glib-2.0>=2.10 gthread-2.0 REQUIRED)
+ PKG_CHECK_MODULES(SQLITE3 sqlite3 REQUIRED)
+ INCLUDE_DIRECTORIES(${GLIBPKG_INCLUDE_DIRS})
+ 
++
++# --------------------------
++# Check for backtrace
++# --------------------------
++
++INCLUDE(CheckIncludeFile)
++CHECK_INCLUDE_FILE("execinfo.h" HAVE_EXECINFO)
++IF(NOT HAVE_EXECINFO)
++  MESSAGE(FATAL_ERROR "execinfo.h could not be found on the system")
++ENDIF(NOT HAVE_EXECINFO)
++
++INCLUDE(CheckSymbolExists)
++CHECK_SYMBOL_EXISTS("backtrace" "execinfo.h" HAVE_BACKTRACE)
++IF(NOT HAVE_BACKTRACE)
++  SET(CMAKE_REQUIRED_FLAGS "-lexecinfo")
++  CHECK_SYMBOL_EXISTS("backtrace" "execinfo.h" HAVE_LIBEXECINFO)
++  IF(HAVE_LIBEXECINFO)
++    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -lexecinfo")
++  ELSE(HAVE_LIBEXECINFO)
++    MESSAGE(FATAL_ERROR "Could not link to libexecinfo")
++  ENDIF(HAVE_LIBEXECINFO)
++ENDIF(NOT HAVE_BACKTRACE)
++
++
+ # --------------------------
+ # set directories
+ # --------------------------
+-- 
+2.23.0
+
