@@ -1,7 +1,10 @@
 # Copyright 2011 Quentin "Sardem FF7" Glidic <sardemff7+exherbo@sardemff7.net>
+# Copyright 2019 Danilo Spinella <danyspin97@protonmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
 require github [ user=sahib ] cmake
+
+export_exlib_phases src_test
 
 SUMMARY="A music related metadata searchengine, both with commandline interface and C API"
 DESCRIPTION="
@@ -25,7 +28,7 @@ download:
 * similar songs
 "
 
-LICENCES="GPL-3"
+LICENCES="LGPL-3"
 SLOT="0"
 
 MYOPTIONS=""
@@ -37,5 +40,22 @@ DEPENDENCIES="
         dev-db/sqlite:3
         dev-libs/glib:2[>=2.10]
         net-misc/curl
+    test:
+        dev-libs/check
 "
+
+# check_opt fails
+RESTRICT="test"
+
+CMAKE_SRC_CONFIGURE_TESTS=(
+    "-DTEST=on ''"
+)
+
+glyr_src_test() {
+    esandbox disable_net
+    for i in api dbc opt; do
+        edo bin/check_${i}
+    done
+    esandbox enable_net
+}
 
