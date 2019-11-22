@@ -15,7 +15,7 @@ export_exlib_phases src_prepare src_configure src_install
 
 SUMMARY="Blender is the free open source 3D content creation suite"
 HOMEPAGE="https://www.blender.org"
-DOWNLOADS="https://download.blender.org/source/${PNV}.tar.gz"
+DOWNLOADS="https://download.blender.org/source/${PNV}.tar.xz"
 
 LICENCES="GPL-2"
 SLOT="0"
@@ -44,7 +44,7 @@ DEPENDENCIES="
         x11-proto/xorgproto
     build+run:
         app-arch/lzo:2
-        dev-libs/boost[>=1.48.0]
+        dev-libs/boost[>=1.68.0]
         dev-libs/libglvnd
         dev-python/numpy[>=1.7.0][python_abis:*(-)?]
         media-libs/OpenColorIO
@@ -109,7 +109,7 @@ blender_src_configure() {
     # WITH_OPENIMAGEIO: required for cycles
     # WITH_INSTALL_PORTABLE: respect CMAKE_INSTALL_PREFIX
     # WITH_PYTHON_INSTALL*: use the system python modules
-    # WITH_OPENCOLORIO, WITH_INPUT_NDOF: unwritten dependencies
+    # WITH_INPUT_NDOF: unwritten dependency
     # no WITH_SYSTEM_BULLET: not supported by upstream because of missing features
     local args=(
         -DCMAKE_BUILD_TYPE:STRING=Release
@@ -187,6 +187,7 @@ blender_src_configure() {
         -DWITH_SYSTEM_GLES:BOOL=TRUE
         -DWITH_SYSTEM_GLEW:BOOL=TRUE
         -DWITH_SYSTEM_LZO:BOOL=TRUE
+        -DWITH_TBB:BOOL=FALSE
         -DWITH_X11_ALPHA:BOOL=TRUE
         -DWITH_X11_XF86VMODE:BOOL=TRUE
         -DWITH_X11_XFIXES:BOOL=TRUE
