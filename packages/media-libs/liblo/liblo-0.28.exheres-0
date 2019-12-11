@@ -3,7 +3,7 @@
 #   Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-require sourceforge [ suffix=tar.gz ] autotools [ supported_automake=[ 1.15 ] supported_autoconf=[ 2.5 ] ]
+require sourceforge [ suffix=tar.gz ] autotools [ supported_automake=[ 1.16 1.15 ] supported_autoconf=[ 2.5 ] ]
 
 SUMMARY="Lightweight OSC (Open Sound Control) implementation"
 DESCRIPTION="
