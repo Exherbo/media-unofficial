@@ -1,0 +1,12 @@
+diff -Naur mediastreamer2-4.3.0/CMakeLists.txt mediastreamer2-4.3.0.new/CMakeLists.txt
+--- mediastreamer2-4.3.0/CMakeLists.txt	2019-12-04 09:55:11.000000000 +0100
++++ mediastreamer2-4.3.0.new/CMakeLists.txt	2019-12-16 17:38:37.169849564 +0100
+@@ -679,7 +679,7 @@
+ endif()
+ 
+ include(CMakePackageConfigHelpers)
+-set(CONFIG_PACKAGE_LOCATION "${CMAKE_INSTALL_DATADIR}/Mediastreamer2/cmake")
++set(CONFIG_PACKAGE_LOCATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
+ 
+ write_basic_package_version_file(
+ 	"${CMAKE_CURRENT_BINARY_DIR}/Mediastreamer2ConfigVersion.cmake"

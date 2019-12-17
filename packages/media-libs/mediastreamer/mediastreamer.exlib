@@ -4,7 +4,7 @@
 # Based in part on ortp-0.15.0.exheres-0 which is
 #   Copyright 2009 Ingmar Vanhassel
 
-require github [ user=BelledonneCommunications pn=${PN}$(ever major) ] \
+require github [ user=BelledonneCommunications pn=${PN}2 ] \
     cmake
 
 export_exlib_phases src_install
@@ -43,6 +43,9 @@ MYOPTIONS="
     ffmpeg? ( ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]] )
     ( providers: jpeg-turbo ) [[ number-selected = exactly-one ]]
 "
+
+# fail to build, last checked: 4.3.0
+RESTRICT="test"
 
 DEPENDENCIES="
     build:
@@ -92,6 +95,7 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DENABLE_OSS:BOOL=TRUE
     -DENABLE_PCAP:BOOL=TRUE
     -DENABLE_QNX:BOOL=FALSE
+    -DENABLE_QRCODE:BOOL=FALSE
     -DENABLE_QSA:BOOL=FALSE
     -DENABLE_RELATIVE_PREFIX:BOOL=FALSE
     -DENABLE_RESAMPLE:BOOL=TRUE
@@ -102,7 +106,6 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DENABLE_STRICT:BOOL=FALSE
     -DENABLE_TOOLS:BOOL=TRUE
     -DENABLE_VIDEO:BOOL=TRUE
-    -DENABLE_VT_H264:BOOL=FALSE
     -DENABLE_ZRTP:BOOL=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTION_ENABLES=(
