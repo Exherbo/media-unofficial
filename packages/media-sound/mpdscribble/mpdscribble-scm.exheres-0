@@ -1,7 +1,10 @@
 # Copyright 2009 Ali Polatel <alip@exherbo.org>
+# Copyright 2020 Danilo Spinella <danyspin97@protonmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
-SUMMARY="mpd client which submits information about tracks being played to Last.fm"
+require github [ user='MusicPlayerDaemon' ] systemd-service meson
+
+SUMMARY="Submits information about tracks being played to a scrobbler"
 DESCRIPTION="
 Features:
 * written in C, consumes very little memory and CPU
@@ -9,39 +12,37 @@ Features:
 * last.fm protocol 1.2 (including 'now playing')
 * supports seeking, crossfading, repeated songs
 "
-HOMEPAGE="http://mpd.wikia.com/wiki/Client:Mpdscribble"
-DOWNLOADS=""
-SCM_REPOSITORY="git://git.musicpd.org/master/mpdscribble.git"
-require scm-git
+HOMEPAGE="http://www.musicpd.org/clients/mpdscribble/"
 
 LICENCES="GPL-2"
-SLOT="0"
 PLATFORMS="~amd64"
+SLOT="0"
 MYOPTIONS="
-    ( curl libsoup ) [[ number-selected = exactly-one ]]
+    systemd
 "
 
 DEPENDENCIES="
     build+run:
-        dev-libs/glib:2[>=2.16]
-        media-libs/libmpdclient[>=2.0]
-        curl? ( net-misc/curl )
-        libsoup? ( gnome-desktop/libsoup:2.4 )
+        dev-libs/boost[>=1.62]
+        dev-libs/libgcrypt
+        media-libs/libmpdclient[>=2.5]
+        net-misc/curl[>=7.18]
+        systemd? ( sys-apps/systemd )
 "
 
-BUGS_TO="alip@exherbo.org"
+BUGS_TO="danyspin97@protonmail.com"
 
-src_prepare() {
-    NOCONFIGURE=1 ./autogen.sh || die "autogen.sh failed"
-}
+MESON_SRC_CONFIGURE_PARAMS=(
+    -Dsyslog=enabled
+    -Dsystemd_system_unit_dir=${SYSTEMDSYSTEMUNITDIR}
+    -Dsystemd_user_unit_dir=${SYSTEMDUSERUNITDIR}
+)
 
-src_configure() {
-    local myconf
-    if option curl; then
-        myconf="--with-http-client=curl"
-    else
-        myconf="--with-http-client=soup"
-    fi
-    econf $myconf
-}
+MESON_SRC_CONFIGURE_OPTION_FEATURES=(
+    systemd
+)
+
+MESON_SRC_CONFIGURE_TESTS=(
+    "-Dtest=true -Dtest=false"
+)
 
