@@ -28,7 +28,7 @@ DEPENDENCIES="
         base/libgee:0.8[>=0.8.5]
         core/json-glib[>=1.0.0]
         dev-db/sqlite:3[>=3.5.9]
-        dev-libs/gexiv2[>=0.10.4][gobject-introspection][vapi]
+        dev-libs/gexiv2[>=0.11.0][gobject-introspection][vapi]
         dev-libs/glib:2[>=2.40.0]
         dev-libs/libxml2:2.0[>=2.6.32]
         gnome-desktop/gcr[>=3][gobject-introspection][vapi]
@@ -39,11 +39,14 @@ DEPENDENCIES="
         media-libs/libexif[>=0.6.16]
         media-libs/libgphoto2[>=2.5.0]
         media-libs/libraw[>=0.13.2]
+        media-libs/libwebp:=
         media-plugins/gst-plugins-base:1.0[>=1.0.0]
         net-libs/webkit:4.0[>=2.4]
         x11-libs/cairo
+        x11-libs/clutter:1
         x11-libs/gdk-pixbuf:2.0
         x11-libs/gtk+:3[>=3.22.0]
+        x11-libs/libchamplain:0.12[>=0.12.16]
     run:
         gnome-desktop/librsvg:2
 "
