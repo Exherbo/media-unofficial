@@ -183,6 +183,7 @@ audacious-plugins_src_configure() {
         $(option_with ffmpeg)                     # FFaudio
         # unpackaged libsidplay2
         "--disable-sid"                           # Commodore 64 audio
+        "--disable-openmpt"                       # unpackaged libopenmpt
 
         # General Plugins
         $(option_enable dbus mpris2)              # MPRIS 2 Server
