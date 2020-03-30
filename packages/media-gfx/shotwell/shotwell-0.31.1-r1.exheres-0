@@ -46,7 +46,7 @@ DEPENDENCIES="
         x11-libs/clutter:1
         x11-libs/gdk-pixbuf:2.0
         x11-libs/gtk+:3[>=3.22.0]
-        x11-libs/libchamplain:0.12[>=0.12.16]
+        x11-libs/libchamplain:0.12[>=0.12.16][gobject-introspection]
     run:
         gnome-desktop/librsvg:2
 "
