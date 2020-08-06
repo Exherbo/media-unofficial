@@ -23,8 +23,6 @@ MYOPTIONS="
     doc
     ffmpeg
     jack
-
-    ffmpeg? ( ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]] )
 "
 
 DEPENDENCIES="
@@ -39,10 +37,7 @@ DEPENDENCIES="
         media-libs/libsndfile[>=1.0.4]
         media-libs/libsamplerate[>=0.0.15]
         sci-libs/fftw[>=3.0.0]
-        ffmpeg? (
-            providers:ffmpeg? ( media/ffmpeg[>=2.0] )
-            providers:libav? ( media/libav[>=9] )
-        )
+        ffmpeg? ( media/ffmpeg[>=2.0] )
         jack? ( media-sound/jack-audio-connection-kit )
         python? ( dev-python/numpy[python_abis:*(-)?] )
 "

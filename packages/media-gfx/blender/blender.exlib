@@ -29,8 +29,6 @@ MYOPTIONS="
     sdl      [[ description = [ Support for sound output using SDL and joystick support ] ]]
     sndfile  [[ description = [ Support for some audio codecs through libsndfile ] ]]
 
-    ffmpeg? ( ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]] )
-
     ( providers: ijg-jpeg jpeg-turbo ) [[ number-selected = exactly-one ]]
 "
 
@@ -62,10 +60,7 @@ DEPENDENCIES="
         x11-libs/libXi
         x11-libs/libXrender
         x11-libs/libXxf86vm
-        ffmpeg? (
-            providers:ffmpeg? ( media/ffmpeg )
-            providers:libav? ( media/libav )
-        )
+        ffmpeg? ( media/ffmpeg )
         fftw? ( sci-libs/fftw[>=3.0] )
         jack? ( media-sound/jack-audio-connection-kit )
         jpeg2000? ( media-libs/OpenJPEG:2 )

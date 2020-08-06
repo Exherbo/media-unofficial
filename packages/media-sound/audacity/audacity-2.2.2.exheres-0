@@ -36,7 +36,7 @@ MYOPTIONS="
     mp3
     soundtouch [[ description = [ Required for pitch and tempo changing ] ]]
     vorbis
-    ffmpeg? ( ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]] )
+
     ( linguas: af ar be bg bn bs ca_ES@valencia ca cs cy da de el es eu_ES eu fa fr ga gl he hi hr
                hu hy id it ja ka km ko lt mk my nb nl oc pl pt_BR pt_PT ro ru sk sl sr_RS
                sr_RS@latin sv ta tg tr uk vi zh_CN zh_TW )
@@ -56,10 +56,7 @@ DEPENDENCIES="
         media-sound/lame[>=3.70] [[ note = [ fails to build when not present/disabled ] ]]
         sys-sound/alsa-lib [[ note = [ automagic ] ]]
         x11-libs/wxGTK:3.0
-        ffmpeg? (
-            providers:ffmpeg? ( media/ffmpeg )
-            providers:libav? ( media/libav )
-        )
+        ffmpeg? ( media/ffmpeg )
         lv2? (
             media-libs/lilv[>=0.16.0]
             media-libs/lv2

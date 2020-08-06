@@ -27,7 +27,6 @@ SLOT="0"
 MYOPTIONS="
     pulseaudio
     qt5
-    ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]]
     ( providers: eudev systemd ) [[ number-selected = exactly-one ]]
     ( linguas: bg bs cs da de en_AU es eu fo fr gl he hr it ja lv nl pl pt pt_BR ru si sr tr uk
                zh_TW )
@@ -43,6 +42,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/glib:2[>=2.10.0]
         dev-libs/libusb:1
+        media/ffmpeg[>=3.0]
         media-libs/SDL:2[>=2.0]
         media-libs/libpng:=
         media-libs/portaudio
@@ -50,8 +50,6 @@ DEPENDENCIES="
         sci-libs/gsl[>=1.15]
         providers:eudev? ( sys-apps/eudev )
         providers:systemd? ( sys-apps/systemd )
-        providers:ffmpeg? ( media/ffmpeg[>=3.0] )
-        providers:libav? ( media/libav )
         pulseaudio? ( media-sound/pulseaudio[>=0.9.15] )
         qt5? ( x11-libs/qtbase:5[gui] )
         !qt5? ( x11-libs/gtk+:3[>=3.0.0] )

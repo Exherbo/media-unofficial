@@ -12,14 +12,11 @@ BUGS_TO="calvin.walton@kepstin.ca"
 LICENCES="LGPL-2.1 MIT"
 SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS="
-    ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]]
-"
+MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        providers:ffmpeg? ( media/ffmpeg )
-        providers:libav? ( media/libav )
+        media/ffmpeg
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS=(

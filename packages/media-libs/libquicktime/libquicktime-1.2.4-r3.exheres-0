@@ -21,7 +21,6 @@ MYOPTIONS="
     schroedinger [[ description = [ Support Dirac encoding and decoding ] ]]
     vorbis
 
-    ffmpeg? ( ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]] )
     ( providers: ijg-jpeg jpeg-turbo ) [[ number-selected = exactly-one ]]
 "
 
@@ -39,10 +38,7 @@ DEPENDENCIES="
             media-libs/faad2[>=2.0]
         )
         dv? ( media-libs/libdv[>=0.102] )
-        ffmpeg? (
-            providers:ffmpeg? ( media/ffmpeg )
-            providers:libav? ( media/libav )
-        )
+        ffmpeg? ( media/ffmpeg )
         gtk? ( x11-libs/gtk+:2[>=2.4.0] )
         h264? ( media-libs/x264 )
         mp3? ( media-sound/lame[>=3.93] )

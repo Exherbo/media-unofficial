@@ -35,7 +35,6 @@ MYOPTIONS="
     vorbis        [[ description = [ Support Ogg/Vorbis decoding ] ]]
     wav           [[ description = [ Support WAV decoding ] ]]
     wavpack       [[ description = [ Support WavPack decoding ] ]]
-    ffmpeg? ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]]
 "
 
 DEPENDENCIES="
@@ -47,10 +46,7 @@ DEPENDENCIES="
         alsa?          ( sys-sound/alsa-lib[>=1.0.11] )
         ao?            ( media-libs/libao )
         cue?           ( media-libs/libcue[>=1.3] )
-        ffmpeg? (
-            providers:ffmpeg? ( media/ffmpeg )
-            providers:libav? ( media/libav )
-        )
+        ffmpeg?        ( media/ffmpeg )
         flac?          ( media-libs/flac )
         jack?          ( media-sound/jack-audio-connection-kit )
         libsamplerate? ( media-libs/libsamplerate )

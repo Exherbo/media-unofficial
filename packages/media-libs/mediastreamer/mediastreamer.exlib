@@ -40,7 +40,6 @@ MYOPTIONS="
     vpx [[ description = [ VP8/VP9 support using libvpx ] ]]
     X
 
-    ffmpeg? ( ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]] )
     ( providers: jpeg-turbo ) [[ number-selected = exactly-one ]]
 "
 
@@ -55,10 +54,7 @@ DEPENDENCIES="
         net-libs/bctoolbox[>=0.4.0]
         net-libs/ortp[>=1.0.0]
         alsa? ( sys-sound/alsa-lib )
-        ffmpeg? (
-            providers:ffmpeg? ( media/ffmpeg )
-            providers:libav? ( media/libav )
-        )
+        ffmpeg? ( media/ffmpeg )
         gsm? ( media-libs/gsm )
         opengl? (
             media-libs/glew
