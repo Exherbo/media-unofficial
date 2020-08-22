@@ -65,8 +65,6 @@ if ever at_least scm; then
 "
 fi
 
-BUGS_TO="alip@exherbo.org"
-
 REMOTE_IDS="launchpad:mixxx"
 
 UPSTREAM_DOCUMENTATION="${HOMEPAGE}/manual/latest/ [[ lang = en ]]"

@@ -37,8 +37,6 @@ DEPENDENCIES="
         )
 "
 
-BUGS_TO="alip@exherbo.org"
-
 UPSTREAM_DOCUMENTATION="http://github.com/alip/${PN}/blob/master/README.mkd"
 
 ZSH_COMPLETIONS=(

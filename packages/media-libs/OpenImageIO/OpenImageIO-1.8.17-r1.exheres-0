@@ -5,8 +5,6 @@ require github [ pn=oiio user=${PN} tag=Release-${PV} ] cmake
 
 SUMMARY="A library for reading and writing images"
 
-BUGS_TO="mixi@exherbo.org"
-
 LICENCES="
     BSD-3
     MIT   [[ note = [ bundled pugixml ] ]]

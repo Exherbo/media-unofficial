@@ -17,8 +17,6 @@ MYOPTIONS=""
 
 DEPENDENCIES=""
 
-BUGS_TO="heirecka@exherbo.org"
-
 CMAKE_SOURCE=${WORKBASE}/${MY_PNV}
 
 src_prepare() {

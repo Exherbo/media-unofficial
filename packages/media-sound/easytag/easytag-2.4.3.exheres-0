@@ -37,8 +37,6 @@ attached picture
 * Packages available for Linux and Windows
 "
 
-BUGS_TO="markus@unixforces.net"
-
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"

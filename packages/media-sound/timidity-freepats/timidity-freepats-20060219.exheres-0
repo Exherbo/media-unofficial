@@ -15,8 +15,6 @@ DEPENDENCIES="
         media-sound/timidity++
 "
 
-BUGS_TO="adriaan@leijnse.net"
-
 WORK="${WORKBASE}/freepats"
 
 src_prepare() {

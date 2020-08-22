@@ -11,8 +11,6 @@ liblo is an implementation of the Open Sound Control protocol for POSIX
 systems, started by Steve Harris and now maintained by Stephen Sinclair.
 "
 
-BUGS_TO="alip@exherbo.org"
-
 LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64"

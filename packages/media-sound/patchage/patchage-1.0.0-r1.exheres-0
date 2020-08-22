@@ -7,8 +7,6 @@ SUMMARY="Modular patch bay for audio and MIDI systems"
 HOMEPAGE="http://drobilla.net/software/${PN}"
 DOWNLOADS="http://download.drobilla.net/${PNV}.tar.bz2"
 
-BUGS_TO="alip@exherbo.org"
-
 LICENCES="GPL-3"
 SLOT="0"
 PLATFORMS="~amd64"

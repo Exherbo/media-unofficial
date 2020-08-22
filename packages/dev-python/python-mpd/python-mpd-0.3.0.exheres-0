@@ -18,5 +18,3 @@ DEPENDENCIES="
         virtual/pkg-config
 "
 
-BUGS_TO="alip@exherbo.org"
-

@@ -23,8 +23,6 @@ mono/stereo
 HOMEPAGE="http://www.surina.net/${PN}"
 DOWNLOADS="${HOMEPAGE}/${PNV}.tar.gz"
 
-BUGS_TO="alip@exherbo.org"
-
 LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64"

@@ -41,7 +41,6 @@ DEPENDENCIES="
         ntk?  ( media-libs/ntk )
 "
 
-BUGS_TO="alip@exherbo.org"
 REMOTE_IDS="sourceforge:${PN}"
 
 src_configure() {

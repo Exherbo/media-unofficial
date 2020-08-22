@@ -43,8 +43,6 @@ DEPENDENCIES="
         xspf? ( media-libs/libxspf )
 "
 
-BUGS_TO="sardemff7@exherbo.org tanderson@caltech.edu"
-
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     --disable-libspiff
     # The only encountered problem while running multiple instances are key bindings, this issue

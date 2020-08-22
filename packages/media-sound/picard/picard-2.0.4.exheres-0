@@ -11,8 +11,6 @@ SUMMARY="Picard is the next generation MusicBrainz tagging application"
 HOMEPAGE="https://${PN}.musicbrainz.org"
 DOWNLOADS="http://ftp.musicbrainz.org/pub/musicbrainz/${PN}/${PNV}.tar.gz"
 
-BUGS_TO="michael@obberon.com calvin.walton@kepstin.ca"
-
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"

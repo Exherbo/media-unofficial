@@ -30,8 +30,6 @@ DEPENDENCIES="
         ]]
 "
 
-BUGS_TO="heirecka@exherbo.org"
-
 CMAKE_SOURCE=${WORKBASE}/${PN}_src_r${PV}
 
 DEFAULT_SRC_PREPARE_PATCHES=(

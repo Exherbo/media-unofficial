@@ -26,8 +26,6 @@ identifiers can be used by third parties (such as MusicBrainz) to relate
 information to the identified audio file. PUIDs are fully qualified UUIDs and do
 not include any acoustic information.
 "
-BUGS_TO="alip@exherbo.org"
-
 LICENCES="|| ( APL-1.0 GPL-2 )"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"

@@ -25,8 +25,6 @@ player and just want something that can handle tagging, Ex Falso is for you.
 UPSTREAM_CHANGELOG="https://${PN}.readthedocs.org/en/latest/changelog.html"
 UPSTREAM_DOCUMENTATION="https://${PN}.readthedocs.org/en/latest/guide/index.html"
 
-BUGS_TO="pyromaniac@thwitt.de"
-
 LICENCES="GPL-2"
 PLATFORMS="~amd64"
 SLOT="0"

@@ -12,8 +12,6 @@ for SMF (Standard MIDI files: .MID/.KAR), Cakewalk (.WRK), and Overture (.OVE) f
 processing. A multiplatform realtime MIDI I/O library is also provided.
 "
 
-BUGS_TO="alip@exherbo.org"
-
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"

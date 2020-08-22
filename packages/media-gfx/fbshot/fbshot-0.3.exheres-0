@@ -14,8 +14,6 @@ BASE_URI="http://www.sfires.net"
 HOMEPAGE="${BASE_URI}/${PN}"
 DOWNLOADS="${BASE_URI}/stuff/${PN}/${PNV}.tar.gz"
 
-BUGS_TO="jedahan@gmail.com"
-
 LICENCES="GPL-2"
 PLATFORMS="~amd64"
 SLOT="0"

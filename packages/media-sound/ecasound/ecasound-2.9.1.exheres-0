@@ -21,8 +21,6 @@ in the package.
 HOMEPAGE="http://${PN}.seul.org/${PN}"
 DOWNLOADS="http://${PN}.seul.org/download/${PNV}.tar.gz"
 
-BUGS_TO="alip@exherbo.org"
-
 LICENCES="LGPL-2.1 GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"

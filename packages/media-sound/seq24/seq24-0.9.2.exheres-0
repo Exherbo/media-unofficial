@@ -21,8 +21,6 @@ DEPENDENCIES="
         lash? ( media-sound/lash )
 "
 
-BUGS_TO="adriaan@leijnse.net"
-
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-lash-fix.diff )
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( jack lash )
 DEFAULT_SRC_INSTALL_EXTRA_DOCS=( RTC SEQ24 )

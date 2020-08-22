@@ -11,8 +11,6 @@ A handy MIDI to WAV converter with OSS and ALSA output support, useful for playi
 midi-capable soundcard
 "
 
-BUGS_TO="adriaan@leijnse.net"
-
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"

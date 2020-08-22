@@ -14,7 +14,6 @@ HOMEPAGE+=" http://wiki.xiph.org/OggKate"
 LICENCES="as-is"
 SLOT="0"
 
-BUGS_TO="marv@exherbo.org"
 REMOTE_IDS="freecode:libkate"
 
 UPSTREAM_CHANGELOG="http://git.xiph.org/?p=users/oggk/kate.git;a=blob;f=ChangeLog;hb=HEAD"

@@ -20,8 +20,6 @@ supported by the linux UVC driver, although it should also work with any v4l2 co
 guvcview is based on luvcview for video rendering, but all controls are build using an interface.
 "
 
-BUGS_TO="mforney@mforney.org"
-
 LICENCES="GPL-3"
 SLOT="0"
 MYOPTIONS="

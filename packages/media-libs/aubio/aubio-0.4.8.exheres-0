@@ -14,8 +14,6 @@ too.
 HOMEPAGE="https://aubio.org"
 DOWNLOADS="${HOMEPAGE}/pub/${PNV}.tar.bz2"
 
-BUGS_TO="alip@exherbo.org"
-
 LICENCES="GPL-3"
 SLOT="0"
 PLATFORMS="~amd64"

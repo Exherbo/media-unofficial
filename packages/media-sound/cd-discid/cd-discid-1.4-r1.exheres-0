@@ -11,8 +11,6 @@ specifications.
 HOMEPAGE="http://linukz.org/cd-discid.shtml"
 DOWNLOADS="http://linukz.org/download/${PNV}.tar.gz"
 
-BUGS_TO="taem@linukz.org"
-
 LICENCES="GPL-2"
 PLATFORMS="~amd64 ~x86"
 SLOT="0"

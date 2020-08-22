@@ -12,8 +12,6 @@ mapping is much better - it uses the same layout as trackers (like Impulse
 Tracker) did, so you have two and half octaves under your fingers.
 "
 
-BUGS_TO="alip@exherbo.org"
-
 LICENCES="BSD-2"
 SLOT="0"
 PLATFORMS="~amd64"

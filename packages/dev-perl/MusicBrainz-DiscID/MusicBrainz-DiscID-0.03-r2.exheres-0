@@ -19,8 +19,6 @@ DEPENDENCIES="
         media-libs/libdiscid
 "
 
-BUGS_TO="pyromaniac@exherbo.org"
-
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-url.patch )
 
 pkg_setup() {

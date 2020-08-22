@@ -34,8 +34,6 @@ DEPENDENCIES="
         tranzport? ( dev-libs/libusb:0.1 )
 "
 
-BUGS_TO="adriaan@leijnse.net"
-
 src_configure() {
     echo -e "clean \n exit" | escons \
         --config=force \

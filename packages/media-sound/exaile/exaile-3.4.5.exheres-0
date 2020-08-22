@@ -13,8 +13,6 @@ iPods, internet radio such as shoutcast, and tabbed playlists.
 HOMEPAGE="http://www.exaile.org"
 DOWNLOADS="https://github.com/exaile/exaile/archive/${PV}.tar.gz -> ${PNV}.tar.gz"
 
-BUGS_TO="jedahan@gmail.com"
-
 LICENCES="GPL-2 GPL-3"
 PLATFORMS="~amd64"
 SLOT="0"

@@ -21,8 +21,6 @@ DOWNLOADS="http://${PN}.googlecode.com/files/${PNV}-src.tgz"
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
-BUGS_TO="jedahan@gmail.com"
-
 UPSTREAM_CHANGELOG="${HOMEPAGE}/wiki/History"
 UPSTREAM_DOCUMENTATION="${HOMEPAGE}/wiki/UserManual"
 

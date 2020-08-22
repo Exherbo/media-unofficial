@@ -22,8 +22,6 @@ Change the speed or pitch of a recording.
 And more!
 "
 
-BUGS_TO="somasis@exherbo.org"
-
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"

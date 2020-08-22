@@ -7,8 +7,6 @@ SUMMARY="A library that implements an algorithm for extracting fingerprints from
 HOMEPAGE="https://acoustid.org/${PN}"
 DOWNLOADS="https://bitbucket.org/acoustid/${PN}/downloads/${PNV}.tar.gz"
 
-BUGS_TO="calvin.walton@kepstin.ca"
-
 LICENCES="LGPL-2.1 MIT"
 SLOT="0"
 PLATFORMS="~amd64"

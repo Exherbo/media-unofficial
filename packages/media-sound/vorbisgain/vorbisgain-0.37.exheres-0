@@ -18,8 +18,6 @@ clipping on playback. It is based upon the ReplayGain technology.
 HOMEPAGE="http://sjeng.org/vorbisgain.html"
 DOWNLOADS="http://sjeng.org/ftp/vorbis/${PNV}.tar.gz"
 
-BUGS_TO="jedahan@gmail.com"
-
 LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"

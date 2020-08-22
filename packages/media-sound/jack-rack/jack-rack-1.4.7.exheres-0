@@ -39,5 +39,3 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
 )
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( 'alsa aseq' 'gnome' 'lash' 'xml' 'xml lrdf' )
 
-BUGS_TO="jedahan@gmail.com"
-

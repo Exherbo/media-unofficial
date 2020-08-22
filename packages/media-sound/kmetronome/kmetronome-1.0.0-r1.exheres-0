@@ -11,8 +11,6 @@ instruments. It uses MIDI for sound generation instead of digital audio, allowin
 and very accurate timing thanks to the ALSA sequencer.
 "
 
-BUGS_TO="urkud@ya.ru"
-
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"

@@ -12,8 +12,6 @@ audio server daemon. With time, this primordial interface has become richer by
 including a enhanced patchbay and connection control features.
 "
 
-BUGS_TO="alip@exherbo.org"
-
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"

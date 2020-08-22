@@ -27,5 +27,3 @@ DEPENDENCIES="
         x11-libs/gtk+:3[gobject-introspection]
 "
 
-BUGS_TO="adriaan@leijnse.net"
-

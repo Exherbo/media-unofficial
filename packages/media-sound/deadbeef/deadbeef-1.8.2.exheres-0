@@ -81,8 +81,6 @@ DEPENDENCIES="
         providers:jpeg-turbo? ( media-libs/libjpeg-turbo )
 "
 
-BUGS_TO="jedahan@gmail.com"
-
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     --disable-ffmpeg
     --disable-gtk2 # use gtk3

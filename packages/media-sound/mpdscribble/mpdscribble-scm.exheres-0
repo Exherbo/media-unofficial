@@ -30,8 +30,6 @@ DEPENDENCIES="
         systemd? ( sys-apps/systemd )
 "
 
-BUGS_TO="danyspin97@protonmail.com"
-
 MESON_SRC_CONFIGURE_PARAMS=(
     -Dsyslog=enabled
     -Dsystemd_system_unit_dir=${SYSTEMDSYSTEMUNITDIR}

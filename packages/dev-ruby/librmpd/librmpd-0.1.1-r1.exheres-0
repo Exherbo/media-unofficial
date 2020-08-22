@@ -15,5 +15,3 @@ SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS=""
 
-BUGS_TO="alip@exherbo.org"
-

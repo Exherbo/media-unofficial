@@ -16,5 +16,3 @@ DEPENDENCIES="
         dev-ruby/activesupport[>=2.2.2]
 "
 
-BUGS_TO="alip@exherbo.org"
-

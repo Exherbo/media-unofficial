@@ -22,8 +22,6 @@ the adjustments directly to the wave data, if requested.
 HOMEPAGE="http://www.rarewares.org/files/others"
 DOWNLOADS="${HOMEPAGE}/${PNV}srcs.zip"
 
-BUGS_TO="jedahan@gmail.com"
-
 LICENCES="LGPL-2.1"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"

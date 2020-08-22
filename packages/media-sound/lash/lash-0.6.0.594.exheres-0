@@ -30,8 +30,6 @@ DEPENDENCIES="
         jack-dbus? ( media-sound/jack-audio-connection-kit[dbus] )
 "
 
-BUGS_TO="adriaan@leijnse.net"
-
 AT_M4DIR=( m4 )
 
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( debug )

@@ -9,8 +9,6 @@ envtag is a simple audio tagger using taglib. Interaction is done
 using environment variables which makes it perfect for shell scripts.
 "
 
-BUGS_TO="alip@exherbo.org"
-
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"

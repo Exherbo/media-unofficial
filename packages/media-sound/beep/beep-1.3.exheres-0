@@ -8,8 +8,6 @@ beep  allows  the  user  to  control  the  pc-speaker with precision, allowing d
 HOMEPAGE="http://www.johnath.com/beep"
 DOWNLOADS="${HOMEPAGE}/${PNV}.tar.gz"
 
-BUGS_TO="jedahan@gmail.com"
-
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"

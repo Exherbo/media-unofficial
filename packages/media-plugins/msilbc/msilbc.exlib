@@ -19,5 +19,3 @@ DEPENDENCIES="
         net-libs/ortp[>=0.16.0]
 "
 
-BUGS_TO="urkud@ya.ru"
-
