@@ -7,8 +7,8 @@ require freedesktop-desktop gtk-icon-cache
 export_exlib_phases src_prepare pkg_postinst pkg_postrm
 
 SUMMARY="Audacious is an advanced audio player"
-HOMEPAGE="http://www.audacious-media-player.org"
-DOWNLOADS="http://distfiles.audacious-media-player.org/${PNV}.tar.bz2"
+HOMEPAGE="https://www.audacious-media-player.org"
+DOWNLOADS="https://distfiles.audacious-media-player.org/${PNV}.tar.bz2"
 
 LICENCES="
     BSD-3 [[ note = [ bundled libguess ] ]]
