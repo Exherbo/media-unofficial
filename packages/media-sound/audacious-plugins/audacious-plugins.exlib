@@ -7,8 +7,8 @@ require option-renames [ renames=[ 'flsyn fluidsynth' ] ] \
 export_exlib_phases src_prepare src_configure
 
 SUMMARY="Skins and Plugins for the Audacious music player"
-HOMEPAGE="http://www.audacious-media-player.org"
-DOWNLOADS="http://distfiles.audacious-media-player.org/${PNV}.tar.bz2"
+HOMEPAGE="https://www.audacious-media-player.org"
+DOWNLOADS="https://distfiles.audacious-media-player.org/${PNV}.tar.bz2"
 DESCRIPTION="Plugins that provide GUI interface, support for decoding various formats (like flac
 or midi), provide desktop environment integration (e.g. notify), allow remote control via dbus, etc.
 Note: some plugins are not on by default and have to be enabled in Preferences -> Plugins."
