@@ -31,6 +31,7 @@ DEPENDENCIES="
         dev-libs/gexiv2[>=0.11.0][gobject-introspection][vapi]
         dev-libs/glib:2[>=2.40.0]
         dev-libs/libxml2:2.0[>=2.6.32]
+        dev-libs/libsecret:1
         gnome-desktop/gcr[>=3][gobject-introspection][vapi]
         gnome-desktop/libgdata
         gnome-desktop/libgudev[>=145]
@@ -41,26 +42,28 @@ DEPENDENCIES="
         media-libs/libraw[>=0.13.2]
         media-libs/libwebp:=
         media-plugins/gst-plugins-base:1.0[>=1.0.0]
-        net-libs/webkit:4.0[>=2.4]
+        net-libs/webkit:4.0[>=2.26]
         x11-libs/cairo
         x11-libs/clutter:1
+        x11-libs/clutter-gtk:1.0
         x11-libs/gdk-pixbuf:2.0
         x11-libs/gtk+:3[>=3.22.0]
         x11-libs/libchamplain:0.12[>=0.12.16][gobject-introspection]
+        x11-libs/pango
     run:
         gnome-desktop/librsvg:2
 "
 
 MESON_SRC_CONFIGURE_PARAMS=(
-    -Ddupe-detection=true
-    -Dextra-plugins=true
-    -Dface-detection=false
-    -Dinstall-apport-hook=false
+    -Ddupe_detection=true
+    -Dextra_plugins=true
+    -Dface_detection=false
+    -Dinstall_apport_hook=false
     -Dmeasure=""
     -Dpublishers=flickr,googlephotos,piwigo,youtube,gallery3,tumblr
     -Dtrace=""
     -Dudev=true
-    -Dunity-support=false
+    -Dunity_support=false
 )
 
 src_install() {
