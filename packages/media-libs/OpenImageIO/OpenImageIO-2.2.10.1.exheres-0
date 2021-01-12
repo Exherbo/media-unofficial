@@ -1,0 +1,109 @@
+# Copyright 2014 Johannes Nixdorf <mixi@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require github [ pn=oiio user=${PN} tag=Release-${PV} ] cmake
+
+SUMMARY="A library for reading and writing images"
+
+LICENCES="
+    BSD-3
+    MIT   [[ note = [ bundled pugixml ] ]]
+    GPL-2 [[ note = [ bundled tbb ] ]]
+"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="
+    freetype [[ description = [ Support for rendering text on image buffers ] ]]
+    gif
+    heif [[ description = [ Support for the H(igh) E(fficiency) I(mage) F(ile) F(ormat) ] ]]
+    jpeg2000
+    raw [[ description = [ Enable reading RAW image files from digital photo cameras ] ]]
+    ( providers: ijg-jpeg jpeg-turbo ) [[ number-selected = exactly-one ]]
+"
+
+# 67% tests passed, 18 tests failed out of 54, last checked: 2.2.10.1
+RESTRICT="test"
+
+# USE_FIELD3D: unwritten
+DEPENDENCIES="
+    build:
+        app-text/txt2man
+        dev-libs/robin-map
+    build+run:
+        dev-libs/boost[>=1.66]
+        dev-libs/fmt
+        dev-libs/pugixml[>=1.8]
+        media-libs/OpenColorIO
+        media-libs/ilmbase[>=2.2]
+        media-libs/libpng:=
+        media-libs/libwebp:=
+        media-libs/openexr[>=2.0.0]
+        media-libs/tiff[>=4.0]
+        sys-libs/zlib
+        freetype? ( media-libs/freetype:2 )
+        gif? ( media-libs/giflib:=[>=5.0] )
+        heif? ( media-libs/libheif )
+        jpeg2000? ( media-libs/OpenJPEG:2 )
+        providers:ijg-jpeg? ( media-libs/jpeg:= )
+        providers:jpeg-turbo? ( media-libs/libjpeg-turbo )
+        raw? ( media-libs/libraw[>=0.18] )
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DBUILD_DOCS:BOOL=TRUE
+    -DBUILD_FMT_FORCE:BOOL=FALSE
+    -DBUILD_MISSING_ROBINMAP:BOOL=FALSE
+    -DBUILD_OIIOUTIL_ONLY:BOOL=FALSE
+    -DBUILD_ROBINMAP_FORCE:BOOL=FALSE
+    -DBUILD_SHARED_LIBS:BOOL=TRUE
+    -DCLANG_TIDY:BOOL=FALSE
+    -DCMAKE_INSTALL_DOCDIR:PATH=/usr/share/doc/${PNVR}
+    -DCMAKE_INSTALL_MANDIR:PATH=/usr/share/man/man1
+    -DCODECOV:BOOL=FALSE
+    -DEMBEDPLUGINS:BOOL=TRUE
+    -DEXTRA_WARNINGS:BOOL=FALSE
+    -DINSTALL_DOCS:BOOL=TRUE
+    -DINSTALL_FONTS:BOOL=TRUE
+    -DLINKSTATIC:BOOL=FALSE
+    -DOIIO_BUILD_TOOLS=TRUE
+    -DOIIO_NAMESPACE_INCLUDE_PATCH:BOOL=FALSE
+    -DOIIO_THREAD_ALLOW_DCLP:BOOL=TRUE
+    -DPYLIB_INCLUDE_SONAME:BOOL=FALSE
+    -DPYLIB_LIB_PREFIX:BOOL=FALSE
+    -DSTOP_ON_WARNING:BOOL=FALSE
+    -DUSE_CCACHE:BOOL=FALSE
+    -DUSE_DCMTK:BOOL=FALSE
+    -DUSE_EMBEDDED_LIBSQUISH:BOOL=FALSE
+    -DUSE_EXTERNAL_PUGIXML:BOOL=TRUE
+    -DUSE_FFMPEG:BOOL=FALSE
+    -DUSE_FIELD3D:BOOL=FALSE
+    -DUSE_GENERATED_EXPORT_HEADER:BOOL=FALSE
+    -DUSE_HDF5:BOOL=FALSE
+    -DUSE_LIBCPLUSPLUS:BOOL=FALSE
+    -DUSE_NUKE:BOOL=FALSE
+    -DUSE_OPENCOLORIO:BOOL=TRUE
+    -DUSE_OPENCV:BOOL=FALSE
+    -DUSE_OPENGL:BOOL=FALSE
+    -DUSE_OPENVDB:BOOL=FALSE
+    -DUSE_PTEX:BOOL=FALSE
+    -DUSE_PYTHON:BOOL=FALSE
+    -DUSE_QT:BOOL=FALSE
+    -DUSE_R3DSDK:BOOL=FALSE
+    -DUSE_TBB:BOOL=FALSE
+    -DVERBOSE:BOOL=TRUE
+)
+
+CMAKE_SRC_CONFIGURE_OPTION_USES=(
+    FREETYPE
+    GIF
+    'heif LIBHEIF'
+    'jpeg2000 OPENJPEG'
+    'providers:jpeg-turbo JPEGTURBO'
+    'raw LIBRAW'
+)
+
+CMAKE_SRC_CONFIGURE_TESTS=(
+    '-DBUILD_TESTING:BOOL=TRUE -DBUILD_TESTING:BOOL=FALSE'
+    '-DOIIO_BUILD_TESTS:BOOL=TRUE -DOIIO_BUILD_TESTS:BOOL=FALSE'
+)
+
