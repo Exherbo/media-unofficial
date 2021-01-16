@@ -34,6 +34,7 @@ CMAKE_SOURCE=${WORKBASE}/${PN}_src_r${PV}
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/${PNV}-fno-common.patch
+    "${FILES}"/${PN}-libmpcdec-Link-against-libm.patch
 )
 
 src_prepare() {
