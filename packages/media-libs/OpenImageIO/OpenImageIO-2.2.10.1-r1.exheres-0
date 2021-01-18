@@ -36,6 +36,7 @@ DEPENDENCIES="
         media-libs/OpenColorIO
         media-libs/ilmbase[>=2.2]
         media-libs/libpng:=
+        media-libs/libsquish
         media-libs/libwebp:=
         media-libs/openexr[>=2.0.0]
         media-libs/tiff[>=4.0]
