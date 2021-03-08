@@ -15,7 +15,7 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         media-libs/glew
-        sys-libs/libgomp
+        sys-libs/libgomp:=
 "
 
 # Until glfw is merged, disable it
