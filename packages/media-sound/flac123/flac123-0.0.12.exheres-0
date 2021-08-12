@@ -1,7 +1,7 @@
 # Copyright 2009 Ali Polatel <alip@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require sourceforge [ project=flac-tools suffix=tar.gz ]
+require sourceforge [ project=flac-tools suffix=tar.gz pnv=${PNV}-release ]
 require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.14 1.15 1.16 ] ]
 
 SUMMARY="Command-line program for playing FLAC audio files. "
