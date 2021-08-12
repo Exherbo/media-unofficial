@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 require sourceforge [ project=flac-tools suffix=tar.gz pnv=${PNV}-release ]
-require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.16 1.15 1.14 ] ]
+require autotools [ supported_autoconf=[ 2.7 ] supported_automake=[ 1.16 ] ]
 
 SUMMARY="Command-line program for playing FLAC audio files."
 
