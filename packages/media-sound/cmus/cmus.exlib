@@ -75,14 +75,15 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     prefix=/usr/$(exhost --target)
     datadir=/usr/share
     exampledir=/usr/share/doc/${PNV}/examples
+    CONFIG_BASS=n
     CONFIG_ROAR=n
 )
 
 DEFAULT_SRC_COMPILE_PARAMS=( V=2 ) # Maximum verbosity
 
 SRC_CONFIGURE_OPTIONS=(
-    aac alsa ao "elogind mpris" ffmpeg flac jack "libsamplerate samplerate" mikmod modplug
-    "mp3 mad" mp4 "musepack mpc" opus oss "pulseaudio pulse" "systemd mpris" vorbis wav wavpack
+    aac alsa ao ffmpeg flac jack "libsamplerate samplerate" mikmod modplug 
+    "mp3 mad" mp4 "musepack mpc" opus oss "pulseaudio pulse" vorbis wav wavpack
 )
 
 cmus_pkg_setup() {
@@ -105,6 +106,11 @@ cmus_src_configure() {
     local s
     local myconf=(
         $(for s in "${SRC_CONFIGURE_OPTIONS[@]}"; do option_yesno ${s}; done)
+        $(if option providers:elogind || option providers:systemd; then
+            echo CONFIG_MPRIS=y
+        else
+            echo CONFIG_MPRIS=n
+        fi)
     )
 
     edo ./configure \
