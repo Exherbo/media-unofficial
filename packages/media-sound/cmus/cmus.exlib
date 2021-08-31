@@ -18,7 +18,6 @@ MYOPTIONS="
     aac           [[ description = [ Support AAC decoding ] ]]
     alsa
     ao
-    cue           [[ description = [ Support for CUE metadata files ] ]]
     ffmpeg
     flac          [[ description = [ Support FLAC decoding ] ]]
     jack
@@ -35,6 +34,10 @@ MYOPTIONS="
     vorbis        [[ description = [ Support Ogg/Vorbis decoding ] ]]
     wav           [[ description = [ Support WAV decoding ] ]]
     wavpack       [[ description = [ Support WavPack decoding ] ]]
+    ( providers: elogind systemd ) [[
+        *description = [ Support for mpris ]
+        number-selected = at-most-one
+    ]]
 "
 
 DEPENDENCIES="
@@ -45,7 +48,6 @@ DEPENDENCIES="
         aac?           ( media-libs/faad2 )
         alsa?          ( sys-sound/alsa-lib[>=1.0.11] )
         ao?            ( media-libs/libao )
-        cue?           ( media-libs/libcue[>=1.3] )
         ffmpeg?        ( media/ffmpeg )
         flac?          ( media-libs/flac )
         jack?          ( media-sound/jack-audio-connection-kit )
@@ -62,7 +64,9 @@ DEPENDENCIES="
         oss?           ( sys-sound/oss )
         pulseaudio?    ( media-sound/pulseaudio )
         vorbis?        ( media-libs/libvorbis )
-        wavpack?       ( media-sound/wavpack )
+        wavpack?       ( media-sound/wavpack[>=4.40] )
+        providers:elogind? ( sys-auth/elogind )
+        providers:systemd? ( sys-apps/systemd )
 "
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(
@@ -71,14 +75,15 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     prefix=/usr/$(exhost --target)
     datadir=/usr/share
     exampledir=/usr/share/doc/${PNV}/examples
+    CONFIG_BASS=n
     CONFIG_ROAR=n
 )
 
 DEFAULT_SRC_COMPILE_PARAMS=( V=2 ) # Maximum verbosity
 
 SRC_CONFIGURE_OPTIONS=(
-    aac alsa ao cue ffmpeg flac jack "libsamplerate samplerate" mikmod modplug
-    "mp3 mad" mp4 "musepack mpc" opus oss "pulseaudio pulse" vorbis wav wavpack
+    aac alsa ao "providers:elogind mpris" ffmpeg flac jack "libsamplerate samplerate" mikmod modplug 
+    "mp3 mad" mp4 "musepack mpc" opus oss "pulseaudio pulse" "providers:systemd mpris" vorbis wav wavpack
 )
 
 cmus_pkg_setup() {
