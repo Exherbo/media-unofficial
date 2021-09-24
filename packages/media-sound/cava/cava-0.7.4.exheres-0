@@ -1,0 +1,37 @@
+# Copyright 2019 Danilo Spinella <danyspin97@protonmail.com>
+# Copyright 2021 Dolan Dolan <vanishingdreams@tutanota.com>
+# Distributed under the terms of the GNU General Public License v2
+
+require github [ user='karlstav' ]
+require autotools [ supported_autoconf=[ 2.7 ] supported_automake=[ 1.16 ] ]
+
+SUMMARY="Console-based Audio Visualizer for Alsa"
+
+LICENCES="MIT"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="
+    alsa                [[ description = [ Enable integration with Advanced Linux Sound Architecture ] ]]
+    iniparser           [[ description = [ Use system iniparser library instead of bundled library ] ]]
+    ncurses             [[ description = [ Enable building with ncurses ] ]]
+    pulseaudio          [[ description = [ Enable integration with Pulseaudio ] ]]
+    portaudio           [[ description = [ Enable integration with Portaudio ] ]]
+    sndio               [[ description = [ Enable integration with sndio ] ]]
+"
+
+DEPENDENCIES="
+    build+run:
+        sci-libs/fftw
+        alsa?           ( sys-sound/alsa-lib )
+        iniparser?      ( dev-libs/iniparser )
+        ncurses?        ( sys-libs/ncurses )
+        pulseaudio?     ( media-sound/pulseaudio )
+        portaudio?      ( media-libs/portaudio )
+        sndio?          ( sys-sound/sndio )
+"
+
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
+    "alsa input-alsa" "iniparser system-iniparser" "ncurses output-ncurses"
+    "pulseaudio input-pulse" "portaudio input-portaudio" "sndio input-sndio"
+)
+
