@@ -16,7 +16,7 @@ Rosegarden is an easy-to-learn, attractive application that runs on Linux, ideal
 for composers, musicians, music students, and small studio or home recording
 environments.
 "
-HOMEPAGE="http://rosegardenmusic.com"
+HOMEPAGE="https://rosegardenmusic.com"
 
 LICENCES="GPL-2"
 SLOT="0"
