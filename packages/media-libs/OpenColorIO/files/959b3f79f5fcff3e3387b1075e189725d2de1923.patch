@@ -1,0 +1,147 @@
+Source/Upstream: Yes, fixed in git master
+Reason: Better manage Imath dependency
+
+From 959b3f79f5fcff3e3387b1075e189725d2de1923 Mon Sep 17 00:00:00 2001
+From: Patrick Hodoul <patrick.hodoul@autodesk.com>
+Date: Wed, 8 Sep 2021 07:56:34 -0400
+Subject: [PATCH] Adsk Contrib - Better manage Imath dependency (#1478)
+
+* Adsk Contrib - Better manage Imath dependency
+
+Signed-off-by: Patrick Hodoul <Patrick.Hodoul@autodesk.com>
+
+* Add the OpenImageIO_Util dependency to OSL unit test framework
+
+Signed-off-by: hodoulp <Patrick.Hodoul@autodesk.com>
+
+* Fix oiio typo
+
+Signed-off-by: Patrick Hodoul <Patrick.Hodoul@autodesk.com>
+---
+ share/cmake/modules/FindOpenImageIO.cmake | 11 +++++++++++
+ src/apps/ocioconvert/CMakeLists.txt       |  1 -
+ src/apps/ocioconvert/main.cpp             | 11 ++++++++++-
+ src/apps/ocioperf/CMakeLists.txt          |  1 -
+ src/apps/ocioperf/main.cpp                |  1 -
+ src/libutils/oiiohelpers/CMakeLists.txt   |  1 -
+ src/libutils/oiiohelpers/oiiohelpers.cpp  |  1 -
+ 7 files changed, 21 insertions(+), 6 deletions(-)
+
+diff --git a/share/cmake/modules/FindOpenImageIO.cmake b/share/cmake/modules/FindOpenImageIO.cmake
+index 4d4a7ee1b..b44742b9b 100644
+--- a/share/cmake/modules/FindOpenImageIO.cmake
++++ b/share/cmake/modules/FindOpenImageIO.cmake
+@@ -59,6 +59,10 @@ find_library ( OPENIMAGEIO_LIBRARY
+                NAMES OpenImageIO${OIIO_LIBNAME_SUFFIX}
+                HINTS ${OPENIMAGEIO_ROOT_DIR}
+                PATH_SUFFIXES lib64 lib )
++find_library ( OPENIMAGEIO_UTIL_LIBRARY
++               NAMES OpenImageIO_Util${OIIO_LIBNAME_SUFFIX}
++               HINTS ${OPENIMAGEIO_ROOT_DIR}
++               PATH_SUFFIXES lib64 lib )
+ find_path ( OPENIMAGEIO_INCLUDE_DIR
+             NAMES OpenImageIO/imageio.h
+             HINTS ${OPENIMAGEIO_ROOT_DIR} )
+@@ -114,6 +118,13 @@ if (OpenImageIO_FOUND)
+             IMPORTED_LOCATION "${OPENIMAGEIO_LIBRARIES}")
+     endif ()
+ 
++    if (NOT TARGET OpenImageIO::OpenImageIO_Util AND EXISTS "${OPENIMAGEIO_UTIL_LIBRARY}")
++        add_library(OpenImageIO::OpenImageIO_Util UNKNOWN IMPORTED)
++        set_target_properties(OpenImageIO::OpenImageIO_Util PROPERTIES
++            IMPORTED_LOCATION "${OPENIMAGEIO_UTIL_LIBRARY}")
++        target_link_libraries(OpenImageIO::OpenImageIO INTERFACE OpenImageIO::OpenImageIO_Util)
++    endif ()
++
+     if (NOT TARGET OpenImageIO::oiiotool AND EXISTS "${OIIOTOOL_BIN}")
+         add_executable(OpenImageIO::oiiotool IMPORTED)
+         set_target_properties(OpenImageIO::oiiotool PROPERTIES
+diff --git a/src/apps/ocioconvert/CMakeLists.txt b/src/apps/ocioconvert/CMakeLists.txt
+index ec135bba6..d2d50f4cc 100755
+--- a/src/apps/ocioconvert/CMakeLists.txt
++++ b/src/apps/ocioconvert/CMakeLists.txt
+@@ -27,7 +27,6 @@ set_target_properties(ocioconvert PROPERTIES
+ target_link_libraries(ocioconvert
+     PRIVATE
+         apputils
+-        ${OCIO_HALF_LIB}
+         ${OCIO_GL_LIB}
+         oiiohelpers
+         OpenColorIO
+diff --git a/src/apps/ocioconvert/main.cpp b/src/apps/ocioconvert/main.cpp
+index a2f6235e4..548be1593 100644
+--- a/src/apps/ocioconvert/main.cpp
++++ b/src/apps/ocioconvert/main.cpp
+@@ -13,6 +13,16 @@ namespace OCIO = OCIO_NAMESPACE;
+ 
+ #include <OpenImageIO/imageio.h>
+ #include <OpenImageIO/typedesc.h>
++
++// Take the half.h the same way OpenImageIO takes it i.e. do not use the Imath/OpenEXR one from
++// OpenColorIO to avoid version clashes between OpenColorIO & OpenImageIO libraries. For example,
++// OpenColorIO uses Imath 3.1.x but OpenImageIO (from the system) is using Imath 3.0.x which
++// breaks the OpenColorIO compilation.
++#if (OIIO_VERSION >= 20200)
++#   include <OpenImageIO/Imath.h>
++#else
++#   include <OpenEXR/half.h>
++#endif
+ #if (OIIO_VERSION < 10100)
+ namespace OIIO = OIIO_NAMESPACE;
+ #endif
+@@ -24,7 +34,6 @@ namespace OIIO = OIIO_NAMESPACE;
+ #endif // OCIO_GPU_ENABLED
+ 
+ #include "oiiohelpers.h"
+-#include "utils/Half.h"
+ 
+ 
+ // Array of non OpenColorIO arguments.
+diff --git a/src/apps/ocioperf/CMakeLists.txt b/src/apps/ocioperf/CMakeLists.txt
+index a11fc6af8..755525b0e 100644
+--- a/src/apps/ocioperf/CMakeLists.txt
++++ b/src/apps/ocioperf/CMakeLists.txt
+@@ -20,7 +20,6 @@ set_target_properties(ocioperf PROPERTIES
+ target_link_libraries(ocioperf
+     PRIVATE
+         apputils
+-        ${OCIO_HALF_LIB}
+         oiiohelpers
+         OpenColorIO
+         OpenImageIO::OpenImageIO
+diff --git a/src/apps/ocioperf/main.cpp b/src/apps/ocioperf/main.cpp
+index 874d6bc30..1ada2fc07 100644
+--- a/src/apps/ocioperf/main.cpp
++++ b/src/apps/ocioperf/main.cpp
+@@ -12,7 +12,6 @@ namespace OIIO = OIIO_NAMESPACE;
+ 
+ #include "apputils/argparse.h"
+ #include "oiiohelpers.h"
+-#include "utils/Half.h"
+ #include "utils/StringUtils.h"
+ 
+ 
+diff --git a/src/libutils/oiiohelpers/CMakeLists.txt b/src/libutils/oiiohelpers/CMakeLists.txt
+index 202ff467e..5ed6c7366 100644
+--- a/src/libutils/oiiohelpers/CMakeLists.txt
++++ b/src/libutils/oiiohelpers/CMakeLists.txt
+@@ -31,7 +31,6 @@ target_link_libraries(oiiohelpers
+ 
+     PRIVATE
+         OpenColorIO
+-        ${OCIO_HALF_LIB}
+         utils::strings
+ )
+ 
+diff --git a/src/libutils/oiiohelpers/oiiohelpers.cpp b/src/libutils/oiiohelpers/oiiohelpers.cpp
+index e407b45b9..b999debbf 100644
+--- a/src/libutils/oiiohelpers/oiiohelpers.cpp
++++ b/src/libutils/oiiohelpers/oiiohelpers.cpp
+@@ -6,7 +6,6 @@
+ 
+ 
+ #include "oiiohelpers.h"
+-#include "utils/Half.h"
+ #include "utils/StringUtils.h"
+ 
+ 
