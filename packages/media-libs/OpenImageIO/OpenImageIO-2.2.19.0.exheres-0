@@ -21,7 +21,7 @@ MYOPTIONS="
     ( providers: ijg-jpeg jpeg-turbo ) [[ number-selected = exactly-one ]]
 "
 
-# 67% tests passed, 18 tests failed out of 54, last checked: 2.2.10.1
+# 67% tests passed, 30 tests failed out of 92, last checked: 2.2.19.0
 RESTRICT="test"
 
 # USE_FIELD3D: unwritten
@@ -34,11 +34,11 @@ DEPENDENCIES="
         dev-libs/fmt
         dev-libs/pugixml[>=1.8]
         media-libs/OpenColorIO
-        media-libs/ilmbase[>=2.2]
+        media-libs/imath
         media-libs/libpng:=
         media-libs/libsquish
         media-libs/libwebp:=
-        media-libs/openexr[>=2.0.0]
+        media-libs/openexr[>=3]
         media-libs/tiff[>=4.0]
         sys-libs/zlib
         freetype? ( media-libs/freetype:2 )
