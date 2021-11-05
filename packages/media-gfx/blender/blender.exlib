@@ -43,16 +43,18 @@ DEPENDENCIES="
     build+run:
         app-arch/lzo:2
         dev-libs/boost[>=1.68.0]
+        dev-libs/gmp:=
         dev-libs/libglvnd
+        dev-libs/pugixml
         dev-python/numpy[>=1.7.0][python_abis:*(-)?]
-        media-libs/OpenColorIO
-        media-libs/OpenImageIO
-        media-libs/OpenSubdiv
+        media-libs/OpenColorIO[>=2.0]
+        media-libs/OpenImageIO[>=2.1.12]
+        media-libs/OpenSubdiv[>=3.4]
         media-libs/freetype:2
         media-libs/glew
-        media-libs/ilmbase
+        media-libs/imath
         media-libs/libpng:=
-        media-libs/openexr
+        media-libs/openexr[>=3]
         media-libs/tiff
         sys-libs/zlib
         x11-libs/libX11
@@ -60,7 +62,7 @@ DEPENDENCIES="
         x11-libs/libXi
         x11-libs/libXrender
         x11-libs/libXxf86vm
-        ffmpeg? ( media/ffmpeg )
+        ffmpeg? ( media/ffmpeg[>=3.0] )
         fftw? ( sci-libs/fftw[>=3.0] )
         jack? ( media-sound/jack-audio-connection-kit )
         jpeg2000? ( media-libs/OpenJPEG:2 )
@@ -106,17 +108,19 @@ blender_src_configure() {
     # WITH_PYTHON_INSTALL*: use the system python modules
     # WITH_INPUT_NDOF: unwritten dependency
     # no WITH_SYSTEM_BULLET: not supported by upstream because of missing features
+    # WITH_AUDASPACE: temporarily hard-disabled to due link failure, last checked: 2.93.5
+    # WITH_PULSEAUDIO: depends on WITH_AUDASPACE
     local args=(
         -DCMAKE_BUILD_TYPE:STRING=Release
         -DCMAKE_SKIP_BUILD_RPATH:BOOL=TRUE
         -DPYTHON_VERSION:STRING=$(python_get_abi)
         -DWITH_ALEMBIC:BOOL=FALSE
-        -DWITH_ALEMBIC_HDF5:BOOL=FALSE
-        -DWITH_AUDASPACE:BOOL=TRUE
+        -DWITH_AUDASPACE:BOOL=FALSE
         -DWITH_BLENDER:BOOL=TRUE
         -DWITH_BOOST:BOOL=TRUE
         -DWITH_BUILDINFO:BOOL=TRUE
         -DWITH_BULLET:BOOL=TRUE
+        -DWITH_CLANG:BOOL=FALSE
         -DWITH_CODEC_AVI:BOOL=TRUE
         -DWITH_COMPOSITOR:BOOL=TRUE
         -DWITH_CUDA_DYNLOAD:BOOL=TRUE
@@ -127,6 +131,7 @@ blender_src_configure() {
         -DWITH_CYCLES_DEBUG:BOOL=FALSE
         -DWITH_CYCLES_DEVICE_CUDA:BOOL=TRUE
         -DWITH_CYCLES_DEVICE_OPENCL:BOOL=TRUE
+        -DWITH_CYCLES_DEVICE_OPTIX:BOOL=FALSE
         -DWITH_CYCLES_EMBREE:BOOL=FALSE
         -DWITH_CYCLES_LOGGING:BOOL=TRUE
         -DWITH_CYCLES_NATIVE_ONLY:BOOL=FALSE
@@ -141,7 +146,9 @@ blender_src_configure() {
         -DWITH_GL_EGL:BOOL=FALSE
         -DWITH_GL_PROFILE_ES20:BOOL=FALSE
         -DWITH_GLEW_ES:BOOL=FALSE
+        -DWITH_GMP:BOOL=TRUE
         -DWITH_GTESTS:BOOL=FALSE
+        -DWITH_HARU:BOOL=FALSE
         -DWITH_HEADLESS:BOOL=FALSE
         -DWITH_IK_ITASC:BOOL=TRUE
         -DWITH_IK_SOLVER:BOOL=TRUE
@@ -161,7 +168,7 @@ blender_src_configure() {
         -DWITH_MEM_VALGRIND:BOOL=FALSE
         -DWITH_MOD_FLUID:BOOL=TRUE
         -DWITH_MOD_REMESH:BOOL=TRUE
-        -DWITH_MOD_SMOKE:BOOL=TRUE
+        -DWITH_NANOVDB:BOOL=FALSE
         -DWITH_OPENCOLLADA:BOOL=FALSE
         -DWITH_OPENCOLORIO:BOOL=TRUE
         -DWITH_OPENGL_DRAW_TESTS:BOOL=FALSE
@@ -171,11 +178,15 @@ blender_src_configure() {
         -DWITH_OPENVDB:BOOL=FALSE
         -DWITH_OPENVDB_3_ABI_COMPATIBLE:BOOL=FALSE
         -DWITH_OPENVDB_BLOSC:BOOL=FALSE
+        -DWITH_POTRACE:BOOL=FALSE
+        -DWITH_PUGIXML:BOOL=TRUE
+        -DWITH_PULSEAUDIO:BOOL=FALSE
         -DWITH_PYTHON_INSTALL:BOOL=FALSE
         -DWITH_PYTHON_INSTALL_NUMPY:BOOL=FALSE
         -DWITH_PYTHON_INSTALL_REQUESTS:BOOL=FALSE
         -DWITH_PYTHON_MODULE:BOOL=FALSE
-        -DWITH_RAYOPTIMIZATION:BOOL=TRUE
+        -DWITH_PYTHON_NUMPY:BOOL=FALSE
+        -DWITH_QUADRIFLOW:BOOL=TRUE
         -DWITH_STATIC_LIBS:BOOL=FALSE
         -DWITH_SYSTEM_AUDASPACE:BOOL=FALSE
         -DWITH_SYSTEM_EIGEN3:BOOL=TRUE
@@ -183,10 +194,12 @@ blender_src_configure() {
         -DWITH_SYSTEM_GLEW:BOOL=TRUE
         -DWITH_SYSTEM_LZO:BOOL=TRUE
         -DWITH_TBB:BOOL=FALSE
+        -DWITH_USD:BOOL=FALSE
         -DWITH_X11_ALPHA:BOOL=TRUE
         -DWITH_X11_XF86VMODE:BOOL=TRUE
         -DWITH_X11_XFIXES:BOOL=TRUE
         -DWITH_X11_XINPUT:BOOL=TRUE
+        -DWITH_XR_OPENXR:BOOL=FALSE
         $(cmake_with ffmpeg CODEC_FFMPEG)
         $(cmake_with fftw FFTW3)
         $(cmake_with fftw MOD_OCEANSIM)

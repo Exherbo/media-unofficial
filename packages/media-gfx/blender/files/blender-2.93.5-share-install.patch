@@ -2,22 +2,22 @@ Source: Timo Gurr <tgurr@exherbo.org>
 Upstream: No
 Reason: Fix share install
 
-diff -Naur blender-2.80/CMakeLists.txt blender-2.80.new/CMakeLists.txt
---- blender-2.80/CMakeLists.txt	2019-07-24 09:41:38.000000000 +0200
-+++ blender-2.80.new/CMakeLists.txt	2019-08-08 18:47:47.280624186 +0200
-@@ -42,6 +42,8 @@
+diff -Naur blender-2.93.5/CMakeLists.txt blender-2.93.5.new/CMakeLists.txt
+--- blender-2.93.5/CMakeLists.txt	2021-04-26 01:11:46.000000000 +0200
++++ blender-2.93.5.new/CMakeLists.txt	2021-11-05 14:10:37.325032067 +0100
+@@ -43,6 +43,8 @@
  
- cmake_minimum_required(VERSION 3.5)
+ cmake_minimum_required(VERSION 3.10)
  
 +include(GNUInstallDirs)
 +
- # Prever LEGACY OpenGL to eb compatible with all the existing releases and
- # platforms which don't hare GLVND yet. Only do it if preference was not set
+ # Prefer LEGACY OpenGL to be compatible with all the existing releases and
+ # platforms which don't have GLVND yet. Only do it if preference was not set
  # externally.
-diff -Naur blender-2.80/source/creator/CMakeLists.txt blender-2.80.new/source/creator/CMakeLists.txt
---- blender-2.80/source/creator/CMakeLists.txt	2019-07-24 09:41:39.000000000 +0200
-+++ blender-2.80.new/source/creator/CMakeLists.txt	2019-08-08 18:46:44.701523409 +0200
-@@ -329,7 +329,7 @@
+diff -Naur blender-2.93.5/source/creator/CMakeLists.txt blender-2.93.5.new/source/creator/CMakeLists.txt
+--- blender-2.93.5/source/creator/CMakeLists.txt	2021-04-18 04:03:07.000000000 +0200
++++ blender-2.93.5.new/source/creator/CMakeLists.txt	2021-11-05 14:10:06.209053395 +0100
+@@ -317,7 +317,7 @@
      if(WITH_INSTALL_PORTABLE)
        set(TARGETDIR_VER ${BLENDER_VERSION})
      else()
@@ -26,7 +26,7 @@ diff -Naur blender-2.80/source/creator/CMakeLists.txt blender-2.80.new/source/cr
      endif()
    endif()
  
-@@ -524,28 +524,28 @@
+@@ -530,28 +530,28 @@
        # manpage only with 'blender' binary
        install(
          FILES ${CMAKE_CURRENT_BINARY_DIR}/blender.1
