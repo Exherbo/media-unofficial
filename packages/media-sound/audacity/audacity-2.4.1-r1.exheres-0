@@ -27,7 +27,6 @@ SLOT="0"
 PLATFORMS="~amd64 ~x86"
 MYOPTIONS="
     ffmpeg
-    flac
     ladspa
     lv2
     mp2
@@ -47,6 +46,7 @@ DEPENDENCIES="
         app-arch/zip[>=2.3]
         dev-libs/expat
         dev-libs/glib:2
+        media-libs/flac [[ note = [ fails to build when not present/disabled ] ]]
         media-libs/libid3tag [[ note = [ fails to build when not present/disabled ] ]]
         media-libs/libsamplerate[>=0.1.2]
         media-libs/libsndfile[>=1.0.0]
@@ -86,6 +86,7 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --disable-quicktime
     --disable-static
     --with-expat=system
+    --with-flac=system
     --with-lame=system
     --with-libid3tag=system
     --with-libsamplerate
@@ -107,7 +108,6 @@ DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
 # lv2 and portaudio system doesn't work, last checked: 2.2.1
 DEFAULT_SRC_CONFIGURE_OPTION_WITHS=(
     'ffmpeg ffmpeg system'
-    'flac libflac system'
     'lv2 lv2 local'
     'mp2 libtwolame system'
     'mp3 libmad system'
