@@ -1,7 +1,7 @@
 # Copyright 2009 Ali Polatel <alip@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require setup-py [ import=distutils blacklist=3 with_opt=true multibuild=false ] waf
+require setup-py [ import=setuptools blacklist=2 with_opt=true multibuild=false ] waf
 
 SUMMARY="Library for audio labelling"
 DESCRIPTION="
