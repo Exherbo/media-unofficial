@@ -54,6 +54,10 @@ DEPENDENCIES="
         gnome-desktop/librsvg:2
 "
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/0001-fix-duplicate-languages-causing-meson-0.61-to-error-.patch
+)
+
 MESON_SRC_CONFIGURE_PARAMS=(
     -Ddupe_detection=true
     -Dextra_plugins=true
