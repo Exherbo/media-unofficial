@@ -56,6 +56,7 @@ DEPENDENCIES="
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/0001-fix-duplicate-languages-causing-meson-0.61-to-error-.patch
+    "${FILES}"/upstream-vala-fixes.patch
 )
 
 MESON_SRC_CONFIGURE_PARAMS=(
