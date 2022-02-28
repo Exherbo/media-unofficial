@@ -39,6 +39,11 @@ DEPENDENCIES="
         tiff? ( media-libs/tiff )
 "
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/42a62648e727e9a0217280474546de3ac69cbff1.patch
+    "${FILES}"/${PN}-1.8.0-pr102.patch
+)
+
 CMAKE_SOURCE="$WORKBASE/${PN}/${PN}"
 
 CMAKE_SRC_CONFIGURE_PARAMS=(

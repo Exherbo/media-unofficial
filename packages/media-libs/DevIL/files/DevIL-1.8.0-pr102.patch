@@ -1,0 +1,47 @@
+Source/Upstream: Reported, https://github.com/DentonW/DevIL/pull/102
+Reason: Fix build with recent jasper versions
+
+From 4f0b1d9bfa9b15991fc70a14f1005878fb2e5fc6 Mon Sep 17 00:00:00 2001
+From: Satadru Pramanik <satadru@gmail.com>
+Date: Tue, 4 Oct 2022 20:31:50 -0400
+Subject: [PATCH] Fix compilation with jasper 3.0.x
+
+---
+ src-IL/src/il_jp2.cpp | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/src-IL/src/il_jp2.cpp b/src-IL/src/il_jp2.cpp
+index 89075a52..ba8317e3 100644
+--- a/src-IL/src/il_jp2.cpp
++++ b/src-IL/src/il_jp2.cpp
+@@ -324,22 +324,30 @@ ILboolean iLoadJp2Internal(jas_stream_t	*Stream, ILimage *Image)
+ // see: https://github.com/OSGeo/gdal/commit/9ef8e16e27c5fc4c491debe50bf2b7f3e94ed334
+ //      https://github.com/DentonW/DevIL/issues/90
+ #if defined(PRIjas_seqent)
++#if JAS_VERSION_MAJOR >= 3
++static long int iJp2_file_read(jas_stream_obj_t *obj, char *buf, long unsigned int cnt)
++#elif JAS_VERSION_MAJOR < 3
+ static int iJp2_file_read(jas_stream_obj_t *obj, char *buf, unsigned cnt)
+ #else
+ static int iJp2_file_read(jas_stream_obj_t *obj, char *buf, int cnt)
+ #endif
++#endif
+ {
+ 	obj;
+ 	return iread(buf, 1, cnt);
+ }
+ 
+ #if defined(JAS_INCLUDE_JP2_CODEC)
++#if JAS_VERSION_MAJOR >= 3
++static long int iJp2_file_write(jas_stream_obj_t *obj, const char *buf, long unsigned int cnt)
++#elif JAS_VERSION_MAJOR < 3
+ static int iJp2_file_write(jas_stream_obj_t *obj, const char *buf, unsigned cnt)
+ #elif defined(PRIjas_seqent)
+ static int iJp2_file_write(jas_stream_obj_t *obj, char *buf, unsigned cnt)
+ #else
+ static int iJp2_file_write(jas_stream_obj_t *obj, char *buf, int cnt)
+ #endif
++#endif
+ {
+ 	obj;
+ 	return iwrite(buf, 1, cnt);
