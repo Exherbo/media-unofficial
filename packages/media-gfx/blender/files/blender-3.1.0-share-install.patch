@@ -2,9 +2,9 @@ Source: Timo Gurr <tgurr@exherbo.org>
 Upstream: No
 Reason: Fix share install
 
-diff -Naur blender-2.93.5/CMakeLists.txt blender-2.93.5.new/CMakeLists.txt
---- blender-2.93.5/CMakeLists.txt	2021-04-26 01:11:46.000000000 +0200
-+++ blender-2.93.5.new/CMakeLists.txt	2021-11-05 14:10:37.325032067 +0100
+diff -Naur blender-3.1.0/CMakeLists.txt blender-3.1.0.new/CMakeLists.txt
+--- blender-3.1.0/CMakeLists.txt	2022-02-22 05:45:08.000000000 +0100
++++ blender-3.1.0.new/CMakeLists.txt	2022-03-11 13:30:39.370922308 +0100
 @@ -43,6 +43,8 @@
  
  cmake_minimum_required(VERSION 3.10)
@@ -14,10 +14,10 @@ diff -Naur blender-2.93.5/CMakeLists.txt blender-2.93.5.new/CMakeLists.txt
  # Prefer LEGACY OpenGL to be compatible with all the existing releases and
  # platforms which don't have GLVND yet. Only do it if preference was not set
  # externally.
-diff -Naur blender-2.93.5/source/creator/CMakeLists.txt blender-2.93.5.new/source/creator/CMakeLists.txt
---- blender-2.93.5/source/creator/CMakeLists.txt	2021-04-18 04:03:07.000000000 +0200
-+++ blender-2.93.5.new/source/creator/CMakeLists.txt	2021-11-05 14:10:06.209053395 +0100
-@@ -317,7 +317,7 @@
+diff -Naur blender-3.1.0/source/creator/CMakeLists.txt blender-3.1.0.new/source/creator/CMakeLists.txt
+--- blender-3.1.0/source/creator/CMakeLists.txt	2022-03-02 00:02:27.000000000 +0100
++++ blender-3.1.0.new/source/creator/CMakeLists.txt	2022-03-11 13:30:13.694115021 +0100
+@@ -326,7 +326,7 @@
      if(WITH_INSTALL_PORTABLE)
        set(TARGETDIR_VER ${BLENDER_VERSION})
      else()
@@ -26,12 +26,12 @@ diff -Naur blender-2.93.5/source/creator/CMakeLists.txt blender-2.93.5.new/sourc
      endif()
    endif()
  
-@@ -530,28 +530,28 @@
+@@ -541,22 +541,22 @@
        # manpage only with 'blender' binary
        install(
          FILES ${CMAKE_CURRENT_BINARY_DIR}/blender.1
 -        DESTINATION share/man/man1
-+        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/man/man1
++        DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/man/man1"
        )
      endif()
  
@@ -51,10 +51,12 @@ diff -Naur blender-2.93.5/source/creator/CMakeLists.txt blender-2.93.5.new/sourc
 -      DESTINATION share/icons/hicolor/symbolic/apps
 +      DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/symbolic/apps"
      )
-     install(
-       PROGRAMS ${CMAKE_SOURCE_DIR}/release/bin/blender-thumbnailer.py
-       DESTINATION bin
-     )
+     if(WITH_BLENDER_THUMBNAILER)
+       install(
+@@ -564,7 +564,7 @@
+         DESTINATION bin
+       )
+     endif()
 -    set(BLENDER_TEXT_FILES_DESTINATION share/doc/blender)
 +    set(BLENDER_TEXT_FILES_DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/doc/blender")
    endif()

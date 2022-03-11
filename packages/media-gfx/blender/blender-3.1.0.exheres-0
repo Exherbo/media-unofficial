@@ -7,7 +7,6 @@ require blender
 PLATFORMS="~amd64"
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PN}-2.93.5-share-install.patch
-    "${FILES}"/${PN}-2.93.5-openexr3.patch
+    "${FILES}"/${PN}-3.1.0-share-install.patch
 )
 

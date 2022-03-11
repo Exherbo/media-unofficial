@@ -9,7 +9,7 @@ MY_PV=${PV/b}
 require cmake \
     flag-o-matic \
     freedesktop-desktop \
-    python [ blacklist="2 3.5 3.6" multibuild=false ]
+    python [ blacklist="2 3.7 3.8 3.9" multibuild=false ]
 
 export_exlib_phases src_prepare src_configure src_install
 
@@ -42,6 +42,7 @@ DEPENDENCIES="
         x11-proto/xorgproto
     build+run:
         app-arch/lzo:2
+        app-arch/zstd
         dev-libs/boost[>=1.68.0]
         dev-libs/gmp:=
         dev-libs/libglvnd
@@ -50,7 +51,7 @@ DEPENDENCIES="
         media-libs/OpenColorIO[>=2.0]
         media-libs/OpenImageIO[>=2.1.12]
         media-libs/OpenSubdiv[>=3.4]
-        media-libs/freetype:2
+        media-libs/freetype:2[woff2]
         media-libs/glew
         media-libs/imath
         media-libs/libpng:=
@@ -130,18 +131,18 @@ blender_src_configure() {
         -DWITH_CYCLES_CUDA_BUILD_SERIAL:BOOL=FALSE
         -DWITH_CYCLES_DEBUG:BOOL=FALSE
         -DWITH_CYCLES_DEVICE_CUDA:BOOL=TRUE
-        -DWITH_CYCLES_DEVICE_OPENCL:BOOL=TRUE
+        -DWITH_CYCLES_DEVICE_HIP:BOOL=FALSE
         -DWITH_CYCLES_DEVICE_OPTIX:BOOL=FALSE
         -DWITH_CYCLES_EMBREE:BOOL=FALSE
         -DWITH_CYCLES_LOGGING:BOOL=TRUE
         -DWITH_CYCLES_NATIVE_ONLY:BOOL=FALSE
-        -DWITH_CYCLES_NETWORK:BOOL=FALSE
         -DWITH_CYCLES_OSL:BOOL=FALSE
         -DWITH_CYCLES_STANDALONE:BOOL=FALSE
         -DWITH_CYCLES_STANDALONE_GUI:BOOL=FALSE
         -DWITH_DOC_MANPAGE:BOOL=TRUE
         -DWITH_DRACO:BOOL=FALSE
         -DWITH_FREESTYLE:BOOL=TRUE
+        -DWITH_GHOST_WAYLAND:BOOL=FALSE
         -DWITH_GHOST_XDND:BOOL=TRUE
         -DWITH_GL_EGL:BOOL=FALSE
         -DWITH_GL_PROFILE_ES20:BOOL=FALSE
@@ -190,10 +191,12 @@ blender_src_configure() {
         -DWITH_STATIC_LIBS:BOOL=FALSE
         -DWITH_SYSTEM_AUDASPACE:BOOL=FALSE
         -DWITH_SYSTEM_EIGEN3:BOOL=TRUE
+        -DWITH_SYSTEM_FREETYPE:BOOL=TRUE
         -DWITH_SYSTEM_GLES:BOOL=TRUE
         -DWITH_SYSTEM_GLEW:BOOL=TRUE
         -DWITH_SYSTEM_LZO:BOOL=TRUE
         -DWITH_TBB:BOOL=FALSE
+        -DWITH_UNITY_BUILD:BOOL=TRUE
         -DWITH_USD:BOOL=FALSE
         -DWITH_X11_ALPHA:BOOL=TRUE
         -DWITH_X11_XF86VMODE:BOOL=TRUE
