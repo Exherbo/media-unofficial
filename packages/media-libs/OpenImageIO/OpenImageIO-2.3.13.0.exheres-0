@@ -1,7 +1,7 @@
 # Copyright 2014 Johannes Nixdorf <mixi@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require github [ pn=oiio user=${PN} tag=Release-${PV} ] cmake
+require github [ pn=oiio user=${PN} tag=v${PV} ] cmake
 
 SUMMARY="A library for reading and writing images"
 
@@ -24,7 +24,6 @@ MYOPTIONS="
 # 67% tests passed, 30 tests failed out of 92, last checked: 2.2.19.0
 RESTRICT="test"
 
-# USE_FIELD3D: unwritten
 DEPENDENCIES="
     build:
         app-text/txt2man
@@ -38,7 +37,7 @@ DEPENDENCIES="
         media-libs/libpng:=
         media-libs/libsquish
         media-libs/libwebp:=
-        media-libs/openexr[>=3]
+        media-libs/openexr[>=3.1]
         media-libs/tiff[>=4.0]
         sys-libs/zlib
         freetype? ( media-libs/freetype:2 )
@@ -67,11 +66,14 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DINSTALL_FONTS:BOOL=TRUE
     -DLINKSTATIC:BOOL=FALSE
     -DOIIO_BUILD_TOOLS=TRUE
+    -DOIIO_DOWNLOAD_MISSING_TESTDATA:BOOL=FALSE
     -DOIIO_NAMESPACE_INCLUDE_PATCH:BOOL=FALSE
     -DOIIO_THREAD_ALLOW_DCLP:BOOL=TRUE
+    -DOIIO_USE_EXR_C_API:BOOL=TRUE
     -DPYLIB_INCLUDE_SONAME:BOOL=FALSE
     -DPYLIB_LIB_PREFIX:BOOL=FALSE
     -DSTOP_ON_WARNING:BOOL=FALSE
+    -DTIME_COMMANDS:BOOL=FALSE
     -DUSE_CCACHE:BOOL=FALSE
     -DUSE_DCMTK:BOOL=FALSE
     -DUSE_EMBEDDED_LIBSQUISH:BOOL=FALSE
@@ -79,7 +81,6 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DUSE_FFMPEG:BOOL=FALSE
     -DUSE_FIELD3D:BOOL=FALSE
     -DUSE_GENERATED_EXPORT_HEADER:BOOL=FALSE
-    -DUSE_HDF5:BOOL=FALSE
     -DUSE_LIBCPLUSPLUS:BOOL=FALSE
     -DUSE_NUKE:BOOL=FALSE
     -DUSE_OPENCOLORIO:BOOL=TRUE
