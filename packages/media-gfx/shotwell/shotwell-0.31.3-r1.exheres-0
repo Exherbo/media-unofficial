@@ -28,7 +28,7 @@ DEPENDENCIES="
         base/libgee:0.8[>=0.8.5]
         core/json-glib[>=1.0.0]
         dev-db/sqlite:3[>=3.5.9]
-        dev-libs/gexiv2[>=0.11.0][gobject-introspection][vapi]
+        dev-libs/gexiv2[>=0.11.0][vapi]
         dev-libs/glib:2[>=2.40.0]
         dev-libs/libxml2:2.0[>=2.6.32]
         dev-libs/libsecret:1
