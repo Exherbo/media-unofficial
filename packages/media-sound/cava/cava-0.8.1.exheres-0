@@ -12,26 +12,44 @@ SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS="
     alsa                [[ description = [ Enable integration with Advanced Linux Sound Architecture ] ]]
-    iniparser           [[ description = [ Use system iniparser library instead of bundled library ] ]]
     ncurses             [[ description = [ Enable building with ncurses ] ]]
     pulseaudio          [[ description = [ Enable integration with Pulseaudio ] ]]
     portaudio           [[ description = [ Enable integration with Portaudio ] ]]
+    sdl                 [[ description = [ Enable integration with sdl output ] ]]
     sndio               [[ description = [ Enable integration with sndio ] ]]
 "
 
 DEPENDENCIES="
+    build:
+        app-editors/vim-runtime [[ note = [ xxd required for compilation, reference: autogen.sh ] ]]
     build+run:
+        dev-libs/iniparser
         sci-libs/fftw
         alsa?           ( sys-sound/alsa-lib )
-        iniparser?      ( dev-libs/iniparser )
         ncurses?        ( sys-libs/ncurses )
         pulseaudio?     ( media-sound/pulseaudio )
         portaudio?      ( media-libs/portaudio )
+        sdl?            ( media-libs/SDL:2 )
         sndio?          ( sys-sound/sndio )
 "
 
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
-    "alsa input-alsa" "iniparser system-iniparser" "ncurses output-ncurses"
-    "pulseaudio input-pulse" "portaudio input-portaudio" "sndio input-sndio"
+    "alsa input-alsa"
+    "ncurses output-ncurses"
+    "pulseaudio input-pulse"
+    "portaudio input-portaudio"
+    "sdl output-sdl"
+    "sndio input-sndio"
 )
+
+src_prepare() {
+    # External commands essential to compilation: autogen.sh
+    edo tee version <<CONTENTS
+${PV}
+CONTENTS
+
+    edo xxd -i example_files/config config_file.h
+
+    autotools_src_prepare
+}
 
