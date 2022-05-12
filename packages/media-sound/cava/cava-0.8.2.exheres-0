@@ -11,24 +11,22 @@ LICENCES="MIT"
 SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS="
-    alsa                [[ description = [ Enable integration with Advanced Linux Sound Architecture ] ]]
-    ncurses             [[ description = [ Enable building with ncurses ] ]]
-    pulseaudio          [[ description = [ Enable integration with Pulseaudio ] ]]
-    portaudio           [[ description = [ Enable integration with Portaudio ] ]]
-    sdl                 [[ description = [ Enable integration with sdl output ] ]]
-    sndio               [[ description = [ Enable integration with sndio ] ]]
+    alsa                [[ description = [ Allows visualizer to detect ALSA output ] ]]
+    ncurses             [[ description = [ Allows visualizer to display using ncurses ] ]]
+    pulseaudio          [[ description = [ Allows visualizer to detect Pulseaudio output ] ]]
+    portaudio           [[ description = [ Allows visualizer to detect Portaudio output ] ]]
+    sdl                 [[ description = [ Allows visualizer to detect SDL output ] ]]
+    sndio               [[ description = [ Allows visualizer to detect Sndio output ] ]]
 "
 
 DEPENDENCIES="
-    build:
-        app-editors/vim-runtime [[ note = [ xxd required for compilation, reference: autogen.sh ] ]]
     build+run:
         dev-libs/iniparser
         sci-libs/fftw
         alsa?           ( sys-sound/alsa-lib )
         ncurses?        ( sys-libs/ncurses )
-        pulseaudio?     ( media-sound/pulseaudio )
         portaudio?      ( media-libs/portaudio )
+        pulseaudio?     ( media-sound/pulseaudio )
         sdl?            ( media-libs/SDL:2 )
         sndio?          ( sys-sound/sndio )
 "
@@ -47,8 +45,6 @@ src_prepare() {
     edo tee version <<CONTENTS
 ${PV}
 CONTENTS
-
-    edo xxd -i example_files/config config_file.h
 
     autotools_src_prepare
 }
