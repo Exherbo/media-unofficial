@@ -40,7 +40,6 @@ DEPENDENCIES="
         dev-python/requests[>=2.2.1][python_abis:*(-)?]
         gnome-bindings/pygobject:3[>=3.18][cairo]
         x11-libs/gtk+:3[>=3.18][gobject-introspection]
-        python_abis:2.7? ( dev-python/faulthandler[python_abis:2.7] )
     run:
         dev-python/dbus-python
         dev-python/mutagen[>=1.34]
