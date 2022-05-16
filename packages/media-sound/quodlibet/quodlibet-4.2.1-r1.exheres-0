@@ -54,7 +54,6 @@ DEPENDENCIES="
         ) [[ *description = [ Plugins for Gstreamer; select GST_PLUGINS for the outputs and codecs you need. ] ]]
 
         dev-libs/keybinder[>=0.3.0] [[ description = [ Register global hotkeys ] ]]
-        dev-libs/zeitgeist:2.0 [[ description = [ Install the Zeitgeist (activity tracker) plugin ] ]]
         dev-python/feedparser[python_abis:*(-)?] [[ description = [ Support for audio feeds ] ]]
         dev-python/musicbrainzngs[python_abis:*(-)?] [[ description = [ Install a plugin for MusicBrainz tagging ] ]]
         dev-python/pyinotify[python_abis:*(-)?] [[ description = [ Install a plugin to automatically update the library ] ]]
