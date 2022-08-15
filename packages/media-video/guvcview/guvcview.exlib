@@ -6,13 +6,6 @@ MY_PNV=${PN}-src-${PV}
 require sourceforge [ suffix=tar.gz pnv=${MY_PNV} ] \
     autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.16 ] ]
 
-if ! ever is_scm; then
-    WORK="${WORKBASE}"/${MY_PNV}
-else
-    SCM_REPOSITORY="https://git.code.sf.net/p/${PN}/git-master"
-    require scm-git
-fi
-
 SUMMARY="A simple v4l2 full-featured video grabber"
 DESCRIPTION="
 This project aims at providing a simple interface for capturing and viewing video from devices
@@ -52,6 +45,8 @@ DEPENDENCIES="
         qt5? ( x11-libs/qtbase:5[gui] )
         !qt5? ( x11-libs/gtk+:3[>=3.0.0] )
 "
+
+WORK="${WORKBASE}"/${MY_PNV}
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     --enable-desktop
