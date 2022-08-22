@@ -40,6 +40,10 @@ DEPENDENCIES="
         python? ( dev-python/numpy[python_abis:*(-)?] )
 "
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/8a05420e5dd8c7b8b2447f82dc919765876511b3.patch
+)
+
 WAF_SRC_CONFIGURE_PARAMS=(
     --docdir=/usr/share/doc/${PNVR}/html
     --mandir=/usr/share/man/man1
