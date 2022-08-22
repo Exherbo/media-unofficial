@@ -13,7 +13,6 @@ MYOPTIONS="
     aac
     doc
     dv
-    ffmpeg
     gtk
     h264
     mp3          [[ description = [ Support MP3 encoding with LAME ] ]]
@@ -38,7 +37,6 @@ DEPENDENCIES="
             media-libs/faad2[>=2.0]
         )
         dv? ( media-libs/libdv[>=0.102] )
-        ffmpeg? ( media/ffmpeg )
         gtk? ( x11-libs/gtk+:2[>=2.4.0] )
         h264? ( media-libs/x264 )
         mp3? ( media-sound/lame[>=3.93] )
@@ -50,24 +48,18 @@ DEPENDENCIES="
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PN}-1.2.4-libav-9.patch
-    "${FILES}"/${PN}-1.2.4-ffmpeg2.patch
     "${FILES}"/${PN}-1.2.4-CVE-2016-2399.patch
-    "${FILES}"/${PN}-1.2.4-ffmpeg29.patch
-    "${FILES}"/${PN}-1.2.4-ffmpeg3.patch
     "${FILES}"/${PN}-1.2.4-CVE-2017-9122.patch
-    "${FILES}"/${PN}-1.2.4-ffmpeg4.patch
 )
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     --enable-gpl
+    --disable-libswscale
     --with-alsa
     --with-libjpeg
     --with-libpng
+    --without-ffmpeg
     --without-sndio
-)
-DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
-    'ffmpeg libswscale'
 )
 DEFAULT_SRC_CONFIGURE_OPTION_WITHS=(
     'X x'
@@ -75,7 +67,6 @@ DEFAULT_SRC_CONFIGURE_OPTION_WITHS=(
     'aac faad2'
     'doc doxygen'
     'dv libdv'
-    'ffmpeg'
     'gtk'
     'h264 x264'
     'mp3 lame'
