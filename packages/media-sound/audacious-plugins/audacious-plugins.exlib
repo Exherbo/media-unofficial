@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 require option-renames [ renames=[ 'flsyn fluidsynth' ] ] \
-    autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.16 ] ]
+    autotools [ supported_autoconf=[ 2.7 ] supported_automake=[ 1.16 ] ]
 
 export_exlib_phases src_prepare src_configure
 
@@ -180,7 +180,7 @@ audacious-plugins_src_configure() {
         $(option_enable sndfile)                  # sndfile extensions
         $(option_enable vorbis)                   # Ogg Vorbis
         $(option_enable wavpack)                  # WavPack 4.31+
-        $(option_with ffmpeg)                     # FFaudio
+        $(option_with ffmpeg ffmpeg ffmpeg)       # FFaudio
         # unpackaged libsidplay2
         "--disable-sid"                           # Commodore 64 audio
         "--disable-openmpt"                       # unpackaged libopenmpt
