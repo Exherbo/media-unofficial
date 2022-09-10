@@ -32,7 +32,7 @@ DEPENDENCIES="
         media-libs/libcddb[>=0.9.5]
         x11-libs/gtk+:2[>=2.4.0]
     recommendation:
-        media-libs/flac [[ note = [ Adds FLAC encoding support ] ]]
+        media-libs/flac:* [[ note = [ Adds FLAC encoding support ] ]]
         media-libs/mac-port [[ note = [ Adds MonkeyAudio (APE) encoding support ] ]]
         media-libs/mpcenc [[ note = [ Adds Musepack (MPC) encoding support ] ]]
         media-sound/lame [[ note = [ Adds MP3 encoding support ] ]]

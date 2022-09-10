@@ -30,7 +30,7 @@ DEPENDENCIES="
         user/timidity
         alsa? ( sys-sound/alsa-lib )
         ao? ( media-libs/libao[>=0.8.5] )
-        flac? ( media-libs/flac[ogg] )
+        flac? ( media-libs/flac:=[ogg] )
         jack? ( media-sound/jack-audio-connection-kit )
         speex? ( media-libs/speex )
         vorbis? ( media-libs/libvorbis )

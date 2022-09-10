@@ -23,7 +23,7 @@ DEPENDENCIES="
         media/cdparanoia
         dev-lang/ruby
         mp3? ( media-sound/lame )
-        flac? ( media-libs/flac )
+        flac? ( media-libs/flac:* )
         ogg? ( media-sound/vorbis-tools )
     recommendation:
         dev-ruby/gettext

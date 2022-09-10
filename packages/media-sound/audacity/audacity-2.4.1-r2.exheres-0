@@ -46,7 +46,7 @@ DEPENDENCIES="
         app-arch/zip[>=2.3]
         dev-libs/expat
         dev-libs/glib:2
-        media-libs/flac [[ note = [ fails to build when not present/disabled ] ]]
+        media-libs/flac:= [[ note = [ fails to build when not present/disabled ] ]]
         media-libs/libid3tag [[ note = [ fails to build when not present/disabled ] ]]
         media-libs/libsamplerate[>=0.1.2]
         media-libs/libsndfile[>=1.0.0]

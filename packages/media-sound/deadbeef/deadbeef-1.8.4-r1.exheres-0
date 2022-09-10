@@ -59,7 +59,7 @@ DEPENDENCIES="
             media-libs/libcddb
         )
         dts?        ( media-libs/libdca )
-        flac?       ( media-libs/flac )
+        flac?       ( media-libs/flac:= )
         game?       ( sys-libs/zlib )
         mp3?        ( media-libs/libmad )
         notify?     ( sys-apps/dbus )

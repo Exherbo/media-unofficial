@@ -92,7 +92,7 @@ DEPENDENCIES="
         dbus? ( dev-libs/dbus-glib:1[>=0.60] )
         fluidsynth? ( media-sound/fluidsynth[>=1.0.6] )
         ffmpeg? ( media/ffmpeg[>=0.9.1] )
-        flac? ( media-libs/flac[>=1.2.1] )
+        flac? ( media-libs/flac:=[>=1.2.1] )
         gtk? (
             x11-libs/cairo
             x11-libs/gtk+:2

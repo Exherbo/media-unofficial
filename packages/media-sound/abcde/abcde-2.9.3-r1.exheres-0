@@ -23,7 +23,7 @@ DEPENDENCIES="
     run:
         media-sound/cd-discid
         aac? ( media-libs/faac )
-        flac? ( media-libs/flac )
+        flac? ( media-libs/flac:* )
         mp3? ( media-sound/lame )
         normalize? ( media-sound/normalize )
         speex? ( media-libs/speex )

@@ -49,7 +49,7 @@ DEPENDENCIES="
         alsa?          ( sys-sound/alsa-lib[>=1.0.11] )
         ao?            ( media-libs/libao )
         ffmpeg?        ( media/ffmpeg )
-        flac?          ( media-libs/flac )
+        flac?          ( media-libs/flac:= )
         jack?          ( media-sound/jack-audio-connection-kit )
         libsamplerate? ( media-libs/libsamplerate )
         mikmod?        ( media-libs/libmikmod )

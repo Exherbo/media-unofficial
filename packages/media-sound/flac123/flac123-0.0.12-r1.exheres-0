@@ -15,7 +15,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/popt
         media-libs/libao
-        media-libs/flac
+        media-libs/flac:=
         media-libs/libogg
 "
 
