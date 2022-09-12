@@ -21,7 +21,7 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build:
-        dev-util/pkg-config
+        virtual/pkg-config
     build+run:
         dev-libs/glib:2[>=2.18.4]
         dev-libs/libdaemon[>=0.13]
