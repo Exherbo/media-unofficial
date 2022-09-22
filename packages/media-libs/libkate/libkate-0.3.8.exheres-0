@@ -20,8 +20,7 @@ DEPENDENCIES="
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( 'doc' )
 
 src_prepare() {
-    sed -i -e "s/HAVE_PYTHON=yes/HAVE_PYTHON=no/" \
-        configure || die "Failed to disable wxPython features"
+    edo sed -i -e "s/HAVE_PYTHON=yes/HAVE_PYTHON=no/" configure
 
     default
 }
@@ -29,6 +28,6 @@ src_prepare() {
 src_install() {
     default
 
-    rm -f "${IMAGE}/usr/share/man/man1/KateDJ.1" || die "Failed to remove KateDJ.1"
+    edo rm -f "${IMAGE}/usr/share/man/man1/KateDJ.1"
 }
 
