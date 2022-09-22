@@ -9,7 +9,7 @@ MYOPTIONS="doc"
 
 DEPENDENCIES="
     build:
-        dev-util/pkg-config
+        virtual/pkg-config
         doc? ( app-doc/doxygen )
     build+run:
         media-libs/libogg[>=1.0]
