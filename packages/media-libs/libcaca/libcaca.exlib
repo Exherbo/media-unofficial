@@ -18,7 +18,7 @@ HOMEPAGE="http://caca.zoy.org/wiki/${PN}"
 
 LICENCES="WTFPL-2 LGPL-2.1"
 SLOT="0"
-MYOPTIONS="X doc imlib2 java mono ncurses opengl python ruby slang
+MYOPTIONS="X doc imlib2 java ncurses opengl python ruby slang
     cxx [[ description = [ Build C++ bindings ] ]]
     plugins [[ description = [ Build X and opengl drivers as plugins ] ]]
     server [[ description = [ Build cacaserver ] ]]
@@ -36,7 +36,6 @@ DEPENDENCIES="
         )
         imlib2? ( media-libs/imlib2 )
         java? ( virtual/jdk:= )
-        mono? ( dev-lang/mono )
         ncurses? ( sys-libs/ncurses )
         opengl? (
             media-libs/ftgl[>=2.1.3_rc5]
@@ -51,6 +50,7 @@ DEPENDENCIES="
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     --disable-cocoa
     --disable-conio
+    --disable-csharp
     --disable-static
     --disable-vga
     --disable-win32
@@ -63,7 +63,6 @@ DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     'X x11'
     'imlib2'
     'java'
-    'mono csharp'
     'ncurses'
     'opengl gl'
     'plugins'
