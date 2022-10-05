@@ -40,10 +40,13 @@ attached picture
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="flac mp3 vorbis
+MYOPTIONS="
+    flac
+    mp3
     mp4      [[ description = [ Adds support to tag mp4 files ] ]]
     nautilus [[ description = [ Build context menu actions for nautilus ] ]]
     opus     [[ description = [ Adds support for opus files ] ]]
+    vorbis
     wavpack  [[ description = [ Add support for wavpack ] ]]
     speex    [[ requires = vorbis ]]
 
@@ -89,7 +92,9 @@ DEPENDENCIES="
         dev-util/desktop-file-utils
 "
 
-DEFAULT_SRC_CONFIGURE_PARAMS=( --disable-appdata-validate )
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --disable-appdata-validate
+)
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     flac
     mp3
