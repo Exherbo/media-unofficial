@@ -20,12 +20,13 @@ DEPENDENCIES="
     build+run:
         dev-python/fasteners[>=0.14][python_abis:*(-)?]
         dev-python/PyJWT[>=2.0][python_abis:*(-)?]
-        dev-python/PyQt5[>=5.10.0][python_abis:*(-)?]
+        dev-python/PyQt5[>=5.11.0][python_abis:*(-)?]
+        dev-python/PyQt5-sip[>=12.9.1][python_abis:*(-)?]
         dev-python/Markdown[>=3.2][python_abis:*(-)?]
         dev-python/mutagen[>=1.37][python_abis:*(-)?]
         dev-python/python-dateutil[>=2.7.3][python_abis:*(-)?]
         dev-python/python-discid[python_abis:*(-)?]
-        dev-python/PyYAML[>=5.1][python_abis:*(-)?]
+        dev-python/PyYAML[>=5.1&<7][python_abis:*(-)?]
     suggestion:
         media-libs/chromaprint [[ description = [ Support for finding AcoustID fingerprints of audio files ] ]]
 "
