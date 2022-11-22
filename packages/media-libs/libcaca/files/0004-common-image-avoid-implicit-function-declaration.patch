@@ -1,0 +1,33 @@
+Upstream: Pending, https://github.com/cacalabs/libcaca/pull/70
+
+From afacac2cf7dfad8015c059a96046d9c2fa34632f Mon Sep 17 00:00:00 2001
+From: Johannes Kauffmann <johanneskauffmann@hotmail.com>
+Date: Sun, 18 Sep 2022 17:31:19 +0200
+Subject: [PATCH 4/6] common-image: avoid implicit function declaration
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+common-image.c: In function ‘load_image’:
+common-image.c:164:18: warning: implicit declaration of function ‘_caca_alloc2d’ [-Wimplicit-function-declaration]
+  164 |     im->pixels = _caca_alloc2d(im->w, im->h, depth);
+      |                  ^~~~~~~~~~~~~
+---
+ src/common-image.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/common-image.c b/src/common-image.c
+index 7059bf40c2e1..d40eba124776 100644
+--- a/src/common-image.c
++++ b/src/common-image.c
+@@ -22,6 +22,7 @@
+ #endif
+ 
+ #include "caca.h"
++#include "caca_internals.h"
+ 
+ #include "common-image.h"
+ 
+-- 
+2.38.1
+

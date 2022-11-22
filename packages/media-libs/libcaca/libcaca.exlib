@@ -1,6 +1,9 @@
 # Copyright 2009-2012 Pierre Lejeune <superheron@gmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
+MY_PV=$(ever replace 2 '.')
+
+require github [ user=cacalabs release=v${MY_PV} suffix=tar.bz2 ]
 require ruby [ multibuild=false with_opt=true ]
 
 SUMMARY="The industry-standard colour ASCII-art library"
@@ -30,6 +33,7 @@ MYOPTIONS="X doc imlib2 java ncurses opengl python ruby slang
 
 DEPENDENCIES="
     build+run:
+        sys-libs/zlib
         X? ( x11-libs/libX11 )
         cxx? ( dev-cpp/cppunit )
         doc? (
@@ -40,9 +44,10 @@ DEPENDENCIES="
         java? ( virtual/jdk:= )
         ncurses? ( sys-libs/ncurses )
         opengl? (
-            media-libs/ftgl[>=2.1.3_rc5]
+            dev-libs/libglvnd[X?]
+            media-libs/ftgl[>=2.1.3_rc5] [[ note = [ configure checks for it, but it's not actually used ] ]]
             x11-dri/freeglut
-            x11-dri/mesa
+            x11-dri/glu
         )
         python? ( dev-lang/python:=[>=2.2] )
         slang? ( sys-libs/slang )

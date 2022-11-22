@@ -1,0 +1,31 @@
+Upstream: Pending, https://github.com/cacalabs/libcaca/pull/70
+
+From f57b0d65cfaac5f1fbdc75458170e102f57a8dfa Mon Sep 17 00:00:00 2001
+From: Johannes Kauffmann <johanneskauffmann@hotmail.com>
+Date: Sun, 18 Sep 2022 17:52:40 +0200
+Subject: [PATCH 5/6] caca: avoid nested externs
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+common-image.c:164:18: warning: nested extern declaration of ‘_caca_alloc2d’ [-Wnested-externs]
+---
+ caca/caca.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/caca/caca.c b/caca/caca.c
+index 327a8f9f87c7..a9f461d87d52 100644
+--- a/caca/caca.c
++++ b/caca/caca.c
+@@ -284,7 +284,7 @@ char const * caca_get_version(void)
+  * XXX: The following functions are private.
+  */
+ 
+-extern void *_caca_alloc2d(size_t width, size_t height, size_t elem_size)
++void *_caca_alloc2d(size_t width, size_t height, size_t elem_size)
+ {
+     if (width == 0 || height == 0 || elem_size == 0 || SIZE_MAX / width / height < elem_size)
+         return NULL;
+-- 
+2.38.1
+

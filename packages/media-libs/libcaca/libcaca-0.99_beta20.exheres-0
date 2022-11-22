@@ -1,0 +1,17 @@
+# Copyright 2009-2012 Pierre Lejeune <superheron@gmail.com>
+# Distributed under the terms of the GNU General Public License v2
+
+require libcaca
+require autotools [ supported_autoconf=[ 2.7 ] supported_automake=[ 1.16 ] ]
+
+PLATFORMS="~amd64"
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/0001-Remove-bashism-in-configure.ac.patch
+    "${FILES}"/0002-Rename-some-internal-functions-with-_caca-prefix-to-.patch
+    "${FILES}"/0003-Fix-GL-and-X11-drivers-in-visibility-mode.patch
+    "${FILES}"/0004-common-image-avoid-implicit-function-declaration.patch
+    "${FILES}"/0005-caca-avoid-nested-externs.patch
+    "${FILES}"/0006-caca_internals-export-_caca_alloc2d.patch
+)
+

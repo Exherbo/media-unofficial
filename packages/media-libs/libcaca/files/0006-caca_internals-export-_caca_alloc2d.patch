@@ -1,0 +1,33 @@
+Upstream: Pending, https://github.com/cacalabs/libcaca/pull/70
+
+From 9683d1f7efe316b1e6113b65c6fff40671d35632 Mon Sep 17 00:00:00 2001
+From: Johannes Kauffmann <johanneskauffmann@hotmail.com>
+Date: Sun, 18 Sep 2022 18:01:31 +0200
+Subject: [PATCH 6/6] caca_internals: export _caca_alloc2d
+
+It is used by the image viewer:
+
+/usr/bin/ld: img2txt-common-image.o: in function `load_image':
+../../src/common-image.c:164: undefined reference to `_caca_alloc2d'
+
+Fixes #59.
+---
+ caca/caca_internals.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/caca/caca_internals.h b/caca/caca_internals.h
+index 7b74b9e943ad..0bd7f6c8c5e9 100644
+--- a/caca/caca_internals.h
++++ b/caca/caca_internals.h
+@@ -268,7 +268,7 @@ extern int _caca_pop_event(caca_display_t *, caca_privevent_t *);
+ extern void _caca_set_term_title(char const *);
+ 
+ /* Internal memory function */
+-extern void *_caca_alloc2d(size_t width, size_t height, size_t elem_size);
++__extern void *_caca_alloc2d(size_t width, size_t height, size_t elem_size);
+ 
+ /* Profiling functions */
+ #if defined PROF
+-- 
+2.38.1
+

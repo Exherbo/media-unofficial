@@ -1,0 +1,155 @@
+Upstream: Yes
+
+From bd2cff9e94cd71807f692aab89a40266009e52a7 Mon Sep 17 00:00:00 2001
+From: Sam Hocevar <sam@hocevar.net>
+Date: Tue, 7 Dec 2021 09:50:02 +0100
+Subject: [PATCH 2/6] Rename some internal functions with _caca prefix to avoid
+ confusion when we export them
+
+---
+ caca/caca_internals.h |  4 ++--
+ caca/driver/conio.c   |  2 +-
+ caca/driver/gl.c      |  2 +-
+ caca/driver/ncurses.c |  6 +++---
+ caca/driver/slang.c   |  6 +++---
+ caca/event.c          | 10 +++++-----
+ 6 files changed, 15 insertions(+), 15 deletions(-)
+
+diff --git a/caca/caca_internals.h b/caca/caca_internals.h
+index b2cedbad2a77..499c63a83cd3 100644
+--- a/caca/caca_internals.h
++++ b/caca/caca_internals.h
+@@ -252,8 +252,8 @@ extern int _caca_getticks(caca_timer_t *);
+ /* Internal event functions */
+ extern void _caca_handle_resize(caca_display_t *);
+ #if defined(USE_SLANG) || defined(USE_NCURSES) || defined(USE_CONIO) || defined(USE_GL)
+-extern void _push_event(caca_display_t *, caca_privevent_t *);
+-extern int _pop_event(caca_display_t *, caca_privevent_t *);
++extern void _caca_push_event(caca_display_t *, caca_privevent_t *);
++extern int _caca_pop_event(caca_display_t *, caca_privevent_t *);
+ #endif
+ 
+ /* Internal window functions */
+diff --git a/caca/driver/conio.c b/caca/driver/conio.c
+index 72813ec8c563..f636f5211fd2 100644
+--- a/caca/driver/conio.c
++++ b/caca/driver/conio.c
+@@ -151,7 +151,7 @@ static int conio_get_event(caca_display_t *dp, caca_privevent_t *ev)
+ 
+     release = *ev;
+     release.type = CACA_EVENT_KEY_RELEASE;
+-    _push_event(dp, &release);
++    _caca_push_event(dp, &release);
+ 
+     return 1;
+ }
+diff --git a/caca/driver/gl.c b/caca/driver/gl.c
+index 7736a4c1d7d4..0cb50bb4ba43 100644
+--- a/caca/driver/gl.c
++++ b/caca/driver/gl.c
+@@ -374,7 +374,7 @@ static int gl_get_event_inner(caca_display_t *dp, caca_privevent_t *ev)
+ 
+         if(dp->drv.p->mouse_clicked)
+         {
+-            _push_event(dp, ev);
++            _caca_push_event(dp, ev);
+             ev->type = CACA_EVENT_MOUSE_PRESS;
+             ev->data.mouse.button = dp->drv.p->mouse_button;
+             dp->drv.p->mouse_clicked = 0;
+diff --git a/caca/driver/ncurses.c b/caca/driver/ncurses.c
+index 81e8ec960b20..18ffa3460def 100644
+--- a/caca/driver/ncurses.c
++++ b/caca/driver/ncurses.c
+@@ -482,9 +482,9 @@ static int ncurses_get_event(caca_display_t *dp, caca_privevent_t *ev)
+         switch(mevent.bstate)
+         {
+ #define PRESS(x) ev->data.mouse.button = x; \
+-                 ev->type = CACA_EVENT_MOUSE_PRESS; _push_event(dp, ev)
++                 ev->type = CACA_EVENT_MOUSE_PRESS; _caca_push_event(dp, ev)
+ #define RELEASE(x) ev->data.mouse.button = x; \
+-                   ev->type = CACA_EVENT_MOUSE_RELEASE; _push_event(dp, ev)
++                   ev->type = CACA_EVENT_MOUSE_RELEASE; _caca_push_event(dp, ev)
+ #define CLICK(x) PRESS(x); RELEASE(x)
+             case BUTTON1_PRESSED: PRESS(1); break;
+             case BUTTON1_RELEASED: RELEASE(1); break;
+@@ -530,7 +530,7 @@ static int ncurses_get_event(caca_display_t *dp, caca_privevent_t *ev)
+         }
+ 
+         if(dp->mouse.x == mevent.x && dp->mouse.y == mevent.y)
+-            return _pop_event(dp, ev);
++            return _caca_pop_event(dp, ev);
+ 
+         dp->mouse.x = mevent.x;
+         dp->mouse.y = mevent.y;
+diff --git a/caca/driver/slang.c b/caca/driver/slang.c
+index 313ee2406803..c61e7dc5995b 100644
+--- a/caca/driver/slang.c
++++ b/caca/driver/slang.c
+@@ -403,12 +403,12 @@ static int slang_get_event(caca_display_t *dp, caca_privevent_t *ev)
+ 
+         ev->data.mouse.button = button;
+         ev->type = CACA_EVENT_MOUSE_PRESS;
+-        _push_event(dp, ev);
++        _caca_push_event(dp, ev);
+         ev->type = CACA_EVENT_MOUSE_RELEASE;
+-        _push_event(dp, ev);
++        _caca_push_event(dp, ev);
+ 
+         if(dp->mouse.x == x && dp->mouse.y == y)
+-            return _pop_event(dp, ev);
++            return _caca_pop_event(dp, ev);
+ 
+         dp->mouse.x = x;
+         dp->mouse.y = y;
+diff --git a/caca/event.c b/caca/event.c
+index cd415a398044..72e4dfee1c84 100644
+--- a/caca/event.c
++++ b/caca/event.c
+@@ -380,7 +380,7 @@ static int _get_next_event(caca_display_t *dp, caca_privevent_t *ev)
+            && dp->events.autorepeat_ticks > AUTOREPEAT_THRESHOLD
+            && dp->events.autorepeat_ticks > AUTOREPEAT_RATE)
+     {
+-        _push_event(dp, ev);
++        _caca_push_event(dp, ev);
+         dp->events.autorepeat_ticks -= AUTOREPEAT_RATE;
+         *ev = dp->events.last_key_event;
+         return 1;
+@@ -403,7 +403,7 @@ static int _get_next_event(caca_display_t *dp, caca_privevent_t *ev)
+           && (dp->events.last_key_ticks > AUTOREPEAT_THRESHOLD
+                || (ev->type & CACA_EVENT_KEY_PRESS)))
+     {
+-        _push_event(dp, ev);
++        _caca_push_event(dp, ev);
+         *ev = dp->events.last_key_event;
+         ev->type = CACA_EVENT_KEY_RELEASE;
+         dp->events.last_key_event.type = CACA_EVENT_NONE;
+@@ -425,7 +425,7 @@ static int _get_next_event(caca_display_t *dp, caca_privevent_t *ev)
+ static int _lowlevel_event(caca_display_t *dp, caca_privevent_t *ev)
+ {
+ #if defined(USE_SLANG) || defined(USE_NCURSES) || defined(USE_CONIO)
+-    int ret = _pop_event(dp, ev);
++    int ret = _caca_pop_event(dp, ev);
+ 
+     if(ret)
+         return ret;
+@@ -435,7 +435,7 @@ static int _lowlevel_event(caca_display_t *dp, caca_privevent_t *ev)
+ }
+ 
+ #if defined(USE_SLANG) || defined(USE_NCURSES) || defined(USE_CONIO) || defined(USE_GL)
+-void _push_event(caca_display_t *dp, caca_privevent_t *ev)
++void _caca_push_event(caca_display_t *dp, caca_privevent_t *ev)
+ {
+     if(!ev->type || dp->events.queue == EVENTBUF_LEN)
+         return;
+@@ -443,7 +443,7 @@ void _push_event(caca_display_t *dp, caca_privevent_t *ev)
+     dp->events.queue++;
+ }
+ 
+-int _pop_event(caca_display_t *dp, caca_privevent_t *ev)
++int _caca_pop_event(caca_display_t *dp, caca_privevent_t *ev)
+ {
+     int i;
+ 
+-- 
+2.38.1
+
