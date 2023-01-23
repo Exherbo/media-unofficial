@@ -36,7 +36,7 @@ DEPENDENCIES="
         mng? ( media-libs/libmng )
         providers:ijg-jpeg? ( media-libs/jpeg:= )
         providers:jpeg-turbo? ( media-libs/libjpeg-turbo )
-        tiff? ( media-libs/tiff )
+        tiff? ( media-libs/tiff:= )
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=(
