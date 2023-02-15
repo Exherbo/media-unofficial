@@ -2,13 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # Based in part on timidity++-2.13.2-r10.ebuild from Gentoo
 
-require sourceforge [ project=timidity pn="TiMidity++" ]
-require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.16 1.15 ] ]
+require sourceforge [ project=timidity pn="TiMidity++" suffix=tar.xz ]
+require autotools [ supported_autoconf=[ 2.7 ] supported_automake=[ 1.16 ] ]
 
 SUMMARY="MIDI software synthesizer"
 DESCRIPTION="
 A handy MIDI to WAV converter with OSS and ALSA output support, useful for playing MIDI without a
-midi-capable soundcard
+midi-capable soundcard.
 "
 
 LICENCES="GPL-2"
@@ -42,9 +42,7 @@ DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/${PN}-2.14.0-ar.patch
     "${FILES}"/${PN}-2.14.0-configure-flags.patch
     "${FILES}"/${PN}-2.14.0-params.patch
-    "${FILES}"/${PN}-2.14.0-pkg-config.patch
-    "${FILES}"/${PN}-2.14.0-revert-for-required-ctl_speana_data-function.patch
-    "${FILES}"/${PN}-2.14.0-tcltk86.patch
+    "${FILES}"/${PN}-2.15.0-pkg-config.patch
 )
 
 # TODO: push to upstream patch with using AM_PROG_AR
@@ -73,7 +71,7 @@ src_install() {
     default
 
     insinto /etc
-    doins "${FILES}/timidity.cfg"
+    doins "${FILES}"/timidity.cfg
 
     dodir /usr/share/timidity
     dosym /etc/timidity.cfg /usr/share/timidity/timidity.cfg
