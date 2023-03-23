@@ -5,7 +5,3 @@ require audacious-plugins
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/f60beb400eeb1e4778bbfd738bc4a4ccef3de539.patch
-)
-

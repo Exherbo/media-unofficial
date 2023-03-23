@@ -15,12 +15,12 @@ Note: some plugins are not on by default and have to be enabled in Preferences -
 
 LICENCES="
     BSD-2 [[ note = [ alsa audpl compressor crossfade ladspa mixer mpg123 mpris2 oss4 resample sdlout unix-io ] ]]
-    BSD-3 [[ note = [ psf xsf ] ]]
-    GPL-2 [[ note = [ aac alarm amidi-plug aosd blue_scope bs2b cue filewriter hotkey jack m3u metronom mms neon null OSS pulse_audio sid sndfile sndstretch tongen vtx xspf ] ]]
+    BSD-3 [[ note = [ opus pipewire psf xsf ] ]]
+    GPL-2 [[ note = [ aac amidi-plug aosd blue_scope bs2b cue filewriter hotkey jack m3u metronom mms neon null OSS pulse_audio qhotkey sid sndfile sndstretch tongen vtx xspf ] ]]
     GPL-3 [[ note = [ asx cdaudio-ng cd-menu-items ffmpeg flacng gtkui notify pls search-tool skins song_change ] ]]
     LGPL-2 [[ note = [ vorbis ] ]]
     LGPL-2.1 [[ note = [ adplug console ] ]]
-    MIT [[ note = [ albumart cairo-spectrum crystalizer lyricwiki voice_removal ] ]]
+    MIT [[ note = [ albumart bitcrusher cairo-spectrum crystalizer lyricwiki voice_removal ] ]]
     public-domain [[ note = [ aac ] ]]
 "
 SLOT="0"
@@ -28,24 +28,25 @@ SLOT="0"
 MYOPTIONS="
     (
         alsa [[ description = [ Support ALSA audio output and MIDI synthesizing with AlsaMidi. ] ]]
-        pulseaudio [[ description = [ Support PulseAudio output. ] ]]
-        oss [[ description = [ Support OSSv4 audio output. ] ]]
         jack [[ description = [ Support JACK audio output. ] ]]
+        oss [[ description = [ Support OSSv4 audio output. ] ]]
+        pipewire [[ description = [ Support Pipewire output. ] ]]
+        pulseaudio [[ description = [ Support PulseAudio output. ] ]]
         qtaudio [[ description = [ Support QtMultimedia output. ] requires = [ qt5 ] ]]
     ) [[ number-selected = at-least-one ]]
 
     aac [[ description = [ Support AAC decoding. ] ]]
-    fluidsynth [[
-        description = [ Support MIDI synthesizing with fluidsynth. ]
-        requires = [ alsa ]
-    ]]
     bs2b [[ description = [ Improve headphone listening of stereo audio records via libbs2b. ] ]]
     cd [[ description = [ AudioCD support. ] ]]
     cue [[ description = [ Support for CUE metadata files from CD/DVDs. ] ]]
     dbus [[ description = [ Control audacious via dbus mpris interface. ] ]]
     ffmpeg [[ description = [ Support decoding tons of audio codecs and access formats via ffmpeg. ] ]]
     flac [[ description = [ Support FLAC decoding and dumping audio out to a flac file. ] ]]
-    gtk [[ description = [ Build the GTK+ 2 GUI. ] ]]
+    fluidsynth [[
+        description = [ Support MIDI synthesizing with fluidsynth. ]
+        requires = [ alsa ]
+    ]]
+    gtk [[ description = [ Build the GTK+ 3 GUI. ] ]]
     mms [[ description = [ Support for mms:// and mmsh:// network streams in Open URL dialog. ] ]]
     modplug [[ description = [ Support for MOD Music formats. ] ]]
     mp3 [[ description = [ Support for mp{1,2,3} and bmu files decoding (and dumping audio out to a mp3 file). ] ]]
@@ -57,16 +58,14 @@ MYOPTIONS="
         description = [ Support for displaying notifications (more customiseable than notify). ]
         requires = [ gtk ]
     ]]
+    opus [[ description = [ Support for Opus decoding and dumping audio to an opus file. ] ]]
     qt5 [[
         description = [ Build the Qt5 GUI. ]
         note = [ Some plugins are still GTK-only. ]
     ]]
     resample [[ description = [ Support converting sample rates using libsamplerate. ] ]]
+    scrobbler [[ description = [ Build audio scrobbler for last.fm. ] ]]
     sdl [[ description = [ Support SDL audio output. ] ]]
-    scrobbler [[
-        description = [ Build audio scrobbler for last.fm. ]
-        requires = [ gtk ]
-    ]]
     sndfile [[ description = [ Support reading files containing sampled sound (like Windows WAV and Apple/SGI AIFF). ] ]]
     speedpitch [[ description = [ Support speed and pitch effects using libsamplerate. ] ]]
     vorbis [[ description = [ Support for OGG/Vorbis formats and dumping audio out to a vorbis file. ] ]]
@@ -75,7 +74,7 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build:
-        sys-devel/gettext
+        sys-devel/gettext[>=0.18.1]
         virtual/pkg-config
     build+run:
         dev-libs/glib:2[>=2.32]
@@ -88,22 +87,20 @@ DEPENDENCIES="
             dev-libs/libcdio[>=0.70]
             media-libs/libcddb[>=1.2.1]
         )
-        cue? ( media-libs/libcue )
+        cue? ( media-libs/libcue[>=2.0] )
         dbus? ( dev-libs/dbus-glib:1[>=0.60] )
         fluidsynth? ( media-sound/fluidsynth[>=1.0.6] )
-        ffmpeg? ( media/ffmpeg[>=0.9.1] )
+        ffmpeg? ( media/ffmpeg[>=2.8] )
         flac? ( media-libs/flac:=[>=1.2.1] )
         gtk? (
             x11-libs/cairo
-            x11-libs/gtk+:2
+            x11-libs/gtk+:3[>=3.22]
             x11-libs/pango
         )
         jack? (
             media-libs/libsamplerate
             media-sound/jack-audio-connection-kit
         )
-        sndfile? ( media-libs/libsndfile[>=0.19] )
-        speedpitch? ( media-libs/libsamplerate )
         mms? ( media-libs/libmms[>=0.3] )
         modplug? ( media-libs/libmodplug )
         mp3? (
@@ -112,8 +109,12 @@ DEPENDENCIES="
         )
         neon? ( net-misc/neon[>=0.27] )
         notify? (
-            x11-libs/libnotify
-            x11-libs/gdk-pixbuf:2.0
+            x11-libs/libnotify[>=0.7]
+            x11-libs/gdk-pixbuf:2.0[>=2.26]
+        )
+        opus? (
+            media-libs/opus[>=1.0.1]
+            media-libs/opusfile[>=0.4]
         )
         osd? (
             x11-libs/cairo
@@ -122,19 +123,22 @@ DEPENDENCIES="
             x11-libs/pango
         )
         oss? ( sys-sound/oss )
+        pipewire? ( media/pipewire[>=0.3.36] )
         pulseaudio? ( media-sound/pulseaudio[>=0.9.5] )
+        qt5? (
+           x11-libs/qtbase:5[>=5.4]
+        )
         qtaudio? (
            x11-libs/qtmultimedia:5
-        )
-        qt5? (
-           x11-libs/qtbase:5
         )
         resample? ( media-libs/libsamplerate )
         scrobbler? ( net-misc/curl[>=7.9.7] )
         sdl? ( media-libs/SDL:2 )
+        sndfile? ( media-libs/libsndfile[>=0.19] )
+        speedpitch? ( media-libs/libsamplerate )
         vorbis? (
-            media-libs/libogg
-            media-libs/libvorbis
+            media-libs/libogg[>=1.0]
+            media-libs/libvorbis[>=1.0]
         )
         wavpack? ( media-sound/wavpack[>=4.31] )
 "
@@ -158,29 +162,33 @@ audacious-plugins_src_configure() {
         # GUI Plugins
         $(option_enable gtk)
         $(option_enable gtk glspectrum)
+        $(option_enable gtk gtk3)
         $(option_enable qt5 qt)
         $(option_enable qt5 qtglspectrum)
+        $(option_enable qt5 qthotkey)
 
         # Output Plugins
         $(option_enable alsa)                     # Advanced Linux Sound Arch.
         $(option_enable jack)                     # Jack Audio Connection Kit
         $(option_enable oss oss4)                 # Open Sound System
+        $(option_enable pipewire)                 # Pipewire
         $(option_enable pulseaudio pulse)         # PulseAudio
-        $(option_enable sdl sdlout)               # Simple DirectMedia Layer
         $(option_enable qtaudio)                  # QtMultimedia
+        $(option_enable sdl sdlout)               # Simple DirectMedia Layer
         $(option_with sdl libsdl 2)
 
         # Input Plugins
         $(option_enable aac)                      # MPEG-2/4 AAC
         $(option_enable cd cdaudio)               # CD Digital Audio
+        $(option_enable ffmpeg ffaudio)           # FFaudio
         $(option_enable flac)                     # Free Lossless Audio Codec
         $(option_enable fluidsynth amidiplug)     # MIDI
         $(option_enable modplug)                  # Module decoder
         $(option_enable mp3 mpg123)               # MPEG-1 Layer I/II/III
+        $(option_enable opus)                     # Opus
         $(option_enable sndfile)                  # sndfile extensions
         $(option_enable vorbis)                   # Ogg Vorbis
         $(option_enable wavpack)                  # WavPack 4.31+
-        $(option_with ffmpeg ffmpeg ffmpeg)       # FFaudio
         # unpackaged libsidplay2
         "--disable-sid"                           # Commodore 64 audio
         "--disable-openmpt"                       # unpackaged libopenmpt
