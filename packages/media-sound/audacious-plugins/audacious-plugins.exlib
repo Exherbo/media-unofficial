@@ -80,6 +80,7 @@ DEPENDENCIES="
         dev-libs/glib:2[>=2.32]
         dev-libs/libxml2:2.0
         media-sound/audacious[~${PV}][gtk?][qt5?]
+        sys-libs/zlib
         aac? ( media-libs/faad2 )
         alsa? ( sys-sound/alsa-lib[>=1.0.16] )
         bs2b? ( media-libs/libbs2b[>=3.0.0] )
@@ -93,8 +94,11 @@ DEPENDENCIES="
         ffmpeg? ( media/ffmpeg[>=2.8] )
         flac? ( media-libs/flac:=[>=1.2.1] )
         gtk? (
+            dev-libs/libglvnd
             x11-libs/cairo
+            x11-libs/gdk-pixbuf:2.0
             x11-libs/gtk+:3[>=3.22]
+            x11-libs/libX11
             x11-libs/pango
         )
         jack? (
@@ -126,7 +130,10 @@ DEPENDENCIES="
         pipewire? ( media/pipewire[>=0.3.36] )
         pulseaudio? ( media-sound/pulseaudio[>=0.9.5] )
         qt5? (
+           dev-libs/libglvnd
+           x11-libs/libX11
            x11-libs/qtbase:5[>=5.4]
+           x11-libs/qtx11extras:5
         )
         qtaudio? (
            x11-libs/qtmultimedia:5
@@ -163,13 +170,16 @@ audacious-plugins_src_configure() {
         $(option_enable gtk)
         $(option_enable gtk glspectrum)
         $(option_enable gtk gtk3)
+        $(option_enable gtk hotkey)
         $(option_enable qt5 qt)
         $(option_enable qt5 qtglspectrum)
         $(option_enable qt5 qthotkey)
 
         # Output Plugins
+        --enable-filewriter
         $(option_enable alsa)                     # Advanced Linux Sound Arch.
         $(option_enable jack)                     # Jack Audio Connection Kit
+        $(option_enable mp3 filewriter_mp3)       # FileWriter MP3 output
         $(option_enable oss oss4)                 # Open Sound System
         $(option_enable pipewire)                 # Pipewire
         $(option_enable pulseaudio pulse)         # PulseAudio
@@ -178,6 +188,7 @@ audacious-plugins_src_configure() {
         $(option_with sdl libsdl 2)
 
         # Input Plugins
+        --enable-console
         $(option_enable aac)                      # MPEG-2/4 AAC
         $(option_enable cd cdaudio)               # CD Digital Audio
         $(option_enable ffmpeg ffaudio)           # FFaudio
