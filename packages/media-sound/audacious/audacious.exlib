@@ -38,6 +38,7 @@ DEPENDENCIES="
             x11-libs/gtk+:3[>=3.22]
             x11-libs/pango
         )
+        libarchive? ( app-arch/libarchive )
         qt5? ( x11-libs/qtbase:5[>=5.2][gui] )
     post:
         media-sound/audacious-plugins[~${PV}][gtk?][qt5?]
