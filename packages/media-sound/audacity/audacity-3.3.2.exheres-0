@@ -1,0 +1,140 @@
+# Copyright 2009, 2010, 2011 Ali Polatel <alip@exherbo.org>
+# Copyright 2013 Marvin Schmidt <marv@exherbo.org>
+# Copyright 2015 Kylie McClain <somasis@exherbo.org>
+# Based in part upon audacity-1.3.7.ebuild which is:
+#   Copyright 1999-2009 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+
+require github [ tag=Audacity-${PV} ]
+require cmake
+require ffmpeg [ with_opt=true ]
+require wxwidgets [ abi=3.2 ]
+require gtk-icon-cache freedesktop-desktop freedesktop-mime
+
+SUMMARY="The Free, Cross-Platform Sound Editor"
+DESCRIPTION="
+Audacity is a free, easy-to-use audio editor and recorder for Windows, Mac OS X,
+GNU/Linux and other operating systems. You can use Audacity to:
+Record live audio.
+Convert tapes and records into digital recordings or CDs.
+Edit Ogg Vorbis, MP3, WAV or AIFF sound files.
+Cut, copy, splice or mix sounds together.
+Change the speed or pitch of a recording.
+And more!
+"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS="
+    ffmpeg
+    flac
+    id3tag
+    ladspa
+    lv2
+    mp2
+    mp3
+    mpg123
+    ogg
+    soundtouch
+    vorbis
+
+    ( linguas: af ar be bg bn bs ca_ES@valencia ca cs cy da de el es eu_ES eu fa fr ga gl he hi hr
+               hu hy id it ja ka km ko lt mk my nb nl oc pl pt_BR pt_PT ro ru sk sl sr_RS
+               sr_RS@latin sv ta tg tr uk vi zh_CN zh_TW )
+"
+
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+    build+run:
+        dev-db/sqlite:3[>=3.31.1]
+        dev-libs/expat
+        dev-libs/glib:2
+        media-libs/fontconfig
+        media-libs/freetype:2
+        media-libs/libjpeg-turbo
+        media-libs/libpng:=
+        media-libs/libsndfile[>=1.0.0]
+        media-libs/portaudio
+        media-libs/portmidi
+        media-libs/soxr[>=0.1.1]
+        media-sound/jack-audio-connection-kit[>=0.103.0]
+        media-sound/lame[>=3.70]
+        media-sound/wavpack
+        sys-sound/alsa-lib
+        x11-dri/mesa
+        x11-libs/gdk-pixbuf:2.0
+        x11-libs/gtk+:3
+        x11-libs/harfbuzz
+        flac? ( media-libs/flac:= )
+        id3tag? ( media-libs/libid3tag )
+        lv2? (
+            media-libs/lilv[>=0.24.6]
+            media-libs/lv2[>=1.16.0]
+            media-libs/serd[>=0.30.2]
+            media-libs/sord[>=0.16.4]
+            media-libs/suil[>=0.10.6]
+        )
+        mp2? ( media-libs/twolame )
+        mp3? ( media-libs/libmad[>=0.14.2b] )
+        mpg123? ( media-sound/mpg123 )
+        ogg? ( media-libs/libogg )
+        soundtouch? ( media-libs/soundtouch )
+        vorbis? ( media-libs/libvorbis )
+"
+:
+src_prepare() {
+    default
+    edo sed -i 's|,strip|,${CMAKE_STRIP}|g' "${CMAKE_SOURCE}"/cmake-proxies/cmake-modules/AudacityFunctions.cmake
+}
+
+src_configure() {
+    local cmake_params=(
+        -G "Unix Makefiles"
+        -DCMAKE_BUILD_TYPE:STRING='Release'
+        -DCMAKE_STRIP:STRING=/usr/$(exhost --target)/bin/$(exhost --target)-strip
+        -Daudacity_conan_enabled:BOOL=OFF
+        -Daudacity_has_sentry_reporting=off
+        -Daudacity_has_crashreports=off
+        -Daudacity_has_updates_check=OFF
+        -Daudacity_has_vst3:BOOL=OFF
+        -Daudacity_lib_preference=system
+        -Daudacity_obey_system_dependencies:BOOL=ON
+        -Daudacity_use_expat=system
+        -Daudacity_use_ffmpeg:STRING=$(option ffmpeg && echo loaded || echo off)
+        -Daudacity_use_ladspa:BOOL=$(option ladspa && echo ON || echo OFF)
+        -Daudacity_use_libflac:STRING=$(option flac && echo system || echo off)
+        -Daudacity_use_libid3tag:STRING=$(option id3tag && echo system || echo off)
+        -Daudacity_use_libmpg123:STRING=$(option mpg123 && echo system || echo off)
+        -Daudacity_use_libmad:STRING=$(option mp3 && echo system || echo off)
+        -Daudacity_use_libogg:STRING=$(option ogg && echo system || echo off)
+        -Daudacity_use_libvorbis:STRING=$(option vorbis && echo system || echo off)
+        -Daudacity_use_lv2:STRING=$(option lv2 && echo system || echo off)
+        -Daudacity_use_soundtouch:STRING=$(option soundtouch && echo system || echo off)
+        -Daudacity_use_twolame:STRING=$(option mp2 && echo system || echo off)
+        -Daudacity_use_nyquist=local
+        -Daudacity_use_pch:BOOL=ON
+        -Daudacity_use_portsmf:STRING=local # required for midi but unpackaged
+        -Daudacity_use_sbsms:STRING=off
+        -Daudacity_use_vamp:STRING=off
+        -Daudacity_use_wxwidgets=system
+
+    )
+
+    ecmake \
+        "${cmake_params[@]}"
+}
+
+pkg_postinst() {
+    freedesktop-desktop_pkg_postinst
+    freedesktop-mime_pkg_postinst
+    gtk-icon-cache_pkg_postinst
+}
+
+pkg_postrm() {
+    freedesktop-desktop_pkg_postrm
+    freedesktop-mime_pkg_postrm
+    gtk-icon-cache_pkg_postrm
+}
+
