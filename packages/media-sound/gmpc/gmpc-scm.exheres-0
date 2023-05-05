@@ -6,12 +6,6 @@ require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 1.13 1.
 
 PLATFORMS="~amd64 ~x86"
 
-DEPENDENCIES="
-    build+run:
-        media-libs/glyr
-        x11-libs/gtk+:3[X?]
-"
-
 AT_M4DIR=( m4 )
 
 DEFAULT_SRC_COMPILE_PARAMS=(

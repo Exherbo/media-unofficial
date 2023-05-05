@@ -13,7 +13,6 @@ client. GMPC is:
 * Fast, even with a huge playlists and database.
 * Extendable, with many plugins available to extend GMPC's core functionality.
 "
-HOMEPAGE="http://gmpclient.org/"
 
 LICENCES="GPL-2"
 SLOT="0"
@@ -38,7 +37,9 @@ DEPENDENCIES="
         dev-libs/glib:2[>=2.16]
         dev-libs/libxml2:2.0
         gnome-desktop/libsoup:2.4
+        media-libs/glyr
         media-libs/libmpd[>=11.8.17]
+        x11-libs/gtk+:3[X?]
         X? ( x11-libs/libX11 )
         xspf? ( media-libs/libxspf )
 "
