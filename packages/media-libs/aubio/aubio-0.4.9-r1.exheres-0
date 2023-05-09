@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 require setup-py [ import=setuptools blacklist=2 with_opt=true multibuild=false ] waf
+require ffmpeg [ with_opt=true ]
 
 SUMMARY="Library for audio labelling"
 DESCRIPTION="
@@ -19,7 +20,6 @@ SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS="
     doc
-    ffmpeg
     jack
 "
 
@@ -35,7 +35,6 @@ DEPENDENCIES="
         media-libs/libsndfile[>=1.0.4]
         media-libs/libsamplerate[>=0.0.15]
         sci-libs/fftw[>=3.0.0]
-        ffmpeg? ( media/ffmpeg[>=2.0] )
         jack? ( media-sound/jack-audio-connection-kit )
         python? ( dev-python/numpy[python_abis:*(-)?] )
 "
