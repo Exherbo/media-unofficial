@@ -5,7 +5,8 @@
 #   Copyright 2009 Ingmar Vanhassel
 
 require github [ user=BelledonneCommunications pn=${PN}2 ] \
-    cmake
+    cmake \
+    ffmpeg [ abis=[ 4 ] with_opt=true ]
 
 export_exlib_phases src_install
 
@@ -27,7 +28,6 @@ MYOPTIONS="
     alsa
     debug
     doc
-    ffmpeg
     gsm [[ description = [ GSM codec support ] ]]
     opengl
     opus [[ description = [ Opus audio decoding and encoding ] ]]
@@ -54,7 +54,6 @@ DEPENDENCIES="
         net-libs/bctoolbox[>=0.4.0]
         net-libs/ortp[>=1.0.0]
         alsa? ( sys-sound/alsa-lib )
-        ffmpeg? ( media/ffmpeg )
         gsm? ( media-libs/gsm )
         opengl? (
             media-libs/glew
@@ -79,6 +78,7 @@ DEPENDENCIES="
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DCMAKE_FIND_ROOT_PATH:PATH="$(ffmpeg_alternatives_prefix);/usr/$(exhost --target)"
     -DCMAKE_BUILD_TYPE:STRING=Release
     -DENABLE_ARTSC:BOOL=FALSE
     -DENABLE_BV16:BOOL=FALSE
