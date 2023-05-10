@@ -2,7 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 require option-renames [ renames=[ 'flsyn fluidsynth' ] ] \
-    autotools [ supported_autoconf=[ 2.7 ] supported_automake=[ 1.16 ] ]
+    autotools [ supported_autoconf=[ 2.7 ] supported_automake=[ 1.16 ] ] \
+    ffmpeg [ with_opt=true ]
 
 export_exlib_phases src_prepare src_configure
 
@@ -91,7 +92,6 @@ DEPENDENCIES="
         cue? ( media-libs/libcue[>=2.0] )
         dbus? ( dev-libs/dbus-glib:1[>=0.60] )
         fluidsynth? ( media-sound/fluidsynth[>=1.0.6] )
-        ffmpeg? ( media/ffmpeg[>=2.8] )
         flac? ( media-libs/flac:=[>=1.2.1] )
         gtk? (
             dev-libs/libglvnd
