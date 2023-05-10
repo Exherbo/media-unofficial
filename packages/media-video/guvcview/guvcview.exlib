@@ -5,6 +5,7 @@ MY_PNV=${PN}-src-${PV}
 
 require sourceforge [ suffix=tar.bz2 pnv=${MY_PNV} ]
 require autotools [ supported_autoconf=[ 2.7 ] supported_automake=[ 1.16 ] ]
+require ffmpeg
 
 export_exlib_phases src_install
 
@@ -37,7 +38,6 @@ DEPENDENCIES="
     build+run:
         dev-libs/glib:2[>=2.10.0]
         dev-libs/libusb:1
-        media/ffmpeg[>=3.0]
         media-libs/SDL:2[>=2.0]
         media-libs/libpng:=
         media-libs/portaudio
