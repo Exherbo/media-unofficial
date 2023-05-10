@@ -5,3 +5,7 @@ require cmus
 
 PLATFORMS="~amd64 ~x86"
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/cmus-2.10.0-ffmpeg-6.patch
+)
+

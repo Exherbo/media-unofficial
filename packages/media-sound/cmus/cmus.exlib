@@ -1,7 +1,7 @@
 # Copyright 2009 Gaute Hope <eg@gaute.vetsj.com>
 # Distributed under the terms of the GNU General Public License v2
 
-require github [ tag=v${PV} ]
+require github [ tag=v${PV} ] ffmpeg [ with_opt=true ]
 
 export_exlib_phases pkg_setup src_prepare src_configure
 
@@ -18,7 +18,6 @@ MYOPTIONS="
     aac           [[ description = [ Support AAC decoding ] ]]
     alsa
     ao
-    ffmpeg
     flac          [[ description = [ Support FLAC decoding ] ]]
     jack
     libsamplerate [[ description = [ Use libsamplerate to resample to JACK's rate ]
@@ -48,7 +47,6 @@ DEPENDENCIES="
         aac?           ( media-libs/faad2 )
         alsa?          ( sys-sound/alsa-lib[>=1.0.11] )
         ao?            ( media-libs/libao )
-        ffmpeg?        ( media/ffmpeg )
         flac?          ( media-libs/flac:= )
         jack?          ( media-sound/jack-audio-connection-kit )
         libsamplerate? ( media-libs/libsamplerate )
@@ -87,6 +85,7 @@ SRC_CONFIGURE_OPTIONS=(
 )
 
 cmus_pkg_setup() {
+    ffmpeg_pkg_setup
     export LD="${CC}"
 }
 
