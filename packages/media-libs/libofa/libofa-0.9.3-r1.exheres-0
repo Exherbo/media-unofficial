@@ -1,7 +1,7 @@
 # Copyright 2009 Ali Polatel <alip@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
-require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.13 1.11 ] ]
+require autotools [ supported_autoconf=[ 2.7 ] supported_automake=[ 1.16 ] ]
 require googlecode [ project=musicip-libofa suffix=tar.gz ]
 
 SUMMARY="Open-source audio fingerprint by MusicIP"
@@ -41,6 +41,10 @@ DEPENDENCIES="
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/${PNV}-gcc-4.3.patch
     -p0 "${FILES}"/${PNV}-gcc-4.patch
+)
+
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --disable-static
 )
 
 src_prepare() {
