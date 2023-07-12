@@ -29,7 +29,7 @@ DEPENDENCIES="
     build+run:
         media-libs/raptor[>=2.0.0]
         providers:libressl? ( dev-libs/libressl:= )
-        providers:openssl? ( dev-libs/openssl )
+        providers:openssl? ( dev-libs/openssl:= )
     run:
         media-libs/ladspa-sdk
 "
