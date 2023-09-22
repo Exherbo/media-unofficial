@@ -1,9 +1,11 @@
 # Copyright 2009 Hong Hao <oahong@gmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
+# Original upstream download doesn't exist anymore
+require debian-upstream [ debian_pv=${PV}.orig ]
+
 SUMMARY="A free implementation of OpenAL's ALUT standard"
-HOMEPAGE="http://connect.creativelabs.com/openal"
-DOWNLOADS="http://connect.creativelabs.com/openal/Downloads/ALUT/${PNV}.tar.gz"
+HOMEPAGE="https://www.openal.org/"
 
 LICENCES="LGPL-2"
 SLOT="0"
