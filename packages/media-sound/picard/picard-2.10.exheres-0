@@ -17,6 +17,8 @@ PLATFORMS="~amd64 ~x86"
 MYOPTIONS=""
 
 DEPENDENCIES="
+    build:
+        sys-devel/gettext
     build+run:
         dev-python/fasteners[>=0.14][python_abis:*(-)?]
         dev-python/PyJWT[>=2.0][python_abis:*(-)?]
@@ -31,7 +33,7 @@ DEPENDENCIES="
         media-libs/chromaprint [[ description = [ Support for finding AcoustID fingerprints of audio files ] ]]
 "
 
-WORK=${WORKBASE}/${PN}-release-${PV}
+WORK=${WORKBASE}/${PN}-${PV}
 
 SETUP_PY_SRC_INSTALL_PARAMS=( --install-locales=/usr/share/locale )
 
