@@ -1,0 +1,38 @@
+# Copyright 2009 Pierre Lejeune <superheron@gmail.com>
+# Distributed under the terms of the GNU General Public License v2
+
+require sourceforge [ suffix=tar.gz ] cmake gtk-icon-cache
+
+SUMMARY="Qt GUI Interface for FluidSynth"
+DESCRIPTION="
+Qsynth is a fluidsynth GUI front-end application, written in C++ around the Qt framework, using Qt
+Designer.
+"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+        x11-libs/qttools:6 [[ note = [ for lupdate ] ]]
+    build+run:
+        media-sound/fluidsynth[>=0.80.0]
+        x11-libs/qtbase:6
+        x11-libs/qtsvg:6
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DCONFIG_FLUID_CHANNEL_INFO:BOOL=FALSE
+    -DCONFIG_FLUID_MIDI_ROUTER:BOOL=FALSE
+    -DCONFIG_FLUID_SERVER:BOOL=TRUE
+    -DCONFIG_GRADIENT:BOOL=TRUE
+    -DCONFIG_QT6:BOOL=TRUE
+    -DCONFIG_STACKTRACE:BOOL=FALSE
+    -DCONFIG_SYSTEM_TRAY:BOOL=TRUE
+    -DCONFIG_XUNIQUE:BOOL=TRUE
+    -DCONFIG_WAYLAND:BOOL=FALSE
+)
+
