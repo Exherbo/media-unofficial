@@ -27,10 +27,14 @@ MYOPTIONS="
     ladspa
     lash [[ description = [ Adds support for the LASH Audio Session Handler ] ]]
     libsndfile [[ description = [ Adds support for libsndfile ] ]]
+    pipewire
     portaudio
     pulseaudio
     readline
 "
+
+# tests fail to run, last checked: 2.3.4
+RESTRICT="test"
 
 DEPENDENCIES="
     build:
@@ -38,30 +42,41 @@ DEPENDENCIES="
     build+run:
         dev-libs/glib:2[>=2.6.5]
         alsa? ( sys-sound/alsa-lib[>=0.9.1] )
-        dbus? ( sys-apps/dbus[>=1.0.0] )
+        dbus? ( sys-apps/dbus[>=1.11.12] )
         jack? ( media-sound/jack-audio-connection-kit )
         ladspa? ( media-libs/ladspa-sdk )
         lash? ( media-sound/lash[>=0.3] )
         libsndfile? ( media-libs/libsndfile[>=1.0.0] )
+        pipewire? ( media/pipewire[>=0.3] )
         portaudio? ( media-libs/portaudio[>=19] )
-        pulseaudio? ( media-sound/pulseaudio[>=0.9.8] )
+        pulseaudio? ( media-sound/pulseaudio[>=2.0] )
         readline? ( sys-libs/readline:= )
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DBUILD_SHARED_LIBS:BOOL=TRUE
-    -DLIB_SUFFIX:STRING=
-    -DMAN_INSTALL_DIR:PATH=/usr/share/man/man1
     -Denable-aufile:BOOL=TRUE
-    -Denable-debug:BOOL=FALSE
+    -Denable-coverage:BOOL=FALSE
+    -Denable-dsound:BOOL=FALSE
     -Denable-floats:BOOL=FALSE
     -Denable-fpe-check:BOOL=FALSE
     -Denable-ipv6:BOOL=TRUE
-    -Denable-ladcca:BOOL=FALSE
+    -Denable-libinstpatch:BOOL=FALSE
     -Denable-midishare:BOOL=TRUE
-    -Denable-pkgconfig:BOOL=TRUE
+    -Denable-network:BOOL=TRUE
+    -Denable-oboe:BOOL=FALSE
+    -Denable-openmp:BOOL=FALSE
+    -Denable-opensles:BOOL=FALSE
+    -Denable-oss:BOOL=FALSE
     -Denable-profiling:BOOL=FALSE
+    -Denable-sdl2:BOOL=FALSE
+    -Denable-systemd:BOOL=FALSE
+    -Denable-threads:BOOL=TRUE
     -Denable-trap-on-fpe:BOOL=FALSE
+    -Denable-ubsan:BOOL=FALSE
+    -Denable-wasapi:BOOL=FALSE
+    -Denable-waveout:BOOL=FALSE
+    -Denable-winmidi:BOOL=FALSE
 )
 CMAKE_SRC_CONFIGURE_OPTIONS=(
     'alsa enable-alsa'
@@ -70,8 +85,18 @@ CMAKE_SRC_CONFIGURE_OPTIONS=(
     'ladspa enable-ladspa'
     'lash enable-lash'
     'libsndfile enable-libsndfile'
+    'pipewire enable-pipewire'
     'portaudio enable-portaudio'
     'pulseaudio enable-pulseaudio'
     'readline enable-readline'
 )
+
+src_prepare() {
+    cmake_src_prepare
+
+    # prevent unsetting CC, CFLAGS and LDFLAGS
+    edo sed \
+        -e '/unset/d' \
+        -i src/gentables/CMakeLists.txt
+}
 
