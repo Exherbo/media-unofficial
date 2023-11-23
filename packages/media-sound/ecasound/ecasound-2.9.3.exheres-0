@@ -3,8 +3,8 @@
 #   Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-require python [ with_opt=true blacklist="3" multibuild=false ]
-require ruby [ with_opt=true multibuild=true multiunpack=false ]
+require python [ with_opt=true blacklist=2 multibuild=false ]
+require ruby [ with_opt=true multibuild=false ]
 
 SUMMARY="A software package designed for multitrack audio processing"
 DESCRIPTION="
@@ -18,15 +18,15 @@ parameters can be controlled by operator objects like oscillators
 and MIDI-CCs. A versatile console mode user-interface is included
 in the package.
 "
-HOMEPAGE="http://${PN}.seul.org/${PN}"
-DOWNLOADS="http://${PN}.seul.org/download/${PNV}.tar.gz"
+HOMEPAGE="https://${PN}.seul.org/${PN}"
+DOWNLOADS="https://${PN}.seul.org/download/${PNV}.tar.gz"
 
 LICENCES="LGPL-2.1 GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS="alsa audiofile debug jack libsamplerate ncurses sndfile vorbis"
 
-# libkvutils_tester fails, last checked: 2.9.1
+# libkvutils_tester fails, last checked: 2.9.3
 RESTRICT="test"
 
 DEPENDENCIES="
@@ -44,62 +44,44 @@ DEPENDENCIES="
 
 DEFAULT_SRC_INSTALL_EXTRA_DOCS=( Documentation/programmers_guide/ecasound_programmers_guide.txt )
 
+pkg_setup() {
+    if option ruby; then
+        eval "$(eclectic ruby script $(ruby_get_abi))"
+    fi
+
+    default
+}
+
 src_configure() {
-    local pyconf=()
+    local myconf=(
+        --enable-shared
+        --enable-sys-readline
+        --disable-arts
+        --disable-oss
+        --disable-static
+        --disable-liboil
+        --disable-liblilv
+        --disable-liblo
+        --with-largefile
+        $(option_enable alsa)
+        $(option_enable audiofile)
+        $(option_enable debug)
+        $(option_enable jack)
+        $(option_enable libsamplerate)
+        $(option_enable ncurses)
+        $(option_enable python pyecasound)
+        $(option_enable ruby rubyecasound)
+        $(option_enable sndfile)
+    )
 
     if option python; then
-        pyconf=(
-            --enable-pyecasound
+        edo export PYTHONPATH=${PYTHON}
+        myconf+=(
             --with-python-includes=/usr/$(exhost --target)/include/python$(python_get_abi)
             --with-python-modules=$(python_get_libdir)
         )
-    else
-        pyconf=( --disable-pyecasound )
     fi
 
-    econf \
-        $(option_enable alsa) \
-        $(option_enable audiofile) \
-        $(option_enable debug) \
-        $(option_enable jack) \
-        $(option_enable libsamplerate) \
-        $(option_enable ncurses) \
-        $(option_enable ruby rubyecasound) \
-        $(option_enable sndfile) \
-        --enable-shared \
-        --enable-sys-readline \
-        --disable-arts \
-        --disable-oss \
-        --disable-static \
-        --disable-liboil \
-        --disable-liblilv \
-        --disable-liblo \
-        --with-largefile \
-        "${pyconf[@]}"
-}
-
-src_compile() {
-    default
-}
-
-install_prepare_one_multibuild() {
-    edo mkdir -p "${WORKBASE}"/RUBY_ABIS/$(ruby_get_abi)
-}
-
-install_one_multibuild() {
-    for i in $(ruby_get_abi);
-    do
-        insinto /usr/$(exhost --target)/lib/ruby/site_ruby/${i}/
-        doins "${IMAGE}"/ecasound.rb
-    done
-}
-
-src_install() {
-    default
-
-    if optionq ruby; then
-        easy-multibuild_src_install
-        edo rm "${IMAGE}"/ecasound.rb
-    fi
+    econf "${myconf[@]}"
 }
 
