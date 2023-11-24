@@ -32,7 +32,7 @@ RESTRICT="test"
 DEPENDENCIES="
     build+run:
         media-libs/ladspa-sdk
-        sys-libs/readline
+        sys-libs/readline:=
         alsa? ( sys-sound/alsa-lib )
         audiofile? ( media-libs/audiofile )
         jack? ( media-sound/jack-audio-connection-kit )
