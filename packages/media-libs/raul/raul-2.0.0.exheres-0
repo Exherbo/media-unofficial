@@ -1,0 +1,29 @@
+# Copyright 2009 Jonathan Dahan <jedahan@gmail.com>
+# Copyright 2012 Ali Polatel <alip@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+require meson
+
+SUMMARY="Raul is a header-only C++ utility library for real-time audio applications"
+HOMEPAGE="https://drobilla.net/software/${PN}"
+DOWNLOADS="https://download.drobilla.net/${PNV}.tar.xz"
+
+LICENCES="GPL-3"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+# unpackaged test dependency autoship
+RESTRICT="test"
+
+DEPENDENCIES=""
+
+MESON_SRC_CONFIGURE_PARAMS=(
+    -Dstrict=false
+    -Dtitle=Raul
+)
+
+MESON_SRC_CONFIGURE_TESTS=(
+    '-Dtests=enabled -Dtests=disabled'
+)
+
