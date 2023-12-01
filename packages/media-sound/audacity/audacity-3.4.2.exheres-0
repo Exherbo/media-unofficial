@@ -5,10 +5,10 @@
 #   Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-require github [ tag=Audacity-${PV} ]
+require github [ release=Audacity-${PV} pnv=${PN}-sources-${PV} suffix=tar.gz ]
 require cmake
 require ffmpeg [ with_opt=true ]
-require wxwidgets [ abi=3.2 ]
+require wxwidgets
 require gtk-icon-cache freedesktop-desktop freedesktop-mime
 
 SUMMARY="The Free, Cross-Platform Sound Editor"
@@ -34,18 +34,15 @@ MYOPTIONS="
     lv2
     mp2
     mp3
-    mpg123
     ogg
+    opus [[ description = [ Support for opus files ] ]]
     soundtouch
     vorbis
-
-    ( linguas: af ar be bg bn bs ca_ES@valencia ca cs cy da de el es eu_ES eu fa fr ga gl he hi hr
-               hu hy id it ja ka km ko lt mk my nb nl oc pl pt_BR pt_PT ro ru sk sl sr_RS
-               sr_RS@latin sv ta tg tr uk vi zh_CN zh_TW )
 "
 
 DEPENDENCIES="
     build:
+        dev-libs/rapidjson
         virtual/pkg-config
     build+run:
         dev-db/sqlite:3[>=3.31.1]
@@ -62,6 +59,7 @@ DEPENDENCIES="
         media-sound/jack-audio-connection-kit[>=0.103.0]
         media-sound/lame[>=3.70]
         media-sound/wavpack
+        sys-apps/util-linux
         sys-sound/alsa-lib
         x11-dri/mesa
         x11-libs/gdk-pixbuf:2.0
@@ -70,23 +68,43 @@ DEPENDENCIES="
         flac? ( media-libs/flac:= )
         id3tag? ( media-libs/libid3tag )
         lv2? (
+            dev-libs/serd[>=0.30.2]
+            dev-libs/sord[>=0.16.4]
             media-libs/lilv[>=0.24.6]
             media-libs/lv2[>=1.16.0]
-            media-libs/serd[>=0.30.2]
-            media-libs/sord[>=0.16.4]
             media-libs/suil[>=0.10.6]
         )
         mp2? ( media-libs/twolame )
-        mp3? ( media-libs/libmad[>=0.14.2b] )
-        mpg123? ( media-sound/mpg123 )
+        mp3? ( media-sound/mpg123 )
         ogg? ( media-libs/libogg )
+        opus? (
+            media-libs/opus
+            media-libs/opusfile
+        )
         soundtouch? ( media-libs/soundtouch )
         vorbis? ( media-libs/libvorbis )
 "
-:
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/e10034c19ed1911b730637fbc722030eb3dfd04b.patch
+)
+
 src_prepare() {
-    default
-    edo sed -i 's|,strip|,${CMAKE_STRIP}|g' "${CMAKE_SOURCE}"/cmake-proxies/cmake-modules/AudacityFunctions.cmake
+    cmake_src_prepare
+
+    edo sed \
+        -e 's|,strip|,${CMAKE_STRIP}|g' \
+        -i "${CMAKE_SOURCE}"/cmake-proxies/cmake-modules/AudacityFunctions.cmake
+
+    # fix locale search path
+    edo sed \
+        -e 's:installPrefix + L"/share/locale":L"/usr/share/locale":g' \
+        -i libraries/lib-files/PathList.cpp
+
+    # fix docdir
+    edo sed \
+        -e "s:doc/\${AUDACITY_NAME}:doc/${PNVR}:g" \
+        -i src/CMakeLists.txt
 }
 
 src_configure() {
@@ -94,32 +112,46 @@ src_configure() {
         -G "Unix Makefiles"
         -DCMAKE_BUILD_TYPE:STRING='Release'
         -DCMAKE_STRIP:STRING=/usr/$(exhost --target)/bin/$(exhost --target)-strip
-        -Daudacity_conan_enabled:BOOL=OFF
+        -Daudacity_conan_enabled:BOOL=FALSE
         -Daudacity_has_sentry_reporting=off
         -Daudacity_has_crashreports=off
+        -Daudacity_has_networking:BOOL=FALSE
+        -Daudacity_has_tests:BOOL=FALSE
         -Daudacity_has_updates_check=OFF
-        -Daudacity_has_vst3:BOOL=OFF
+        -Daudacity_has_url_schmemes_support:BOOL=FALSE
+        -Daudacity_has_vst3:BOOL=FALSE
         -Daudacity_lib_preference=system
-        -Daudacity_obey_system_dependencies:BOOL=ON
+        -Daudacity_obey_system_dependencies:BOOL=TRUE
         -Daudacity_use_expat=system
+        -Daudacity_use_catch2:STRING=system
         -Daudacity_use_ffmpeg:STRING=$(option ffmpeg && echo loaded || echo off)
+        -Daudacity_use_jpeg:STRING=system
         -Daudacity_use_ladspa:BOOL=$(option ladspa && echo ON || echo OFF)
         -Daudacity_use_libflac:STRING=$(option flac && echo system || echo off)
         -Daudacity_use_libid3tag:STRING=$(option id3tag && echo system || echo off)
-        -Daudacity_use_libmpg123:STRING=$(option mpg123 && echo system || echo off)
-        -Daudacity_use_libmad:STRING=$(option mp3 && echo system || echo off)
+        -Daudacity_use_libmp3lame:STRING=system
+        -Daudacity_use_libmpg123:STRING=$(option mp3 && echo system || echo off)
         -Daudacity_use_libogg:STRING=$(option ogg && echo system || echo off)
+        -Daudacity_use_libopus:STRING=$(option opus && echo system || echo off)
+        -Daudacity_use_libsndfile:STRING=system
         -Daudacity_use_libvorbis:STRING=$(option vorbis && echo system || echo off)
         -Daudacity_use_lv2:STRING=$(option lv2 && echo system || echo off)
         -Daudacity_use_soundtouch:STRING=$(option soundtouch && echo system || echo off)
         -Daudacity_use_twolame:STRING=$(option mp2 && echo system || echo off)
-        -Daudacity_use_nyquist=local
+        -Daudacity_use_nyquist:STRING=local
+        -Daudacity_use_midi:STRING=system
+        -Daudacity_use_opusfile:STRING=$(option opus && echo system || echo off)
         -Daudacity_use_pch:BOOL=ON
+        -Daudacity_use_png:STRING=system
+        -Daudactiy_use_portaudio:STRING=system
         -Daudacity_use_portsmf:STRING=local # required for midi but unpackaged
+        -Daudacity_use_rapidjson:STRING=system
         -Daudacity_use_sbsms:STRING=off
         -Daudacity_use_vamp:STRING=off
-        -Daudacity_use_wxwidgets=system
-
+        -Daudacity_use_vst3sdk:STRING=local
+        -Daudacity_use_wavpack:STRING=system
+        -Daudacity_use_wxwidgets:STRING=system
+        -Daudacity_use_zlib:STRING=system
     )
 
     ecmake \
