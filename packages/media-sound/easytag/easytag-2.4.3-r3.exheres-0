@@ -75,7 +75,7 @@ DEPENDENCIES="
             media-libs/id3lib[>=3.8.0]
             media-libs/libid3tag
         )
-        mp4? ( media-libs/taglib[>=1.9.1] )
+        mp4? ( media-libs/taglib:=[>=1.9.1] )
         opus? (
             media-libs/opus[>=1.0]
             media-libs/opusfile
