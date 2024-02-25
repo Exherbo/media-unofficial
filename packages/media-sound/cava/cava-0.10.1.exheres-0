@@ -12,11 +12,12 @@ SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS="
     alsa                [[ description = [ Enables visualization through ALSA output ] ]]
-    ncurses             [[ description = [ Enables displaying with ncurses library ] ]]
+    jack                [[ description = [ Enables visualization through Jack output ] ]]
+    ncurses             [[ description = [ Enables ncurses display ] ]]
     pipewire            [[ description = [ Enables visualization through Pipewire output ] ]]
     portaudio           [[ description = [ Enables visualization through Portaudio output ] ]]
     pulseaudio          [[ description = [ Enables visualization through Pulseaudio output ] ]]
-    sdl                 [[ description = [ Enables displaying with SDL2 library ] ]]
+    sdl                 [[ description = [ Enables SDL2 display ] ]]
     sndio               [[ description = [ Enables visualization through Sndio output ] ]]
 "
 
@@ -28,6 +29,7 @@ DEPENDENCIES="
         dev-libs/iniparser
         sci-libs/fftw
         alsa?           ( sys-sound/alsa-lib )
+        jack?           ( media-sound/jack-audio-connection-kit )
         ncurses?        ( sys-libs/ncurses )
         pipewire?       ( media-libs/pipewire[>=0.3] )
         portaudio?      ( media-libs/portaudio )
@@ -41,6 +43,7 @@ DEPENDENCIES="
 
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     "alsa input-alsa"
+    "jack input-jack"
     "ncurses output-ncurses"
     "pipewire input-pipewire"
     "portaudio input-portaudio"
