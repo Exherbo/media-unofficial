@@ -85,10 +85,6 @@ DEPENDENCIES="
         vorbis? ( media-libs/libvorbis )
 "
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/e10034c19ed1911b730637fbc722030eb3dfd04b.patch
-)
-
 src_prepare() {
     cmake_src_prepare
 
