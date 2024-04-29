@@ -1,7 +1,7 @@
 # Copyright 2009 Pierre Lejeune <superheron@gmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
-require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.16 1.15 ] ]
+require autotools [ supported_autoconf=[ 2.7 ] supported_automake=[ 1.16 ] ]
 
 export_exlib_phases src_prepare
 
@@ -16,7 +16,8 @@ PortAudio provides a very simple API for recording and/or playing sound using a 
 function.  Example programs are included that synthesize sine waves and pink noise, perform fuzz
 distortion on a guitar, list available audio devices, etc.
 "
-HOMEPAGE="http://www.portaudio.com"
+HOMEPAGE="https://www.portaudio.com"
+DOWNLOADS="https://files.portaudio.com/archives/pa_stable_v${PV/./_}.tgz"
 
 LICENCES="MIT"
 SLOT="0"
@@ -26,10 +27,14 @@ MYOPTIONS="
 "
 
 DEPENDENCIES="
+    build:
+        virtual/pkg-config
     build+run:
         alsa? ( sys-sound/alsa-lib )
         jack? ( media-sound/jack-audio-connection-kit )
 "
+
+WORK=${WORKBASE}/${PN}
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     --enable-cxx
@@ -49,6 +54,6 @@ portaudio_src_prepare() {
     # Note(tanderson): Sent upstream 6/08/15
     edo sed -i -e 's/AC_PATH_PROG/AC_CHECK_TOOL/' configure.in
 
-    autotools_src_prepare
+    eautoconf
 }
 

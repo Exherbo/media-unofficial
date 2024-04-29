@@ -3,9 +3,5 @@
 
 require portaudio
 
-DOWNLOADS="http://www.portaudio.com/archives/pa_stable_v19_20140130.tgz -> ${PNV}.tgz"
-
 PLATFORMS="~amd64 ~x86"
-
-WORK=${WORKBASE}/${PN}
 
