@@ -2,17 +2,19 @@
 # Distributed under the terms of the GNU General Public License v2
 
 require option-renames [ renames=[ 'flsyn fluidsynth' ] ] \
-    autotools [ supported_autoconf=[ 2.7 ] supported_automake=[ 1.16 ] ] \
+    meson \
     ffmpeg [ with_opt=true ]
 
-export_exlib_phases src_prepare src_configure
+export_exlib_phases src_configure
 
 SUMMARY="Skins and Plugins for the Audacious music player"
+DESCRIPTION="
+Plugins that provide GUI interface, support for decoding various formats (like flac or midi),
+provide desktop environment integration (e.g. notify), allow remote control via dbus, etc.
+Note: some plugins are not on by default and have to be enabled in Preferences -> Plugins.
+"
 HOMEPAGE="https://www.audacious-media-player.org"
 DOWNLOADS="https://distfiles.audacious-media-player.org/${PNV}.tar.bz2"
-DESCRIPTION="Plugins that provide GUI interface, support for decoding various formats (like flac
-or midi), provide desktop environment integration (e.g. notify), allow remote control via dbus, etc.
-Note: some plugins are not on by default and have to be enabled in Preferences -> Plugins."
 
 LICENCES="
     BSD-2 [[ note = [ alsa audpl compressor crossfade ladspa mixer mpg123 mpris2 oss4 resample sdlout unix-io ] ]]
@@ -25,52 +27,51 @@ LICENCES="
     public-domain [[ note = [ aac ] ]]
 "
 SLOT="0"
-
 MYOPTIONS="
     (
-        alsa [[ description = [ Support ALSA audio output and MIDI synthesizing with AlsaMidi. ] ]]
-        jack [[ description = [ Support JACK audio output. ] ]]
-        oss [[ description = [ Support OSSv4 audio output. ] ]]
-        pipewire [[ description = [ Support Pipewire output. ] ]]
-        pulseaudio [[ description = [ Support PulseAudio output. ] ]]
-        qtaudio [[ description = [ Support QtMultimedia output. ] requires = [ qt5 ] ]]
+        alsa [[ description = [ Support ALSA audio output and MIDI synthesizing with AlsaMidi ] ]]
+        jack [[ description = [ Support JACK audio output ] ]]
+        oss [[ description = [ Support OSSv4 audio output ] ]]
+        pipewire [[ description = [ Support Pipewire output ] ]]
+        pulseaudio [[ description = [ Support PulseAudio output ] ]]
+        qtaudio [[ description = [ Support QtMultimedia output ] requires = [ qt6 ] ]]
     ) [[ number-selected = at-least-one ]]
 
-    aac [[ description = [ Support AAC decoding. ] ]]
-    bs2b [[ description = [ Improve headphone listening of stereo audio records via libbs2b. ] ]]
-    cd [[ description = [ AudioCD support. ] ]]
-    cue [[ description = [ Support for CUE metadata files from CD/DVDs. ] ]]
-    dbus [[ description = [ Control audacious via dbus mpris interface. ] ]]
-    ffmpeg [[ description = [ Support decoding tons of audio codecs and access formats via ffmpeg. ] ]]
-    flac [[ description = [ Support FLAC decoding and dumping audio out to a flac file. ] ]]
+    aac [[ description = [ Support AAC decoding ] ]]
+    bs2b [[ description = [ Improve headphone listening of stereo audio records via libbs2b ] ]]
+    cd [[ description = [ AudioCD support ] ]]
+    cue [[ description = [ Support for CUE metadata files from CD/DVDs ] ]]
+    dbus [[ description = [ Control audacious via dbus mpris interface ] ]]
+    ffmpeg [[ description = [ Support decoding tons of audio codecs and access formats via ffmpeg ] ]]
+    flac [[ description = [ Support FLAC decoding and dumping audio out to a flac file ] ]]
     fluidsynth [[
-        description = [ Support MIDI synthesizing with fluidsynth. ]
+        description = [ Support MIDI synthesizing with fluidsynth ]
         requires = [ alsa ]
     ]]
-    gtk [[ description = [ Build the GTK+ 3 GUI. ] ]]
-    mms [[ description = [ Support for mms:// and mmsh:// network streams in Open URL dialog. ] ]]
-    modplug [[ description = [ Support for MOD Music formats. ] ]]
-    mp3 [[ description = [ Support for mp{1,2,3} and bmu files decoding (and dumping audio out to a mp3 file). ] ]]
-    neon [[ description = [ Support for http:// and https:// protocols in Open URL dialog. ] ]]
+    gtk [[ description = [ Build the GTK+ 3 GUI ] ]]
+    mms [[ description = [ Support for mms:// and mmsh:// network streams in Open URL dialog ] ]]
+    modplug [[ description = [ Support for MOD Music formats ] ]]
+    mp3 [[ description = [ Support for mp{1,2,3} and bmu files decoding (and dumping audio out to a mp3 file) ] ]]
+    neon [[ description = [ Support for http:// and https:// protocols in Open URL dialog ] ]]
     notify [[
-        description = [ Support for desktop notifications (simple but provides good DE integration). ]
+        description = [ Support for desktop notifications (simple but provides good DE integration) ]
     ]]
     osd [[
-        description = [ Support for displaying notifications (more customiseable than notify). ]
+        description = [ Support for displaying notifications (more customiseable than notify) ]
         requires = [ gtk ]
     ]]
-    opus [[ description = [ Support for Opus decoding and dumping audio to an opus file. ] ]]
-    qt5 [[
-        description = [ Build the Qt5 GUI. ]
-        note = [ Some plugins are still GTK-only. ]
+    opus [[ description = [ Support for Opus decoding and dumping audio to an opus file ] ]]
+    qt6 [[
+        description = [ Build the Qt6 GUI ]
+        note = [ Some plugins are still GTK-only ]
     ]]
-    resample [[ description = [ Support converting sample rates using libsamplerate. ] ]]
-    scrobbler [[ description = [ Build audio scrobbler for last.fm. ] ]]
-    sdl [[ description = [ Support SDL audio output. ] ]]
-    sndfile [[ description = [ Support reading files containing sampled sound (like Windows WAV and Apple/SGI AIFF). ] ]]
-    speedpitch [[ description = [ Support speed and pitch effects using libsamplerate. ] ]]
-    vorbis [[ description = [ Support for OGG/Vorbis formats and dumping audio out to a vorbis file. ] ]]
-    wavpack [[ description = [ Support for PCM audio formats. ] ]]
+    resample [[ description = [ Support converting sample rates using libsamplerate ] ]]
+    scrobbler [[ description = [ Build audio scrobbler for last.fm ] ]]
+    sdl [[ description = [ Support SDL audio output ] ]]
+    sndfile [[ description = [ Support reading files containing sampled sound (like Windows WAV and Apple/SGI AIFF) ] ]]
+    speedpitch [[ description = [ Support speed and pitch effects using libsamplerate ] ]]
+    vorbis [[ description = [ Support for OGG/Vorbis formats and dumping audio out to a vorbis file ] ]]
+    wavpack [[ description = [ Support for PCM audio formats ] ]]
 "
 
 DEPENDENCIES="
@@ -80,7 +81,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/glib:2[>=2.32]
         dev-libs/libxml2:2.0
-        media-sound/audacious[~${PV}][gtk?][qt5?]
+        media-sound/audacious[~${PV}][gtk?][qt6?]
         sys-libs/zlib
         aac? ( media-libs/faad2 )
         alsa? ( sys-sound/alsa-lib[>=1.0.16] )
@@ -129,14 +130,13 @@ DEPENDENCIES="
         oss? ( sys-sound/oss )
         pipewire? ( media/pipewire[>=0.3.36] )
         pulseaudio? ( media-sound/pulseaudio[>=0.9.5] )
-        qt5? (
+        qt6? (
            dev-libs/libglvnd
            x11-libs/libX11
-           x11-libs/qtbase:5[>=5.4]
-           x11-libs/qtx11extras:5
+           x11-libs/qtbase:6[>=6.0]
         )
         qtaudio? (
-           x11-libs/qtmultimedia:5
+           x11-libs/qtmultimedia:6
         )
         resample? ( media-libs/libsamplerate )
         scrobbler? ( net-misc/curl[>=7.9.7] )
@@ -150,83 +150,72 @@ DEPENDENCIES="
         wavpack? ( media-sound/wavpack[>=4.31] )
 "
 
-audacious-plugins_src_prepare() {
-    # Find pkg-config
-    edo sed \
-        -e "s:pkg-config:${PKG_CONFIG}:g" \
-        -i configure.ac
-
-    autotools_src_prepare
-}
-
 audacious-plugins_src_configure() {
-    local myopts=(
-        # System
-        --disable-coreaudio
-        --disable-mac-media-keys
-        --with-system-libxml2
-
-        # GUI Plugins
-        $(option_enable gtk)
-        $(option_enable gtk glspectrum)
-        $(option_enable gtk gtk3)
-        $(option_enable gtk hotkey)
-        $(option_enable qt5 qt)
-        $(option_enable qt5 qtglspectrum)
-        $(option_enable qt5 qthotkey)
-
-        # Output Plugins
-        --enable-filewriter
-        $(option_enable alsa)                     # Advanced Linux Sound Arch.
-        $(option_enable jack)                     # Jack Audio Connection Kit
-        $(option_enable mp3 filewriter_mp3)       # FileWriter MP3 output
-        $(option_enable oss oss4)                 # Open Sound System
-        $(option_enable pipewire)                 # Pipewire
-        $(option_enable pulseaudio pulse)         # PulseAudio
-        $(option_enable qtaudio)                  # QtMultimedia
-        $(option_enable sdl sdlout)               # Simple DirectMedia Layer
-        $(option_with sdl libsdl 2)
-
-        # Input Plugins
-        --enable-console
-        $(option_enable aac)                      # MPEG-2/4 AAC
-        $(option_enable cd cdaudio)               # CD Digital Audio
-        $(option_enable ffmpeg ffaudio)           # FFaudio
-        $(option_enable flac)                     # Free Lossless Audio Codec
-        $(option_enable fluidsynth amidiplug)     # MIDI
-        $(option_enable modplug)                  # Module decoder
-        $(option_enable mp3 mpg123)               # MPEG-1 Layer I/II/III
-        $(option_enable opus)                     # Opus
-        $(option_enable sndfile)                  # sndfile extensions
-        $(option_enable vorbis)                   # Ogg Vorbis
-        $(option_enable wavpack)                  # WavPack 4.31+
-        # unpackaged libsidplay2
-        "--disable-sid"                           # Commodore 64 audio
-        "--disable-openmpt"                       # unpackaged libopenmpt
-
-        # General Plugins
-        $(option_enable dbus mpris2)              # MPRIS 2 Server
-        $(option_enable notify)                   # libnotify OSD
-        $(option_enable osd aosd)                 # Audacious OSD
-        $(option_enable scrobbler scrobbler2)     # AudioScrobbler Client
-        # unpackaged ampache_browser
-        "--disable-ampache"
-
-        # Effect Plugins
-        $(option_enable bs2b)                     # Bauer stereophonic-to-binaural
-        $(option_enable resample)                 # Sample Rate Converter
-        $(option_enable speedpitch)               # Speed and Pitch effects
-        # Untested
-        "--disable-soxr"
-
-        # Transport Plugins
-        $(option_enable neon)                     # neon-based http/https
-        $(option_enable mms)                      # libmms-based mms
-
-        # Container Plugins
-        $(option_enable cue)                      # CUE playlist format
+    local meson_args=(
+        -Dadplug=false
+        -Dampache=false
+        -Dconsole=true
+        -Dcoreaudio=false
+        -Dfilewriter=true
+        -Dlirc=false
+        -Dmac-media-keys=false
+        -Dmoonstone=false
+        -Dopenmpt=false
+        -Dsid=false
+        -Dsndio=false
+        -Dsongchange=false
+        -Dsoxr=false
+        $(meson_switch aac)
+        $(meson_switch alsa)
+        $(meson_switch bs2b)
+        $(meson_switch cd cdaudio)
+        $(meson_switch cue)
+        $(meson_switch dbus mpris2)
+        $(meson_switch ffmpeg ffaudio)
+        $(meson_switch flac)
+        $(meson_switch flac filewriter-flac)
+        $(meson_switch fluidsynth amidiplug)
+        $(meson_switch gtk)
+        $(meson_switch gtk gtk3)
+        $(meson_switch jack)
+        $(meson_switch mms)
+        $(meson_switch modplug)
+        $(meson_switch mp3 filewriter-mp3)
+        $(meson_switch mp3 mpg123)
+        $(meson_switch neon)
+        $(meson_switch notify)
+        $(meson_switch opus)
+        $(meson_switch osd aosd)
+        $(meson_switch oss)
+        $(meson_switch pipewire)
+        $(meson_switch pulseaudio pulse)
+        $(meson_switch qt6)
+        $(meson_switch qt6 qt)
+        $(meson_switch qt6 streamtuner)
+        $(meson_switch qt6 vumeter)
+        $(meson_switch qtaudio)
+        $(meson_switch resample)
+        $(meson_switch sdl sdlout)
+        $(meson_switch scrobbler scrobbler2)
+        $(meson_switch sndfile)
+        $(meson_switch speedpitch)
+        $(meson_switch vorbis)
+        $(meson_switch vorbis filewriter-ogg)
+        $(meson_switch wavpack)
     )
 
-    econf "${myopts[@]}"
+    if option gtk || option qt6; then
+        meson_args+=(
+            -Dgl-spectrum=true
+            -Dhotkey=true
+        )
+    else
+        meson_args+=(
+            -Dgl-spectrum=false
+            -Dhotkey=false
+        )
+    fi
+
+    exmeson "${meson_args[@]}"
 }
 
