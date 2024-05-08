@@ -2,7 +2,7 @@
 # Copyright 2012 Ivan Dives
 # Distributed under the terms of the GNU General Public License v2
 
-require freedesktop-desktop gtk-icon-cache
+require meson freedesktop-desktop gtk-icon-cache
 
 export_exlib_phases src_prepare pkg_postinst pkg_postrm
 
@@ -20,7 +20,7 @@ MYOPTIONS="
     dbus [[ description = [ Build mpris backend (can be later used by mpris2 plugin). ] ]]
     gtk [[ description = [ Build the GTK+ 3 GUI ] ]]
     libarchive [[ description = [ Play music files from archived source ] ]]
-    qt5 [[ description = [ Build the Qt5 GUI ] ]]
+    qt6 [[ description = [ Build the Qt6 GUI ] ]]
 "
 
 DEPENDENCIES="
@@ -39,37 +39,34 @@ DEPENDENCIES="
             x11-libs/pango
         )
         libarchive? ( app-arch/libarchive )
-        qt5? ( x11-libs/qtbase:5[>=5.2][gui] )
+        qt6? ( x11-libs/qtbase:6[>=6.0][gui] )
     post:
-        media-sound/audacious-plugins[~${PV}][gtk?][qt5?]
+        media-sound/audacious-plugins[~${PV}][gtk?][qt6?]
 "
 
-DEFAULT_SRC_CONFIGURE_PARAMS=(
-    --enable-nls
-    --with-buildstamp=Exherbo
+MESON_SRC_CONFIGURE_PARAMS=(
+    -Dbuildstamp=Exherbo
+    -Dvalgrind=false
 )
 
-DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
+MESON_SRC_CONFIGURE_OPTION_SWITCHES=(
     dbus
     gtk
-    "gtk gtk3"
+    'gtk gtk3'
     libarchive
-    "qt5 qt"
-)
-
-DEFAULT_SRC_COMPILE_PARAMS=(
-    AR=${AR}
-    RANLIB=${RANLIB}
+    'qt6 qt'
+    qt6
 )
 
 audacious_src_prepare() {
+    meson_src_prepare
+
     # Prefer Qt if both are enabled
-    if option qt5 && option gtk; then
+    if option qt6 && option gtk; then
         edo sed \
             -e 's:audacious %U:audacious %U --qt:g' \
             -i audacious.desktop
     fi
-    default
 }
 
 audacious_pkg_postinst() {
