@@ -40,7 +40,13 @@ DEPENDENCIES="
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/cdfe9cef2dcc3edf7d05ca2e9c2dbbf8dea21f1c.patch
     "${FILES}"/8a05420e5dd8c7b8b2447f82dc919765876511b3.patch
+    "${FILES}"/245deeadd81afc4ec5635b65d71646490c5c19fd.patch
+    "${FILES}"/128acfdcdcc13fcf4333a01c425b83028e746694.patch
+    "${FILES}"/0b947f9634937d27589d995ec90e90d763aca86f.patch
+    "${FILES}"/53bc55cda4f0e106e63b8a993538fa4debf4bb66.patch
+    "${FILES}"/8e9d3a3696e1384f21e8a7b9bc302b17bfb912b4.patch
     "${FILES}"/${PN}-0.4.9-waf-python311.patch
 )
 
@@ -70,6 +76,10 @@ src_prepare() {
     edo sed \
         -e "s:libaubio-doc:${PNVR}:g" \
         -i wscript
+
+    # remove failing test with ffmpeg 7
+    # https://github.com/aubio/aubio/issues/397
+    edo rm tests/src/io/test-source_avcodec.c
 }
 
 src_configure() {

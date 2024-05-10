@@ -1,0 +1,25 @@
+Source/Upstream: Yes, fixed in git master
+Reason: Fix build with ffmpeg 7
+
+From 8e9d3a3696e1384f21e8a7b9bc302b17bfb912b4 Mon Sep 17 00:00:00 2001
+From: Paul Brossier <piem@piem.org>
+Date: Wed, 27 Dec 2023 19:23:13 +0100
+Subject: [PATCH] [source_avcodec] remove deprecation warning (< ffmpeg 5.1)
+
+---
+ src/io/source_avcodec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/io/source_avcodec.c b/src/io/source_avcodec.c
+index 7b4dd857..71ea8b5f 100644
+--- a/src/io/source_avcodec.c
++++ b/src/io/source_avcodec.c
+@@ -53,7 +53,7 @@
+ #endif
+ 
+ #if LIBAVUTIL_VERSION_INT < AV_VERSION_INT(57,28,100)
+-#warning "libavutil < 57.28.100 is deprecated"
++//#warning "libavutil < 57.28.100 is deprecated"
+ #else
+ #define LIBAVUTIL_HAS_CH_LAYOUT
+ #endif
