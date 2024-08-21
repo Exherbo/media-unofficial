@@ -25,7 +25,7 @@ MYOPTIONS="
     dbus
     jack
     ladspa
-    lash [[ description = [ Adds support for the LASH Audio Session Handler ] ]]
+    lash [[ description = [ Adds support for the LASH Audio Session Handler (deprecated) ] ]]
     libsndfile [[ description = [ Adds support for libsndfile ] ]]
     pipewire
     portaudio
