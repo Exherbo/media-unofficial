@@ -39,7 +39,7 @@ DEPENDENCIES="
         virtual/pkg-config
         ape? ( dev-lang/yasm )
     build+run:
-        dev-libs/atk
+        dev-libs/at-spi2-core[>=2.52.0]
         dev-libs/glib:2
         dev-libs/jansson
         media-libs/libpng:=
