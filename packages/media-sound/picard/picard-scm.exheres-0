@@ -4,7 +4,7 @@
 # Based in part upon 'picard-0.11.ebuild' from Gentoo, which is:
 #     Copyright 1999-2009 Gentoo Foundation
 
-require setup-py [ import=setuptools blacklist="2" multibuild=false ]
+require py-pep517 [ backend=setuptools multibuild=false test=pytest blacklist="3.8" entrypoints=[ ${PN} ] ]
 require github [ user=metabrainz tag=release-${PV} ]
 require freedesktop-desktop gtk-icon-cache utf8-locale
 
@@ -15,13 +15,15 @@ HOMEPAGE+=" https://${PN}.musicbrainz.org"
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS=""
+MYOPTIONS="
+    multimedia [[ description = [ Optional multimedia player provided by PyQt5 ] ]]
+"
 
 DEPENDENCIES="
     build+run:
         dev-python/charset-normalizer[>=3.3.2][python_abis:*(-)?]
         dev-python/PyJWT[>=2.0][python_abis:*(-)?]
-        dev-python/PyQt6[>=6.5][python_abis:*(-)?]
+        dev-python/PyQt6[>=6.5][python_abis:*(-)?][multimedia?]
         dev-python/Markdown[>=3.2][python_abis:*(-)?]
         dev-python/mutagen[>=1.37][python_abis:*(-)?]
         dev-python/python-dateutil[>=2.7.3][python_abis:*(-)?]
@@ -29,9 +31,15 @@ DEPENDENCIES="
         dev-python/PyYAML[>=5.1&<7][python_abis:*(-)?]
     suggestion:
         media-libs/chromaprint [[ description = [ Support for finding AcoustID fingerprints of audio files ] ]]
+        x11-libs/qtimageformats:6[tiff] [[ description = [ Support for handling TIFF images for album covers ] ]]
 "
 
-SETUP_PY_SRC_INSTALL_PARAMS=( --install-locales=/usr/share/locale )
+src_install() {
+    py-pep517_src_install
+
+    edo mv "${IMAGE}"/usr/$(exhost --target)/share/* "${IMAGE}"/usr/share/
+    edo rmdir "${IMAGE}"/usr/$(exhost --target)/share
+}
 
 pkg_setup() {
     require_utf8_locale

@@ -4,25 +4,28 @@
 # Based in part upon 'picard-0.11.ebuild' from Gentoo, which is:
 #     Copyright 1999-2009 Gentoo Foundation
 
-require setup-py [ import=setuptools blacklist="2" multibuild=false ]
+require py-pep517 [ backend=setuptools multibuild=false test=pytest blacklist="3.8" entrypoints=[ ${PN} ] ]
 require freedesktop-desktop gtk-icon-cache
 
 SUMMARY="Picard is the next generation MusicBrainz tagging application"
 HOMEPAGE="https://${PN}.musicbrainz.org"
-DOWNLOADS="http://ftp.musicbrainz.org/pub/musicbrainz/${PN}/${PNV}.tar.gz"
+DOWNLOADS="https://data.musicbrainz.org/pub/musicbrainz/${PN}/${PNV}.tar.gz"
 
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS=""
+MYOPTIONS="
+    multimedia [[ description = [ Optional multimedia player provided by PyQt5 ] ]]
+"
 
 DEPENDENCIES="
     build:
         sys-devel/gettext
     build+run:
+        dev-python/charset-normalizer[>=3.3.2][python_abis:*(-)?]
         dev-python/fasteners[>=0.14][python_abis:*(-)?]
         dev-python/PyJWT[>=2.0][python_abis:*(-)?]
-        dev-python/PyQt5[>=5.11.0][python_abis:*(-)?]
+        dev-python/PyQt5[>=5.11.0][python_abis:*(-)?][multimedia?]
         dev-python/PyQt5-sip[>=12.9.1][python_abis:*(-)?]
         dev-python/Markdown[>=3.2][python_abis:*(-)?]
         dev-python/mutagen[>=1.37][python_abis:*(-)?]
@@ -31,11 +34,17 @@ DEPENDENCIES="
         dev-python/PyYAML[>=5.1&<7][python_abis:*(-)?]
     suggestion:
         media-libs/chromaprint [[ description = [ Support for finding AcoustID fingerprints of audio files ] ]]
+        x11-libs/qtimageformats:5[tiff] [[ description = [ Support for handling TIFF images for album covers ] ]]
 "
 
 WORK=${WORKBASE}/${PN}-${PV}
 
-SETUP_PY_SRC_INSTALL_PARAMS=( --install-locales=/usr/share/locale )
+src_install() {
+    py-pep517_src_install
+
+    edo mv "${IMAGE}"/usr/$(exhost --target)/share/* "${IMAGE}"/usr/share/
+    edo rmdir "${IMAGE}"/usr/$(exhost --target)/share
+}
 
 pkg_postinst() {
     freedesktop-desktop_pkg_postinst
