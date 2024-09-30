@@ -1,6 +1,8 @@
 # Copyright 2009 Ali Polatel <alip@exherbo.org>
 # Distributed under the terms of the GNU General Public License v2
 
+WAF_VERSION="2.0.27"
+
 require setup-py [ import=setuptools blacklist=2 with_opt=true multibuild=false ] waf
 require ffmpeg [ with_opt=true ]
 
@@ -13,7 +15,10 @@ with a typo: several transcription errors are likely to be found in the results
 too.
 "
 HOMEPAGE="https://aubio.org"
-DOWNLOADS="${HOMEPAGE}/pub/${PNV}.tar.bz2"
+DOWNLOADS="
+    ${HOMEPAGE}/pub/${PNV}.tar.bz2
+    https://waf.io/waf-${WAF_VERSION}.tar.bz2
+"
 
 LICENCES="GPL-3"
 SLOT="0"
@@ -47,7 +52,7 @@ DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/0b947f9634937d27589d995ec90e90d763aca86f.patch
     "${FILES}"/53bc55cda4f0e106e63b8a993538fa4debf4bb66.patch
     "${FILES}"/8e9d3a3696e1384f21e8a7b9bc302b17bfb912b4.patch
-    "${FILES}"/${PN}-0.4.9-waf-python311.patch
+    "${FILES}"/95ff046c698156f21e2ca0d1d8a02c23ab76969f.patch
 )
 
 WAF_SRC_CONFIGURE_PARAMS=(
@@ -71,6 +76,9 @@ WAF_SRC_COMPILE_PARAMS=( --notests )
 
 src_prepare() {
     default
+
+    # copy in newer waf version to fix build with python 3.11 & 3.12
+    edo cp -a "${WORKBASE}"/waf-${WAF_VERSION}/{waf,waflib} "${WORK}"
 
     # fix documentation install path
     edo sed \
