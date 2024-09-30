@@ -1,0 +1,33 @@
+Source/Upstream: Yes, fixed in git master
+Reason: Fix build
+
+From 1f0bc4c6940d27905d11e3324e30c6a63fad6392 Mon Sep 17 00:00:00 2001
+From: John Lindgren <john@jlindgren.net>
+Date: Sun, 26 May 2024 21:14:56 -0400
+Subject: [PATCH] qtui: QObject::findChildren requires a Q_OBJECT
+
+---
+ src/qtui/main_window.cc | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/src/qtui/main_window.cc b/src/qtui/main_window.cc
+index 52ef18294..c4188cef7 100644
+--- a/src/qtui/main_window.cc
++++ b/src/qtui/main_window.cc
+@@ -30,7 +30,6 @@
+ #include "menus.h"
+ #include "playlist-qt.h"
+ #include "playlist_tabs.h"
+-#include "settings.h"
+ #include "status_bar.h"
+ #include "time_slider.h"
+ #include "tool_bar.h"
+@@ -217,7 +216,7 @@ MainWindow::MainWindow()
+      * place, but user screenshots show that it somehow happens, and in
+      * that case we don't want them to be gone forever. */
+     toolbar->show();
+-    for (auto w : findChildren<DockWidget *>())
++    for (auto w : findChildren<QDockWidget *>())
+         w->show();
+ 
+     /* set initial keyboard focus on the playlist */
