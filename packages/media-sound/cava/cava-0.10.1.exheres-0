@@ -31,7 +31,7 @@ DEPENDENCIES="
         alsa?           ( sys-sound/alsa-lib )
         jack?           ( media-sound/jack-audio-connection-kit )
         ncurses?        ( sys-libs/ncurses )
-        pipewire?       ( media-libs/pipewire[>=0.3] )
+        pipewire?       ( media/pipewire[>=0.3] )
         portaudio?      ( media-libs/portaudio )
         pulseaudio?     ( media-sound/pulseaudio )
         sdl?            (
