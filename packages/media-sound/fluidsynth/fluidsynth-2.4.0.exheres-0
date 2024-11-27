@@ -25,7 +25,6 @@ MYOPTIONS="
     dbus
     jack
     ladspa
-    lash [[ description = [ Adds support for the LASH Audio Session Handler (deprecated) ] ]]
     libsndfile [[ description = [ Adds support for libsndfile ] ]]
     pipewire
     portaudio
@@ -45,7 +44,6 @@ DEPENDENCIES="
         dbus? ( sys-apps/dbus[>=1.11.12] )
         jack? ( media-sound/jack-audio-connection-kit )
         ladspa? ( media-libs/ladspa-sdk )
-        lash? ( media-sound/lash[>=0.3] )
         libsndfile? ( media-libs/libsndfile[>=1.0.0] )
         pipewire? ( media/pipewire[>=0.3] )
         portaudio? ( media-libs/portaudio[>=19] )
@@ -83,7 +81,6 @@ CMAKE_SRC_CONFIGURE_OPTIONS=(
     'dbus enable-dbus'
     'jack enable-jack'
     'ladspa enable-ladspa'
-    'lash enable-lash'
     'libsndfile enable-libsndfile'
     'pipewire enable-pipewire'
     'portaudio enable-portaudio'
