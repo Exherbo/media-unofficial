@@ -12,7 +12,9 @@ Designer.
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS=""
+MYOPTIONS="
+    pipewire
+"
 
 DEPENDENCIES="
     build:
@@ -22,6 +24,7 @@ DEPENDENCIES="
         media-sound/fluidsynth[>=0.80.0]
         x11-libs/qtbase:6
         x11-libs/qtsvg:6
+        pipewire? ( media/pipewire[>=0.3] )
 "
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
@@ -34,5 +37,9 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -DCONFIG_SYSTEM_TRAY:BOOL=TRUE
     -DCONFIG_XUNIQUE:BOOL=TRUE
     -DCONFIG_WAYLAND:BOOL=FALSE
+)
+
+CMAKE_SRC_CONFIGURE_OPTIONS=(
+    'pipewire CONFIG_PIPEWIRE'
 )
 
