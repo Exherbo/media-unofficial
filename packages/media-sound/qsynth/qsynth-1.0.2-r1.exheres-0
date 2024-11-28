@@ -27,6 +27,10 @@ DEPENDENCIES="
         pipewire? ( media/pipewire[>=0.3] )
 "
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PN}-1.0.2-fix-localesearch.patch
+)
+
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DCONFIG_FLUID_CHANNEL_INFO:BOOL=FALSE
     -DCONFIG_FLUID_MIDI_ROUTER:BOOL=FALSE

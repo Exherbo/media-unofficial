@@ -1,0 +1,16 @@
+Source: Timo Gurr <tgurr@exherbo.org>
+Upstream: No
+Reason: Fix locale search path on multiarch
+
+diff -Naur qsynth-1.0.2/src/qsynth.cpp qsynth-1.0.2.new/src/qsynth.cpp
+--- qsynth-1.0.2/src/qsynth.cpp	2024-09-30 12:49:09.604100403 +0200
++++ qsynth-1.0.2.new/src/qsynth.cpp	2024-11-28 14:57:33.075020286 +0100
+@@ -181,7 +181,7 @@
+ #if defined(Q_OS_WINDOWS) || defined(Q_OS_MACOS)
+ 	sLocPath.append("/translations");
+ #else
+-	sLocPath.append(CONFIG_DATADIR "/qsynth/translations");
++	sLocPath = "/usr/share/qsynth/translations";
+ #endif
+ 	qsynthApplication::translationsPath = sLocPath;
+ 
