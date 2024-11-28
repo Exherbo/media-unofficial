@@ -1,0 +1,17 @@
+Source: Timo Gurr <tgurr@exherbo.org>
+Upstream: No
+Reason: Fix locale search path on multiarch
+
+diff -Naur qjackctl-1.0.3/src/qjackctl.cpp qjackctl-1.0.3.new/src/qjackctl.cpp
+--- qjackctl-1.0.3/src/qjackctl.cpp	2024-10-29 19:10:05.697843604 +0100
++++ qjackctl-1.0.3.new/src/qjackctl.cpp	2024-11-28 14:41:18.963392242 +0100
+@@ -174,8 +174,7 @@
+ 		} else {
+ 			sLocPath = QApplication::applicationDirPath();
+ 		#ifndef _WIN32
+-			sLocPath.remove(CONFIG_BINDIR);
+-			sLocPath.append(CONFIG_DATADIR "/qjackctl/translations");
++			sLocPath = "/usr/share/qjackctl/translations";
+ 		#else
+ 			sLocPath.append("/translations");
+ 		#endif
