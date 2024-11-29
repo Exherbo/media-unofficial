@@ -114,8 +114,9 @@ src_configure() {
         -Daudacity_has_networking:BOOL=FALSE
         -Daudacity_has_tests:BOOL=FALSE
         -Daudacity_has_updates_check=OFF
-        -Daudacity_has_url_schmemes_support:BOOL=FALSE
+        -Daudacity_has_url_schemes_support:BOOL=FALSE
         -Daudacity_has_vst3:BOOL=FALSE
+        -Daudacity_has_whats_new:BOOL=TRUE
         -Daudacity_lib_preference=system
         -Daudacity_obey_system_dependencies:BOOL=TRUE
         -Daudacity_use_expat=system
@@ -139,7 +140,7 @@ src_configure() {
         -Daudacity_use_opusfile:STRING=$(option opus && echo system || echo off)
         -Daudacity_use_pch:BOOL=ON
         -Daudacity_use_png:STRING=system
-        -Daudactiy_use_portaudio:STRING=system
+        -Daudacity_use_portaudio:STRING=system
         -Daudacity_use_portsmf:STRING=local # required for midi but unpackaged
         -Daudacity_use_rapidjson:STRING=system
         -Daudacity_use_sbsms:STRING=off
