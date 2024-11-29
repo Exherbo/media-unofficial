@@ -3,7 +3,7 @@
 #   Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-require autotools [ supported_autoconf=[ 2.7 ] supported_automake=[ 1.16 ] ]
+require autotools [ supported_autoconf=[ 2.7 ] supported_automake=[ 1.17 ] ]
 
 SUMMARY="Audio processing library for changing tempo, pitch and playback rates"
 DESCRIPTION="
