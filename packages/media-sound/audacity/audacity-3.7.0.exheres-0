@@ -36,7 +36,6 @@ MYOPTIONS="
     mp3
     ogg
     opus [[ description = [ Support for opus files ] ]]
-    soundtouch
     vorbis
 "
 
@@ -55,6 +54,7 @@ DEPENDENCIES="
         media-libs/libsndfile[>=1.0.0]
         media-libs/portaudio
         media-libs/portmidi
+        media-libs/soundtouch
         media-libs/soxr[>=0.1.1]
         media-sound/jack-audio-connection-kit[>=0.103.0]
         media-sound/lame[>=3.70]
@@ -81,7 +81,6 @@ DEPENDENCIES="
             media-libs/opus
             media-libs/opusfile
         )
-        soundtouch? ( media-libs/soundtouch )
         vorbis? ( media-libs/libvorbis )
 "
 
@@ -133,7 +132,7 @@ src_configure() {
         -Daudacity_use_libsndfile:STRING=system
         -Daudacity_use_libvorbis:STRING=$(option vorbis && echo system || echo off)
         -Daudacity_use_lv2:STRING=$(option lv2 && echo system || echo off)
-        -Daudacity_use_soundtouch:STRING=$(option soundtouch && echo system || echo off)
+        -Daudacity_use_soundtouch:STRING=system
         -Daudacity_use_twolame:STRING=$(option mp2 && echo system || echo off)
         -Daudacity_use_nyquist:STRING=local
         -Daudacity_use_midi:STRING=system
