@@ -32,7 +32,7 @@ MYOPTIONS="alsa jack dssi lash
 DEPENDENCIES="
     build+run:
         sci-libs/fftw:0
-        dev-libs/Mini-XML
+        dev-libs/Mini-XML:=[<4]
         x11-libs/fltk[>=1.1.2]
         dssi? ( media-libs/dssi )
         jack? ( media-sound/jack-audio-connection-kit )
