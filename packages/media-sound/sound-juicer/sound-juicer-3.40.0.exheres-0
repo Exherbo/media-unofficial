@@ -1,8 +1,9 @@
-# Copyright 2009 Pierre Lejeune <superheron@gmail.com>
+# Copyright 2009-2025 Pierre Lejeune <superheron@gmail.com>
 # Copyright 2017 Rasmus Thomsen <Rasmus.thomsen@protonmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
-require gnome.org [ suffix='tar.xz' ] freedesktop-desktop gsettings gtk-icon-cache
+require gnome.org [ suffix='tar.xz' ] meson
+require freedesktop-desktop gsettings gtk-icon-cache
 
 SUMMARY="Gstreamer-based CD ripper"
 DESCRIPTION="
@@ -32,19 +33,21 @@ DEPENDENCIES="
         media-libs/libcanberra[providers:gtk3]
         media-libs/libdiscid[>=0.4.0]
         media-libs/libmusicbrainz:5[>=5.0.1]
-        media-plugins/gst-plugins-base:1.0
+        media-plugins/gst-plugins-base:1.0[gstreamer_plugins:cdda][gstreamer_plugins:ogg][gstreamer_plugins:vorbis]
+        media-plugins/gst-plugins-good:1.0[gstreamer_plugins:flac][gstreamer_plugins:wavpack]
         x11-libs/gtk+:3[>=3.21.6]
-    run:
-        media-plugins/gst-plugins-base:1.0[gstreamer_plugins:cdda] [[
-            note = [ Required for accessing CDs ] ]]
-    recommendation:
-        media-plugins/gst-plugins-base:1.0[gstreamer_plugins:vorbis] [[
-            description = [ Required to encode rips to Ogg Vorbis ] ]]
-        media-plugins/gst-plugins-good:1.0[gstreamer_plugins:flac] [[
-            description = [ Required to encode rips to FLAC ] ]]
-         media-plugins/gst-plugins-good:1.0[gstreamer_plugins:wavpack] [[
-            description = [ Required to encode rips to Wave ] ]]
 "
+
+src_prepare() {
+    meson_src_prepare
+    edo sed -e "/^sound_juicer_docdir/s/meson.project_name()/'${PNVR}'/" -i meson.build
+}
+
+src_install() {
+    export GSETTINGS_DISABLE_SCHEMAS_COMPILE=1
+    meson_src_install
+    unset GSETTINGS_DISABLE_SCHEMAS_COMPILE
+}
 
 pkg_postinst() {
     gsettings_pkg_postinst
