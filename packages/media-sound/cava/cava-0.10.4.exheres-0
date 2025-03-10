@@ -4,7 +4,7 @@
 
 require github [ user=karlstav release=${PV} suffix=tar.gz ]
 
-SUMMARY="Console-based Audio Visualizer for Alsa"
+SUMMARY="Cross-platform Audio Visualizer"
 
 LICENCES="MIT"
 SLOT="0"
