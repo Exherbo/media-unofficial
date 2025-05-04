@@ -3,7 +3,9 @@
 #   Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-require gnome.org [ suffix=tar.xz ] freedesktop-desktop gsettings gtk-icon-cache
+require gnome.org [ suffix=tar.xz ]
+require freedesktop-desktop gsettings gtk-icon-cache
+require flag-o-matic
 
 SUMMARY="GTK+ utility for editing MP2, MP3, MP4, FLAC, Ogg and other media tags"
 DESCRIPTION="
@@ -111,6 +113,20 @@ DEFAULT_SRC_CONFIGURE_TESTS=( '--any --enable-tests --disable-tests' )
 src_prepare() {
     has_version 'media-libs/taglib:=[>=2]' \
         && expatch "${FILES}"/${PN}-2.4.3-taglib-2.patch
+
+    default
+}
+
+src_configure() {
+    # Allow to build with gcc 15. We could add upstream commit
+    # a41d48c8849aff8f6bc19ae1f449d8509c20d3ae to partly solve this, but
+    # id3lib has a typedef int bool in its public header and bool became a
+    # keyword in C23. Fixing it there, comes with some ABI concerns and it is
+    # marked as depcreated anyway (and upstream recommends to switch to
+    # taglib).
+    # https://gitlab.gnome.org/GNOME/easytag/-/issues/109
+    # https://sourceforge.net/p/id3lib/bugs/215/
+    append-flags -std=gnu17
 
     default
 }
