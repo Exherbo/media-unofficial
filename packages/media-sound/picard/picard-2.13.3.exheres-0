@@ -4,7 +4,7 @@
 # Based in part upon 'picard-0.11.ebuild' from Gentoo, which is:
 #     Copyright 1999-2009 Gentoo Foundation
 
-require py-pep517 [ backend=setuptools multibuild=false test=pytest blacklist="3.8" entrypoints=[ ${PN} ] ]
+require py-pep517 [ backend=setuptools multibuild=false test=pytest ]
 require freedesktop-desktop gtk-icon-cache
 
 SUMMARY="Picard is the next generation MusicBrainz tagging application"
