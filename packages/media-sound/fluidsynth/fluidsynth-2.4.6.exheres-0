@@ -68,6 +68,7 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -Denable-oss:BOOL=FALSE
     -Denable-profiling:BOOL=FALSE
     -Denable-sdl2:BOOL=FALSE
+    -Denable-sdl3:BOOL=FALSE
     -Denable-systemd:BOOL=FALSE
     -Denable-threads:BOOL=TRUE
     -Denable-trap-on-fpe:BOOL=FALSE
@@ -93,7 +94,7 @@ src_prepare() {
 
     # prevent unsetting CC, CFLAGS and LDFLAGS
     edo sed \
-        -e '/unset/d' \
+        -e '/set(ENV/d' \
         -i src/gentables/CMakeLists.txt
 }
 
