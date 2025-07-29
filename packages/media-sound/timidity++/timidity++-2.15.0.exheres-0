@@ -3,7 +3,8 @@
 # Based in part on timidity++-2.13.2-r10.ebuild from Gentoo
 
 require sourceforge [ project=timidity pn="TiMidity++" suffix=tar.xz ]
-require autotools [ supported_autoconf=[ 2.7 ] supported_automake=[ 1.16 ] ]
+require autotools [ supported_autoconf=[ 2.7 ] supported_automake=[ 1.18 ] ]
+require flag-o-matic
 
 SUMMARY="MIDI software synthesizer"
 DESCRIPTION="
@@ -43,6 +44,7 @@ DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/${PN}-2.14.0-configure-flags.patch
     "${FILES}"/${PN}-2.14.0-params.patch
     "${FILES}"/${PN}-2.15.0-pkg-config.patch
+    "${FILES}"/${PN}-2.15.0-configure-c99.patch
 )
 
 # TODO: push to upstream patch with using AM_PROG_AR
@@ -53,6 +55,9 @@ WORK="${WORKBASE}/TiMidity++-${PV}"
 AT_M4DIR=( autoconf )
 
 src_configure() {
+    # Allow to build with GCC 15
+    append-flags -std=gnu17
+
     local audios
     for i in alsa jack vorbis flac speex ao; do
         option $i && audios="${audios},${i}"

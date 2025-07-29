@@ -1,0 +1,58 @@
+Source/Upstream: Yes, fixed in git master
+Reason: Fix usage of obsolete C89 features
+
+diff --git a/autoconf/utils.m4 b/autoconf/utils.m4
+index d2f8db13be54b70c..11f207dc7a5e1ec3 100644
+--- a/autoconf/utils.m4
++++ b/autoconf/utils.m4
+@@ -62,11 +62,12 @@ yes) i_dlfcn=define;;
+ *)   i_dlfcn=undef;;
+ esac
+ cat > dyna.c <<EOM
+-fred () { }
++int fred () { }
+ EOM
+ 
+ cat > fred.c <<EOM
+ #include <stdio.h>
++#include <stdlib.h>
+ #$i_dlfcn I_DLFCN
+ #ifdef I_DLFCN
+ #include <dlfcn.h>      /* the dynamic linker include file for Sunos/Solaris */
+@@ -78,7 +79,7 @@ cat > fred.c <<EOM
+ 
+ extern int fred() ;
+ 
+-main()
++int main()
+ {
+     void * handle ;
+     void * symbol ;
+diff --git a/configure.in b/configure.in
+index ee44903c24d6d12c..5c9fd2d48228cbb9 100644
+--- a/configure.in
++++ b/configure.in
+@@ -709,6 +709,7 @@ dnl ***
+ AC_CACHE_CHECK([for an implementation of va_copy()],lib_cv_va_copy,[
+ 	AC_RUN_IFELSE([AC_LANG_SOURCE([[
+ 	#include <stdarg.h>
++	#include <stdlib.h>
+ 	void f (int i, ...) {
+ 	va_list args1, args2;
+ 	va_start (args1, i);
+@@ -728,6 +729,7 @@ AC_CACHE_CHECK([for an implementation of va_copy()],lib_cv_va_copy,[
+ AC_CACHE_CHECK([for an implementation of __va_copy()],lib_cv___va_copy,[
+ 	AC_RUN_IFELSE([AC_LANG_SOURCE([[
+ 	#include <stdarg.h>
++	#include <stdlib.h>
+ 	void f (int i, ...) {
+ 	va_list args1, args2;
+ 	va_start (args1, i);
+@@ -758,6 +760,7 @@ fi
+ AC_CACHE_CHECK([whether va_lists can be copied by value],lib_cv_va_val_copy,[
+ 	AC_RUN_IFELSE([AC_LANG_SOURCE([[
+ 	#include <stdarg.h>
++	#include <stdlib.h>
+ 	void f (int i, ...) {
+ 	va_list args1, args2;
+ 	va_start (args1, i);
