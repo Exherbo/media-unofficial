@@ -95,10 +95,11 @@ DEPENDENCIES="
         fluidsynth? ( media-sound/fluidsynth[>=1.0.6] )
         flac? ( media-libs/flac:=[>=1.2.1] )
         gtk? (
+            core/json-glib[>=1.0]
             dev-libs/libglvnd
             x11-libs/cairo
             x11-libs/gdk-pixbuf:2.0
-            x11-libs/gtk+:3[>=3.22]
+            x11-libs/gtk+:3[>=3.18]
             x11-libs/libX11
             x11-libs/pango
         )
@@ -128,8 +129,8 @@ DEPENDENCIES="
             x11-libs/pango
         )
         oss? ( sys-sound/oss )
-        pipewire? ( media/pipewire[>=0.3.36] )
-        pulseaudio? ( media-sound/pulseaudio[>=0.9.5] )
+        pipewire? ( media/pipewire[>=0.3.33] )
+        pulseaudio? ( media-sound/pulseaudio[>=0.9.11] )
         qt6? (
            dev-libs/libglvnd
            x11-libs/libX11
@@ -140,7 +141,7 @@ DEPENDENCIES="
         )
         resample? ( media-libs/libsamplerate )
         scrobbler? ( net-misc/curl[>=7.9.7] )
-        sdl? ( media-libs/SDL:2 )
+        sdl? ( media-libs/SDL:3[>=3.2.0] )
         sndfile? ( media-libs/libsndfile[>=0.19] )
         speedpitch? ( media-libs/libsamplerate )
         vorbis? (
@@ -157,10 +158,11 @@ audacious-plugins_src_configure() {
         -Dconsole=true
         -Dcoreaudio=false
         -Dfilewriter=true
+        -Dgtk2=false
         -Dlirc=false
         -Dmac-media-keys=false
-        -Dmoonstone=false
         -Dopenmpt=false
+        -Dqt5=false
         -Dsid=false
         -Dsndio=false
         -Dsongchange=false
@@ -169,6 +171,7 @@ audacious-plugins_src_configure() {
         $(meson_switch alsa)
         $(meson_switch bs2b)
         $(meson_switch cd cdaudio)
+        $(meson_switch cd cdaudio-cddb)
         $(meson_switch cue)
         $(meson_switch dbus mpris2)
         $(meson_switch ffmpeg ffaudio)
@@ -176,7 +179,6 @@ audacious-plugins_src_configure() {
         $(meson_switch flac filewriter-flac)
         $(meson_switch fluidsynth amidiplug)
         $(meson_switch gtk)
-        $(meson_switch gtk gtk3)
         $(meson_switch jack)
         $(meson_switch mms)
         $(meson_switch modplug)
@@ -189,10 +191,8 @@ audacious-plugins_src_configure() {
         $(meson_switch oss)
         $(meson_switch pipewire)
         $(meson_switch pulseaudio pulse)
-        $(meson_switch qt6)
         $(meson_switch qt6 qt)
         $(meson_switch qt6 streamtuner)
-        $(meson_switch qt6 vumeter)
         $(meson_switch qtaudio)
         $(meson_switch resample)
         $(meson_switch sdl sdlout)
@@ -208,11 +208,13 @@ audacious-plugins_src_configure() {
         meson_args+=(
             -Dgl-spectrum=true
             -Dhotkey=true
+            -Dvumeter=true
         )
     else
         meson_args+=(
             -Dgl-spectrum=false
             -Dhotkey=false
+            -Dvumeter=false
         )
     fi
 
