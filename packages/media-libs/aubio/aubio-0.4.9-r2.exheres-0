@@ -4,7 +4,7 @@
 WAF_VERSION="2.0.27"
 
 require setup-py [ import=setuptools blacklist=2 with_opt=true multibuild=false ] waf
-require ffmpeg [ with_opt=true ]
+require ffmpeg [ abis=[ 4 5 6 7 ] with_opt=true ]
 
 SUMMARY="Library for audio labelling"
 DESCRIPTION="
