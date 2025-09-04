@@ -35,7 +35,7 @@ DEPENDENCIES="
         gtk? (
             x11-libs/cairo
             x11-libs/gdk-pixbuf:2.0
-            x11-libs/gtk+:3[>=3.22]
+            x11-libs/gtk+:3[>=3.18]
             x11-libs/pango
         )
         libarchive? ( app-arch/libarchive )
@@ -46,16 +46,16 @@ DEPENDENCIES="
 
 MESON_SRC_CONFIGURE_PARAMS=(
     -Dbuildstamp=Exherbo
+    -Dgtk2=false
+    -Dqt5=false
     -Dvalgrind=false
 )
 
 MESON_SRC_CONFIGURE_OPTION_SWITCHES=(
     dbus
     gtk
-    'gtk gtk3'
     libarchive
     'qt6 qt'
-    qt6
 )
 
 audacious_src_prepare() {
