@@ -1,7 +1,7 @@
 # Copyright 2009 Gaute Hope <eg@gaute.vetsj.com>
 # Distributed under the terms of the GNU General Public License v2
 
-require github [ tag=v${PV} ] ffmpeg [ with_opt=true ]
+require github [ tag=v${PV} ] ffmpeg [ abis=[ 4 5 6 ] with_opt=true ]
 
 export_exlib_phases pkg_setup src_prepare src_configure
 
