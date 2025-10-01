@@ -21,7 +21,7 @@ MYOPTIONS="sdl xv
 
 DEPENDENCIES="
     build+run:
-        sdl? ( media-libs/SDL:0[>=1.1.6] )
+        sdl? ( media-libs/sdl12-compat[>=1.1.6] )
         xv? ( x11-libs/libXv )
 "
 
