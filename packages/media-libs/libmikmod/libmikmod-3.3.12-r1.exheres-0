@@ -26,7 +26,7 @@ DEPENDENCIES="
         alsa? ( sys-sound/alsa-lib )
         openal? ( media-libs/openal )
         pulseaudio? ( media-sound/pulseaudio )
-        sdl? ( media-libs/SDL:2 )
+        sdl? ( media-libs/sdl2-compat )
 "
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(

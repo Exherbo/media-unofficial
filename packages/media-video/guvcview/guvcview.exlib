@@ -38,7 +38,7 @@ DEPENDENCIES="
     build+run:
         dev-libs/glib:2[>=2.10.0]
         dev-libs/libusb:1
-        media-libs/SDL:2[>=2.0]
+        media-libs/sdl2-compat[>=2.0]
         media-libs/libpng:=
         media-libs/portaudio
         media-libs/v4l-utils

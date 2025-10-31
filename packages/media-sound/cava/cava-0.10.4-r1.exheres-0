@@ -34,7 +34,7 @@ DEPENDENCIES="
         pulseaudio? ( media-sound/pulseaudio )
         sdl? (
             dev-libs/libglvnd
-            media-libs/SDL:2
+            media-libs/sdl2-compat
         )
         sndio? ( sys-sound/sndio )
 "
