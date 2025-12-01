@@ -1,7 +1,7 @@
 # Copyright 2009 Gaute Hope <eg@gaute.vetsj.com>
 # Distributed under the terms of the GNU General Public License v2
 
-require github [ tag=v${PV} ] ffmpeg [ abis=[ 4 5 6 ] with_opt=true ]
+require github [ tag=v${PV} ] ffmpeg [ with_opt=true ]
 
 export_exlib_phases pkg_setup src_prepare src_configure
 
@@ -10,7 +10,7 @@ DESCRIPTION="
 cmus is a small and fast text mode music player for Linux and many other UNIX
 like operating systems.
 "
-HOMEPAGE="https://cmus.github.io/"
+HOMEPAGE+=" https://cmus.github.io"
 
 LICENCES="GPL-2"
 SLOT="0"
@@ -72,7 +72,8 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     PKG_CONFIG=${PKG_CONFIG}
     prefix=/usr/$(exhost --target)
     datadir=/usr/share
-    exampledir=/usr/share/doc/${PNV}/examples
+    docdir=/usr/share/doc/${PNVR}
+    CONFIG_AAUDIO=n
     CONFIG_BASS=n
     CONFIG_ROAR=n
 )
