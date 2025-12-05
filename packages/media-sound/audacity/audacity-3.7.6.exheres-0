@@ -119,7 +119,6 @@ src_configure() {
         -Daudacity_lib_preference=system
         -Daudacity_obey_system_dependencies:BOOL=TRUE
         -Daudacity_use_expat=system
-        -Daudacity_use_catch2:STRING=system
         -Daudacity_use_ffmpeg:STRING=$(option ffmpeg && echo loaded || echo off)
         -Daudacity_use_jpeg:STRING=system
         -Daudacity_use_ladspa:BOOL=$(option ladspa && echo ON || echo OFF)
@@ -144,7 +143,6 @@ src_configure() {
         -Daudacity_use_rapidjson:STRING=system
         -Daudacity_use_sbsms:STRING=off
         -Daudacity_use_vamp:STRING=off
-        -Daudacity_use_vst3sdk:STRING=local
         -Daudacity_use_wavpack:STRING=system
         -Daudacity_use_wxwidgets:STRING=system
         -Daudacity_use_zlib:STRING=system
