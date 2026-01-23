@@ -1,6 +1,9 @@
 # Copyright 2009-2011 Pierre Lejeune <superheron@gmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
+# GCEM_REVISION in cmake_admin/FindGCEM.cmake
+GCEM_REV="012ae73c6d0a2cb09ffe86475f5c6fba3926e200"
+
 require github [ user=FluidSynth tag=v${PV} ] cmake
 
 SUMMARY="FluidSynth is a real-time software synthesizer based on the SoundFont 2 specifications"
@@ -15,6 +18,9 @@ Features
     * Shared library which can be used in other programs
     * Built in command line shell
     * Playback of MIDI files
+"
+DOWNLOADS+="
+    https://github.com/kthohr/gcem/archive/${GCEM_REV}.tar.gz -> gcem-${GCEM_REV}.tar.gz
 "
 
 LICENCES="LGPL-2.1"
@@ -39,7 +45,6 @@ DEPENDENCIES="
     build:
         virtual/pkg-config
     build+run:
-        dev-libs/glib:2[>=2.6.5]
         alsa? ( sys-sound/alsa-lib[>=0.9.1] )
         dbus? ( sys-apps/dbus[>=1.11.12] )
         jack? ( media-sound/jack-audio-connection-kit )
@@ -53,6 +58,7 @@ DEPENDENCIES="
 
 CMAKE_SRC_CONFIGURE_PARAMS=(
     -DBUILD_SHARED_LIBS:BOOL=TRUE
+    -DGCEM_INCLUDE_DIR:PATH="${WORKBASE}"/gcem-${GCEM_REV}/include
     -Denable-aufile:BOOL=TRUE
     -Denable-coverage:BOOL=FALSE
     -Denable-dsound:BOOL=FALSE
@@ -61,13 +67,13 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -Denable-ipv6:BOOL=TRUE
     -Denable-libinstpatch:BOOL=FALSE
     -Denable-midishare:BOOL=TRUE
+    -Denable-native-dls:BOOL=TRUE
     -Denable-network:BOOL=TRUE
     -Denable-oboe:BOOL=FALSE
     -Denable-openmp:BOOL=FALSE
     -Denable-opensles:BOOL=FALSE
     -Denable-oss:BOOL=FALSE
     -Denable-profiling:BOOL=FALSE
-    -Denable-sdl2:BOOL=FALSE
     -Denable-sdl3:BOOL=FALSE
     -Denable-systemd:BOOL=FALSE
     -Denable-threads:BOOL=TRUE
@@ -76,6 +82,7 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
     -Denable-wasapi:BOOL=FALSE
     -Denable-waveout:BOOL=FALSE
     -Denable-winmidi:BOOL=FALSE
+    -Dosal:STRING=cpp11
 )
 CMAKE_SRC_CONFIGURE_OPTIONS=(
     'alsa enable-alsa'
@@ -88,13 +95,4 @@ CMAKE_SRC_CONFIGURE_OPTIONS=(
     'pulseaudio enable-pulseaudio'
     'readline enable-readline'
 )
-
-src_prepare() {
-    cmake_src_prepare
-
-    # prevent unsetting CC, CFLAGS and LDFLAGS
-    edo sed \
-        -e '/set(ENV/d' \
-        -i src/gentables/CMakeLists.txt
-}
 
