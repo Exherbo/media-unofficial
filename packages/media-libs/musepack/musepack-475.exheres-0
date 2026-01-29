@@ -12,8 +12,8 @@ It is based on the MPEG-1 Layer-2 / MP2 algorithms, but since 1997 it has
 rapidly developed and vastly improved and is now at an advanced stage in which
 it contains heavily optimized and patentless code."
 
-HOMEPAGE="http://www.musepack.net/"
-DOWNLOADS="http://files.musepack.net/source/${PN}_src_r${PV}.tar.gz"
+HOMEPAGE="https://www.musepack.net/"
+DOWNLOADS="https://files.musepack.net/source/${PN}_src_r${PV}.tar.gz"
 
 LICENCES="BSD-3"
 SLOT="0"
@@ -35,6 +35,12 @@ CMAKE_SOURCE=${WORKBASE}/${PN}_src_r${PV}
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}"/${PNV}-fno-common.patch
     "${FILES}"/${PN}-libmpcdec-Link-against-libm.patch
+)
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    # Unfortunately it seems rather inactive, so I haven't bothered with a
+    # patch
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 )
 
 src_prepare() {
