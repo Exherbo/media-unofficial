@@ -19,6 +19,10 @@ DEPENDENCIES=""
 
 CMAKE_SOURCE=${WORKBASE}/${MY_PNV}
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    -p0 "${FILES}"/${PN}-gcc14.patch
+)
+
 CMAKE_SRC_CONFIGURE_PARAMS=(
     # Unfortunately it seems rather inactive, so I haven't bothered with a
     # patch
@@ -26,10 +30,10 @@ CMAKE_SRC_CONFIGURE_PARAMS=(
 )
 
 src_prepare() {
-    default
+    cmake_src_prepare
     # Don't be unverbose by default
     edo sed -e '/^set(CMAKE_VERBOSE_MAKEFILE/d' \
-            -i "${CMAKE_SOURCE}"/CMakeLists.txt
+            -i CMakeLists.txt
 }
 
 src_install() {
