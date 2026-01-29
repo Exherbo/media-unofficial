@@ -7,8 +7,8 @@ require cmake
 
 SUMMARY="Musepack's replay gain library"
 
-HOMEPAGE="http://www.musepack.net/"
-DOWNLOADS="http://files.musepack.net/source/${MY_PNV}.tar.gz"
+HOMEPAGE="https://www.musepack.net/"
+DOWNLOADS="https://files.musepack.net/source/${MY_PNV}.tar.gz"
 
 LICENCES="LGPL-2"
 SLOT="0"
@@ -18,6 +18,12 @@ MYOPTIONS=""
 DEPENDENCIES=""
 
 CMAKE_SOURCE=${WORKBASE}/${MY_PNV}
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    # Unfortunately it seems rather inactive, so I haven't bothered with a
+    # patch
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+)
 
 src_prepare() {
     default
