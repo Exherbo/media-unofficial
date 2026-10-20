@@ -134,7 +134,7 @@ DEPENDENCIES="
         qt6? (
            dev-libs/libglvnd
            x11-libs/libX11
-           x11-libs/qtbase:6[>=6.0]
+           x11-libs/qtbase:6[>=6.2]
         )
         qtaudio? (
            x11-libs/qtmultimedia:6
