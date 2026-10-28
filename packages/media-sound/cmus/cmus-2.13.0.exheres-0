@@ -5,7 +5,3 @@ require cmus
 
 PLATFORMS="~amd64 ~x86"
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PN}-2.12.0-ffmpeg-8.patch
-)
-
